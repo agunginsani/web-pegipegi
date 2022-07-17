@@ -8,3 +8,4 @@ Pegipegi web mono-repository.
 - [Nuxt](https://v3.nuxtjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/)
