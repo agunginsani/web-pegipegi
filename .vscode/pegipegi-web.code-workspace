@@ -1,0 +1,29 @@
+{
+  "settings": {
+    "files.associations": {
+      "*.css": "tailwindcss"
+    }
+  },
+  "folders": [
+    {
+      "path": "..",
+      "name": "🗂️ root"
+    },
+    {
+      "path": "../apps/flight-mobile",
+      "name": "📱 apps/flight-mobile"
+    },
+    {
+      "path": "../apps/bus-mobile",
+      "name": "📱 apps/bus-mobile"
+    },
+    {
+      "path": "../packages/ui",
+      "name": "📦 packages/ui"
+    },
+    {
+      "path": "../packages/tailwind-preset",
+      "name": "📦 packages/tailwind-preset"
+    }
+  ]
+}

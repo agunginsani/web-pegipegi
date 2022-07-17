@@ -1,0 +1,37 @@
+{
+  "name": "@pegipegi/ui",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/lib.umd.cjs",
+  "module": "./dist/lib.js",
+  "types": "./dist/types/lib.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/lib.js",
+      "require": "./dist/lib.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build && vue-tsc -p tsconfig.lib.json",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@pegipegi/tailwind-preset": "workspace:^1.0.0",
+    "@vitejs/plugin-vue": "^3.0.0",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.6",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "vue": "^3.2.37",
+    "vue-tsc": "^0.38.4"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.37"
+  }
+}
