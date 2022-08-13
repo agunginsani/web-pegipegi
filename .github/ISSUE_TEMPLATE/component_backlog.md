@@ -13,25 +13,13 @@ All related documents.
 
 # Component
 
-## Prop Type
+## Type
 
 ```ts
-const props = defineProps<{
-  ...
-}>()
-```
-
-## Event
-
-```ts
-const emit = defineEmits<{
-  ...
-}>()
+...
 ```
 
 ## Slot
-
-### `default`
 
 ```vue
 ...
