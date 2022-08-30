@@ -8,10 +8,6 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^5.3.0",
-    "nuxt": "3.0.0-rc.5"
-  },
-  "dependencies": {
-    "@pegipegi/tailwind-preset": "workspace:^1.0.0",
-    "@pegipegi/ui": "workspace:^1.0.0"
+    "nuxt": "3.0.0-rc.8"
   }
 }
