@@ -16,7 +16,9 @@
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
-        "webpack"
+        "webpack",
+        "vue",
+        "postcss"
       ]
     }
   }

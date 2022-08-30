@@ -16,14 +16,6 @@
     {
       "path": "../apps/bus-mobile",
       "name": "📱 apps/bus-mobile"
-    },
-    {
-      "path": "../packages/ui",
-      "name": "📦 packages/ui"
-    },
-    {
-      "path": "../packages/tailwind-preset",
-      "name": "📦 packages/tailwind-preset"
     }
   ]
 }
