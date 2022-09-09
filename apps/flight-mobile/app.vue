@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Button } from '@pegipegi/ui';
+import { Button } from '@pegipegi/pegipegi-web-ui';
 </script>
 
 <template>
   <div class="">
-    <Button variant="text">Hello</Button>
+    <Button>Hello</Button>
   </div>
 </template>

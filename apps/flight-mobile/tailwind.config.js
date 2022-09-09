@@ -4,7 +4,7 @@
 module.exports = {
   content: [
     './app.vue',
-    './node_modules/@pegipegi/ui/dist/**/*.{vue,js,ts,jsx,tsx}',
+    './node_modules/@pegipegi/pegipegi-web-ui/**/*.{vue,js,ts,jsx,tsx}',
   ],
-  presets: [require('@pegipegi/tailwind-preset')],
+  presets: [require('@pegipegi/pegipegi-web-ui/tailwind-preset')],
 };
