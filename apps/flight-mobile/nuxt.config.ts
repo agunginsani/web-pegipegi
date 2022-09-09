@@ -5,4 +5,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: '@pegipegi/pegipegi-web-ui/style',
   },
+  typescript: {
+    strict: true,
+  },
 });
