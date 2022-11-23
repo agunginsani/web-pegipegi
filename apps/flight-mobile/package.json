@@ -8,9 +8,11 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.0.1",
-    "nuxt": "3.0.0-rc.12"
+    "nuxt": "3.0.0"
   },
   "dependencies": {
-    "@pegipegi/pegipegi-web-ui": "^1.0.3"
+    "@pegipegi/pegipegi-web-ui": "^1.0.3",
+    "@pinia/nuxt": "^0.4.3",
+    "zod": "^3.19.1"
   }
 }
