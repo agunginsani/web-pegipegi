@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss"],
   tailwindcss: {
-    cssPath: "@pegipegi/pegipegi-web-ui/style",
+    cssPath: "@pegipegi/web-pegipegi-ui/style",
   },
 });

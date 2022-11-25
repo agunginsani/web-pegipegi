@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import z from "zod";
+  import { Button } from "@pegipegi/web-pegipegi-ui";
 
   const PickPointSchema = z.object({
     traceId: z.string(),
@@ -25,22 +26,22 @@
 
 <template>
   <div>
-    <button
+    <Button
       @click="
         page++;
         refresh();
       "
     >
       Next
-    </button>
-    <button
+    </Button>
+    <Button
       @click="
         page--;
         refresh();
       "
     >
       Previous
-    </button>
+    </Button>
     <hr />
     <p v-if="data !== null">{{ data }}</p>
   </div>

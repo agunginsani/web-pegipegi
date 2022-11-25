@@ -12,6 +12,6 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
-    "@pegipegi/pegipegi-web-ui": "^1.0.3"
+    "@pegipegi/web-pegipegi-ui": "^0.0.3"
   }
 }

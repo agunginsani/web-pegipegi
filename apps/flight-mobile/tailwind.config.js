@@ -2,9 +2,6 @@
  * @type {import('tailwindcss').Config}
  */
 module.exports = {
-  content: [
-    './app.vue',
-    './node_modules/@pegipegi/pegipegi-web-ui/**/*.{vue,js,ts,jsx,tsx}',
-  ],
-  presets: [require('@pegipegi/pegipegi-web-ui/tailwind-preset')],
+  content: ["./**/@pegipegi/web-pegipegi-ui/**/*.js", "./pages/**/*.vue"],
+  presets: [require("@pegipegi/web-pegipegi-ui/tailwind-config")],
 };

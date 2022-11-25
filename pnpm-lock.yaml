@@ -19,12 +19,12 @@ importers:
   apps/flight-mobile:
     specifiers:
       '@nuxtjs/tailwindcss': ^6.0.1
-      '@pegipegi/pegipegi-web-ui': ^1.0.3
+      '@pegipegi/web-pegipegi-ui': ^0.0.3
       '@pinia/nuxt': ^0.4.3
       nuxt: 3.0.0
       zod: ^3.19.1
     dependencies:
-      '@pegipegi/pegipegi-web-ui': 1.0.3
+      '@pegipegi/web-pegipegi-ui': 0.0.3
       '@pinia/nuxt': 0.4.5
       zod: 3.19.1
     devDependencies:
@@ -673,6 +673,18 @@ packages:
 
   /@pegipegi/pegipegi-web-ui/1.0.3:
     resolution: {integrity: sha512-QxWVgltQaFzpCsSxyroaIsr/wckjUDSJku8uwa6+YphgMAaDRewsNQeRgjhpXFYZ4PTqSNx2jXMLGVQz1yhnOA==, tarball: download/@pegipegi/pegipegi-web-ui/1.0.3/da23f31c3fbb5aebacacfafaf4af10604dd987a7}
+    peerDependencies:
+      tailwindcss: ^3.1.8
+      vue: ^3.2.37
+    peerDependenciesMeta:
+      tailwindcss:
+        optional: true
+      vue:
+        optional: true
+    dev: false
+
+  /@pegipegi/web-pegipegi-ui/0.0.3:
+    resolution: {integrity: sha512-XG0ygbYSRBLs7EwZTt2tySCJgiUIiBFAgK2nI1Mku8Vv+4j4Anu1vBZgJTIqPAUgfYWkhv0P0z/r3S0+dwuC6Q==, tarball: download/@pegipegi/web-pegipegi-ui/0.0.3/1ccdb8b586e8d601247bf38abd9f6d0be1373afc}
     peerDependencies:
       tailwindcss: ^3.1.8
       vue: ^3.2.37

@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // css: ['@pegipegi/web-pegipegi-ui/component-style'],
   modules: [
     "@nuxtjs/tailwindcss",
     ["@pinia/nuxt", { autoImports: ["defineStore"] }],
@@ -11,6 +12,6 @@ export default defineNuxtConfig({
     },
   },
   tailwindcss: {
-    cssPath: "@pegipegi/pegipegi-web-ui/style",
+    cssPath: "@pegipegi/web-pegipegi-ui/style",
   },
 });
