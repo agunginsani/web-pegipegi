@@ -14,4 +14,4 @@ RUN pnpm -F flignt-mobile... build-production
 
 WORKDIR /src/apps/flight-mobile
 
-CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r newrelic -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
+CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
