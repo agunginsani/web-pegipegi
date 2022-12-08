@@ -1,0 +1,17 @@
+FROM node:16
+
+RUN npm install -g pnpm@^7
+
+WORKDIR /src
+
+COPY .npmrc pnpm-lock.yaml ./
+RUN pnpm fetch
+
+COPY . ./
+
+RUN pnpm -F flight-mobile... install --offline
+RUN pnpm -F flight-mobile... build-staging
+
+WORKDIR /src/apps/flight-mobile
+
+CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.staging dotenv_config_debug=true"]

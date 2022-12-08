@@ -1,48 +1,20 @@
 <script lang="ts" setup>
-  import z from "zod";
-  import { Button } from "@pegipegi/web-pegipegi-ui";
+  import useAirports from "home-module/composables/use-airports";
+  import useSeatClasses from "home-module/composables/use-seat-classes";
+  import usePromoBanners from "home-module/composables/use-promo-banners";
 
-  const PickPointSchema = z.object({
-    traceId: z.string(),
-    time: z.string(),
-    data: z.array(
-      z.object({
-        address: z.string(),
-        id: z.string(),
-        isMapAvailable: z.boolean(),
-      })
-    ),
-  });
-
-  const page = ref(1);
-  const authFetch = useAuthFetch();
-
-  const { data, refresh } = await useAsyncData(() =>
-    authFetch("/bus/search/v2/pickpoint", {
-      params: { page: page.value, search: "jaka" },
-    }).then((data) => PickPointSchema.parse(data))
-  );
+  const [{ data: airports }, { data: seatClasses }, { data: promos }] =
+    await Promise.all([useAirports(), useSeatClasses(), usePromoBanners()]);
 </script>
 
 <template>
-  <div>
-    <Button
-      @click="
-        page++;
-        refresh();
-      "
-    >
-      Next
-    </Button>
-    <Button
-      @click="
-        page--;
-        refresh();
-      "
-    >
-      Previous
-    </Button>
-    <hr />
-    <p v-if="data !== null">{{ data }}</p>
-  </div>
+  <h1>Promo Banners</h1>
+  <hr />
+  <code>{{ promos }}</code>
+  <h1>Seat Classes</h1>
+  <hr />
+  <code>{{ seatClasses }}</code>
+  <h1>Airports</h1>
+  <hr />
+  <code>{{ airports }}</code>
 </template>

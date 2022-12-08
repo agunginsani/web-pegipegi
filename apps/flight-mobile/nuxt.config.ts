@@ -1,17 +1,27 @@
+import { resolve } from "path";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // css: ['@pegipegi/web-pegipegi-ui/component-style'],
   modules: [
     "@nuxtjs/tailwindcss",
     ["@pinia/nuxt", { autoImports: ["defineStore"] }],
   ],
   runtimeConfig: {
+    bannerApiKey: "",
     public: {
-      cloudRunBaseUrl: "",
-      bannerBaseUrl: "",
+      authBaseUrl: "",
+      bannerApiBaseUrl: "",
+      apixBaseUrl: "",
     },
   },
   tailwindcss: {
     cssPath: "@pegipegi/web-pegipegi-ui/style",
+  },
+  typescript: {
+    shim: false,
+  },
+  alias: {
+    "common-module": resolve(__dirname, "./modules/common"),
+    "home-module": resolve(__dirname, "./modules/home"),
   },
 });

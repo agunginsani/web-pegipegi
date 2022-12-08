@@ -1,9 +1,14 @@
 {
+  "name": "flight-mobile",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build-production": "nuxt build --dotenv .env.production",
+    "build-staging": "nuxt build --dotenv .env.staging",
+    "dev-production": "nuxt dev --dotenv .env.production",
+    "dev-staging": "nuxt dev --dotenv .env.staging",
     "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
     "preview": "nuxt preview"
   },
   "devDependencies": {
@@ -11,8 +16,12 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
+    "@google-cloud/logging-winston": "^5.2.3",
     "@pegipegi/web-pegipegi-ui": "^0.0.3",
     "@pinia/nuxt": "^0.4.3",
+    "dotenv": "^16.0.3",
+    "newrelic": "latest",
+    "winston": "^3.8.2",
     "zod": "^3.19.1"
   }
 }
