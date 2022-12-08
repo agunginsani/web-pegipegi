@@ -12,9 +12,10 @@ COPY . ./
 RUN pnpm -F flight-mobile... install --offline
 RUN pnpm -F flignt-mobile... build-production
 
-WORKDIR /src/apps/flight-mobile
 
 RUN apt-get update && apt-get install sudo
 RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-IYUZ6L5S05J83WA7T2A0CCBD35W NEW_RELIC_ACCOUNT_ID=699667 /usr/local/bin/newrelic install -n logs-integration
+
+WORKDIR /src/apps/flight-mobile
 
 CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r newrelic -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
