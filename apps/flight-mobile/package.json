@@ -19,6 +19,7 @@
     "@pegipegi/web-pegipegi-ui": "^0.0.3",
     "@pinia/nuxt": "^0.4.3",
     "dotenv": "^16.0.3",
+    "newrelic": "latest",
     "winston": "^3.8.2",
     "zod": "^3.19.1"
   }

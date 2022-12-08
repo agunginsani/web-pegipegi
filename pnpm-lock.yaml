@@ -33,6 +33,7 @@ importers:
       "@pegipegi/web-pegipegi-ui": ^0.0.3
       "@pinia/nuxt": ^0.4.3
       dotenv: ^16.0.3
+      newrelic: latest
       nuxt: 3.0.0
       winston: ^3.8.2
       zod: ^3.19.1
@@ -41,6 +42,7 @@ importers:
       "@pegipegi/web-pegipegi-ui": 0.0.3
       "@pinia/nuxt": 0.4.5
       dotenv: 16.0.3
+      newrelic: 9.7.2
       winston: 3.8.2
       zod: 3.19.1
     devDependencies:
@@ -654,6 +656,19 @@ packages:
       chalk: 4.1.2
     dev: true
 
+  /@contrast/fn-inspect/3.3.0:
+    resolution:
+      {
+        integrity: sha512-iulijoAuhfamXZNWsEy4ORNd8TxqD6aKeMiukDpWSwuRJ3sB+4lOmY2DkP2WwlBpYMmh3k4/7LHP2I925Y2xKQ==,
+      }
+    engines: { node: ">=12.13.0" }
+    requiresBuild: true
+    dependencies:
+      nan: 2.17.0
+      node-gyp-build: 4.5.0
+    dev: false
+    optional: true
+
   /@cspotcode/source-map-support/0.8.1:
     resolution:
       {
@@ -959,6 +974,58 @@ packages:
     dependencies:
       is-promise: 4.0.0
     dev: true
+
+  /@newrelic/aws-sdk/5.0.2_newrelic@9.7.2:
+    resolution:
+      {
+        integrity: sha512-vn5Aj0ZznjzqqxR69mHIWi7QUjBeab9f0Dfra/UOPZlyLy3Q/HbK4/sYV9/q/Ifmx85B3kJI4ca7mytCx073VQ==,
+      }
+    engines: { node: ">=14.0.0" }
+    peerDependencies:
+      newrelic: ">=8.7.0"
+    dependencies:
+      newrelic: 9.7.2
+    dev: false
+
+  /@newrelic/koa/7.1.0_newrelic@9.7.2:
+    resolution:
+      {
+        integrity: sha512-jKYzlw8NGZpRMpxKmHv97F5ms+YxD+YZ0sC8fG3lQqjQ+Ie+IEgP8pbI/qVAMc07CBhe07ygstQthu86Rb5RZw==,
+      }
+    engines: { node: ">=14.0.0" }
+    peerDependencies:
+      newrelic: ">=6.11.0"
+    dependencies:
+      newrelic: 9.7.2
+    dev: false
+
+  /@newrelic/native-metrics/9.0.0:
+    resolution:
+      {
+        integrity: sha512-WYDRs4hlFerUyism2TjF1PIJfP8w50Nc9Kt61zWNrGM3QYOrKXZ5ibA3R0fQgU0+LM7UWtQ9g7onFpVUGsj8QQ==,
+      }
+    engines: { node: ">=14", npm: ">=6" }
+    requiresBuild: true
+    dependencies:
+      https-proxy-agent: 5.0.1
+      nan: 2.17.0
+      semver: 5.7.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+    optional: true
+
+  /@newrelic/superagent/6.0.0_newrelic@9.7.2:
+    resolution:
+      {
+        integrity: sha512-5nClQp9ACd4BvLusAgFHjjKLDgAaC+dKmIsRNOPC82LOLFaoOgxxtbecnDIJ0NWCKQS+WOdmXdgYutwH+e5dsA==,
+      }
+    engines: { node: ">=14.0" }
+    peerDependencies:
+      newrelic: ">=6.11.0"
+    dependencies:
+      newrelic: 9.7.2
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution:
@@ -1635,6 +1702,13 @@ packages:
         integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==,
       }
     dev: true
+
+  /@tyriar/fibonacci-heap/2.0.9:
+    resolution:
+      {
+        integrity: sha512-bYuSNomfn4hu2tPiDN+JZtnzCpSpbJ/PNeulmocDy3xN2X5OkJL65zo6rPZp65cPPhLF9vfT/dgE+RtFRCSxOA==,
+      }
+    dev: false
 
   /@unhead/dom/1.0.4:
     resolution:
@@ -2435,7 +2509,6 @@ packages:
       {
         integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==,
       }
-    dev: true
 
   /buffer/5.7.1:
     resolution:
@@ -2936,6 +3009,19 @@ packages:
 
   /concat-map/0.0.1:
     resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
+
+  /concat-stream/2.0.0:
+    resolution:
+      {
+        integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==,
+      }
+    engines: { "0": node >= 6.0 }
+    dependencies:
+      buffer-from: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+      typedarray: 0.0.6
+    dev: false
 
   /consola/2.15.3:
     resolution:
@@ -5532,6 +5618,13 @@ packages:
       }
     dev: true
 
+  /json-stringify-safe/5.0.1:
+    resolution:
+      {
+        integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==,
+      }
+    dev: false
+
   /json5/2.2.1:
     resolution:
       {
@@ -6474,6 +6567,14 @@ packages:
       }
     dev: true
 
+  /nan/2.17.0:
+    resolution:
+      {
+        integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==,
+      }
+    dev: false
+    optional: true
+
   /nanoid/3.3.4:
     resolution:
       {
@@ -6499,6 +6600,33 @@ packages:
       }
     engines: { node: ">= 0.6" }
     dev: true
+
+  /newrelic/9.7.2:
+    resolution:
+      {
+        integrity: sha512-SzjngZYv4VNQpseBN1KkHoEOKo5dl0Hrtbs1uKi+kIO0899vh2u7fLKJuLtp6jBSgwTMp71dO6G2/cclbUXz7w==,
+      }
+    engines: { node: ">=14", npm: ">=6.0.0" }
+    hasBin: true
+    dependencies:
+      "@grpc/grpc-js": 1.7.3
+      "@grpc/proto-loader": 0.7.3
+      "@newrelic/aws-sdk": 5.0.2_newrelic@9.7.2
+      "@newrelic/koa": 7.1.0_newrelic@9.7.2
+      "@newrelic/superagent": 6.0.0_newrelic@9.7.2
+      "@tyriar/fibonacci-heap": 2.0.9
+      concat-stream: 2.0.0
+      https-proxy-agent: 5.0.1
+      json-stringify-safe: 5.0.1
+      readable-stream: 3.6.0
+      semver: 5.7.1
+      winston-transport: 4.5.0
+    optionalDependencies:
+      "@contrast/fn-inspect": 3.3.0
+      "@newrelic/native-metrics": 9.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /nitropack/1.0.0:
     resolution:
@@ -6635,7 +6763,6 @@ packages:
         integrity: sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==,
       }
     hasBin: true
-    dev: true
 
   /node-releases/2.0.6:
     resolution:
@@ -8584,7 +8711,6 @@ packages:
         integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==,
       }
     hasBin: true
-    dev: true
 
   /semver/6.3.0:
     resolution:
@@ -9482,6 +9608,13 @@ packages:
       media-typer: 0.3.0
       mime-types: 2.1.35
     dev: true
+
+  /typedarray/0.0.6:
+    resolution:
+      {
+        integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==,
+      }
+    dev: false
 
   /typescript/4.9.3:
     resolution:
