@@ -1,6 +1,7 @@
 {
   "name": "flight-mobile",
   "private": true,
+  "type": "module",
   "scripts": {
     "build-production": "nuxt build --dotenv .env.production",
     "build-staging": "nuxt build --dotenv .env.staging",
