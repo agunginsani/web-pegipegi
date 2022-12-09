@@ -1,12 +1,12 @@
 import winston from "winston";
-import { LoggingWinston } from "@google-cloud/logging-winston";
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
   const transports: winston.LoggerOptions["transports"] = [
     new winston.transports.Console(),
   ];
 
   if (process.env.STREAM_LOG_TO_GCP) {
+    const { LoggingWinston } = await import("@google-cloud/logging-winston");
     transports.push(new LoggingWinston());
   }
 

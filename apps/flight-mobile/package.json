@@ -1,5 +1,5 @@
 {
-  "name": "flight-mobile",
+  "name": "flight-mobile-app",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "dev-staging": "nuxt dev --dotenv .env.staging",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
-    "preview": "nuxt preview"
+    "preview-staging": "nuxt preview --dotenv .env.staging"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.0.1",
