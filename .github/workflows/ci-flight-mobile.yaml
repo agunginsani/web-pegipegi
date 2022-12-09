@@ -23,7 +23,7 @@ jobs:
           version: ^7
       - name: Install
         run: |
-          pnpm -F -w flight-mobile... install
+          pnpm -F flight-mobile... install -w
           pnpm -F flight-mobile^... build-staging
       - name: Lint
         run: pnpm prettier apps/flight-mobile --check
