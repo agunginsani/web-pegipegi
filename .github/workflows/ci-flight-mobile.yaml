@@ -39,9 +39,9 @@ jobs:
       - name: Install
         run: |
           pnpm -F flight-mobile-test install
-          pnpm dlx playwright install --with-deps
+          pnpm -F flight-mobile-test playwright install --with-deps
       - name: Test
-        run: CI=true pnpm playwright test
+        run: CI=true pnpm -F flight-mobile-test playwright test
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
