@@ -22,13 +22,25 @@ jobs:
         with:
           version: ^7
       - name: Install
-        run: |
-          pnpm -F flight-mobile... install -w
-          pnpm -F flight-mobile^... build-staging
+        run: pnpm -F flight-mobile install -w
       - name: Lint
         run: pnpm prettier apps/flight-mobile --check
       - name: Build staging
         run: pnpm -F flight-mobile build-staging
+  e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ^7
+      - name: Install
+        run: |
+          pnpm -F flight-mobile-test install
+          pnpm playwright install --with-deps
+      - name: Test
+        run: CI=true pnpm playwright test
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
