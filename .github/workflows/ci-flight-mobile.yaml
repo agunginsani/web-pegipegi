@@ -1,0 +1,44 @@
+name: ci
+on:
+  pull_request:
+    paths:
+      - apps/flight-mobile/**
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - master
+      - release/flight-mobile/*
+    paths:
+      - apps/flight-mobile/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ^7
+      - name: Install
+        run: |
+          pnpm -F flight-mobile... install -w
+          pnpm -F flight-mobile^... build-staging
+      - name: Lint
+        run: pnpm prettier apps/flight-mobile --check
+      - name: Build staging
+        run: pnpm -F flight-mobile build-staging
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: apps/flight-mobile
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
