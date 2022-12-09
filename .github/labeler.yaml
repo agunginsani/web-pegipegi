@@ -6,6 +6,9 @@ ci:
 documentation:
   - "**/*.md"
 
+test:
+  - tests/**
+
 "apps:bus-mobile":
   - apps/bus-mobile/**
 
