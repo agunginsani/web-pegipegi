@@ -28,6 +28,7 @@ jobs:
       - name: Build staging
         run: pnpm -F flight-mobile build-staging
   e2e:
+    needs: build
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +39,7 @@ jobs:
       - name: Install
         run: |
           pnpm -F flight-mobile-test install
-          pnpm playwright install --with-deps
+          pnpm dlx playwright install --with-deps
       - name: Test
         run: CI=true pnpm playwright test
   sonarcloud:
