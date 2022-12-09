@@ -23,11 +23,10 @@ jobs:
           version: ^7
       - name: Install
         run: |
-          pnpm -F flight-mobile... install
+          pnpm -F -w flight-mobile... install
           pnpm -F flight-mobile^... build-staging
       - name: Lint
-        run: |
-          pnpm prettier apps/flight-mobile --check
+        run: pnpm prettier apps/flight-mobile --check
       - name: Build
         run: pnpm -F flight-mobile build-staging
   sonarcloud:
