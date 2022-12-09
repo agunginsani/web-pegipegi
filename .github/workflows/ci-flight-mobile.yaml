@@ -27,8 +27,6 @@ jobs:
         run: pnpm prettier apps/flight-mobile --check
       - name: Build staging
         run: pnpm -F flight-mobile-app build-staging
-      - name: Preview staging
-        run: pnpm -F flight-mobile-app preview-staging
       - name: E2E
         run: |
           pnpm -F flight-mobile-test install
