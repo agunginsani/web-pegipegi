@@ -1,0 +1,13 @@
+ci:
+  - .github/workflows/*
+  - ./**/cloudbuild.yaml
+  - ./**/dockerfile.*
+
+documentation:
+  - ./**/*.md
+
+"apps:bus-mobile":
+  - apps/bus-mobile/**
+
+"apps:flight-mobile":
+  - apps/flight-mobile/**
