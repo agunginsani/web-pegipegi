@@ -10,7 +10,7 @@
       "tsconfig.json": "tsconfig.*.json",
       ".prettierrc": ".prettierignore",
       "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc",
-      "cloudbuild.yaml": "dockerfile.*, newrelic.js"
+      "cloudbuild.yaml": "dockerfile.*, newrelic.cjs"
     },
     "files.associations": {
       "*.css": "tailwindcss"
