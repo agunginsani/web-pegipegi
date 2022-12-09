@@ -8,6 +8,7 @@
       "*.jsx": "${capture}.js",
       "*.tsx": "${capture}.ts",
       "tsconfig.json": "tsconfig.*.json",
+      ".prettierrc": ".prettierignore",
       "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc",
       "cloudbuild.yaml": "dockerfile.*, newrelic.js"
     },
