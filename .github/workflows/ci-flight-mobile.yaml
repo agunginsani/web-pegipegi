@@ -27,7 +27,7 @@ jobs:
           pnpm -F flight-mobile^... build-staging
       - name: Lint
         run: pnpm prettier apps/flight-mobile --check
-      - name: Build
+      - name: Build staging
         run: pnpm -F flight-mobile build-staging
   sonarcloud:
     runs-on: ubuntu-latest
