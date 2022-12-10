@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - apps/flight-mobile/**
+      - .github/ci-flight-mobile.yaml
     types:
       - opened
       - synchronize
@@ -13,6 +14,7 @@ on:
       - release/flight-mobile/*
     paths:
       - apps/flight-mobile/**
+      - .github/ci-flight-mobile.yaml
 jobs:
   build:
     runs-on: ubuntu-latest
