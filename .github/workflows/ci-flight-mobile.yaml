@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - apps/flight-mobile/**
+      - .github/workflows/ci-flight-mobile.yaml
     types:
       - opened
       - synchronize
@@ -13,14 +14,19 @@ on:
       - release/flight-mobile/*
     paths:
       - apps/flight-mobile/**
+      - .github/workflows/ci-flight-mobile.yaml
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v2
         with:
-          version: ^7
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
       - name: Install
         run: pnpm -F flight-mobile-app install -w
       - name: Lint
