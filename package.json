@@ -2,6 +2,7 @@
   "name": "pegipegi-web",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "engines": {
     "node": ">=14",
     "pnpm": ">=7"
