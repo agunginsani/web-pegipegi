@@ -1,4 +1,4 @@
-name: semantic-pr-checker
+name: semantic_pr_checker
 
 on:
   pull_request_target:
