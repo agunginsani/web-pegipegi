@@ -1,20 +1,21 @@
 <script lang="ts" setup>
-  import useAirports from "home-module/composables/use-airports";
-  import useSeatClasses from "home-module/composables/use-seat-classes";
-  import usePromoBanners from "home-module/composables/use-promo-banners";
+  import SectionSearch from 'home-module/components/SectionSearch.vue'
+  import useHomeStore from 'home-module/composables/use-home-store';
 
-  const [{ data: airports }, { data: seatClasses }, { data: promos }] =
-    await Promise.all([useAirports(), useSeatClasses(), usePromoBanners()]);
+  const { fetch } = useHomeStore()
+  await fetch()
 </script>
 
 <template>
-  <h1>Promo Banners</h1>
-  <hr />
-  <code>{{ promos }}</code>
-  <h1>Seat Classes</h1>
-  <hr />
-  <code>{{ seatClasses }}</code>
-  <h1>Airports</h1>
-  <hr />
-  <code>{{ airports }}</code>
+  <header>
+    header
+  </header>
+  
+  <main class="bg-[#ffc09a] mb-auto flex-grow block">
+    <SectionSearch/>
+  </main>
+
+  <footer>
+    footer
+  </footer>
 </template>
