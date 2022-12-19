@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <header>header</header>
+  <header>
+    <h1>Cari Tiket Pesawat</h1>
+  </header>
 
   <main class="bg-[#ffc09a] mb-auto flex-grow block">
     <SectionSearch />

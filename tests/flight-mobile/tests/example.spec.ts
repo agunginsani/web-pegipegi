@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("home page has `Promo Banners` text", async ({ page }) => {
+test("home page has `Cari Tiket Pesawat` text", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("Promo Banners")).toBeVisible();
+  await expect(page.getByText("Cari Tiket Pesawat")).toBeVisible();
 });
