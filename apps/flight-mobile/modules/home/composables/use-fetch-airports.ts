@@ -15,7 +15,7 @@ const Airports = z.array(
   })
 );
 
-type Airports = z.infer<typeof Airports>;
+export type Airports = z.infer<typeof Airports>;
 
 export default function useAirports() {
   const { token } = useAuthStore();
