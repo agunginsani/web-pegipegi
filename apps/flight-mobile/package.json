@@ -8,6 +8,7 @@
     "dev-production": "nuxt dev --dotenv .env.production",
     "dev-staging": "nuxt dev --dotenv .env.staging",
     "start-staging": "nuxt start --dotenv .env.staging",
+    "start-production": "nuxt start --dotenv .env.production",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
     "preview-staging": "nuxt preview --dotenv .env.staging"
