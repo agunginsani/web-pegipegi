@@ -4,6 +4,7 @@ import { resolve } from "path";
 export default defineNuxtConfig({
   modules: [
     "@nuxt/image-edge",
+    "@vueuse/nuxt",
     "@nuxtjs/tailwindcss",
     ["@pinia/nuxt", { autoImports: ["defineStore"] }],
   ],
