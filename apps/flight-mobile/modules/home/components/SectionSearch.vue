@@ -2,6 +2,7 @@
   import { Button } from "@pegipegi/web-pegipegi-ui";
   import SearchForm from "home-module/components/SearchForm/index.vue";
   import SearchFormInput from "home-module/components/SearchForm/SearchFormInput.vue";
+  // TODO: use @nuxt/image
   import iconFrom from "home-module/assets/icon-search-from.svg";
   import iconTo from "home-module/assets/icon-search-to.svg";
   import iconDepart from "home-module/assets/icon-search-depart-date.svg";
