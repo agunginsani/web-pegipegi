@@ -44,7 +44,7 @@
         :value="value.label"
         type="text"
         class="block bg-transparent outline-none"
-        disabled
+        readonly
       />
     </div>
   </div>
