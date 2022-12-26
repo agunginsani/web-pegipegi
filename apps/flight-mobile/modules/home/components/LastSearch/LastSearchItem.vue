@@ -58,18 +58,25 @@
 
 <template>
   <div
-    class="border-neutral-tuna-100 min-w-[280px] rounded-xl border px-4 py-3"
+    class="border-neutral-tuna-100 relative min-w-[280px] rounded-xl border px-4 py-3"
   >
     <div class="flex justify-between">
       <div
-        class="flex space-x-[4px] overflow-hidden whitespace-nowrap pr-1 text-sm font-bold"
+        class="flex space-x-1 overflow-hidden whitespace-nowrap pr-4 text-sm font-bold leading-5"
       >
         <span>{{ history.from.city }}</span>
-        <NuxtImg :src="`/icon-arrow-${flightType}.svg`" :alt="flightType" />
+        <NuxtImg
+          :src="`/icon-arrow-${flightType}.svg`"
+          :alt="flightType"
+          width="16"
+          height="16"
+        />
         <span class="truncate">{{ history.to.city }}</span>
       </div>
-      <button>
-        <NuxtImg src="/icon-close.svg" alt="close" />
+      <button
+        class="absolute right-1 top-1 flex h-9 w-9 items-center justify-center"
+      >
+        <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
       </button>
     </div>
     <div class="text-neutral-tuna-300 text-sm leading-5">
