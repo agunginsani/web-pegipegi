@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     ["@pinia/nuxt", { autoImports: ["defineStore"] }],
+    "@nuxt/image-edge",
   ],
   runtimeConfig: {
     bannerApiKey: "",

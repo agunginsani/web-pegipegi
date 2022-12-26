@@ -2,17 +2,12 @@
   import { Button } from "@pegipegi/web-pegipegi-ui";
   import SearchForm from "home-module/components/SearchForm/index.vue";
   import SearchFormInput from "home-module/components/SearchForm/SearchFormInput.vue";
-  // TODO: use @nuxt/image
-  import iconFrom from "home-module/assets/icon-search-from.svg";
-  import iconTo from "home-module/assets/icon-search-to.svg";
-  import iconDepart from "home-module/assets/icon-search-depart-date.svg";
-  import iconPassenger from "home-module/assets/icon-search-passenger.svg";
 
   const inputItems = computed(() => [
     {
       id: "form",
       label: "Asal",
-      icon: iconFrom,
+      icon: "/icon-search-from.svg",
       value: {
         label: "Jakarta (JKT)",
         value: "JKT",
@@ -21,7 +16,7 @@
     {
       id: "to",
       label: "Tujuan",
-      icon: iconTo,
+      icon: "/icon-search-to.svg",
       value: {
         label: "Bali/Denpasar (DPS)",
         value: "DPS",
@@ -30,7 +25,7 @@
     {
       id: "departDate",
       label: "Pergi",
-      icon: iconDepart,
+      icon: "/icon-search-depart-date.svg",
       value: {
         label: "Jumat, 25 Jun 2022",
         value: "25-06-2022",
@@ -39,7 +34,7 @@
     {
       id: "passengers",
       label: "Penumpang",
-      icon: iconPassenger,
+      icon: "/icon-search-passenger.svg",
       value: {
         label: "1 Dewasa",
         value: "1",

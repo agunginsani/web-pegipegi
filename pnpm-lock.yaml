@@ -29,6 +29,7 @@ importers:
   apps/flight-mobile:
     specifiers:
       "@google-cloud/logging-winston": ^5.2.3
+      "@nuxt/image-edge": 1.0.0-27840416.dc1ed65
       "@nuxtjs/tailwindcss": ^6.0.1
       "@pegipegi/web-pegipegi-ui": ^0.0.3
       "@pinia/nuxt": ^0.4.3
@@ -42,10 +43,11 @@ importers:
       "@pegipegi/web-pegipegi-ui": 0.0.3
       "@pinia/nuxt": 0.4.5
       dotenv: 16.0.3
-      newrelic: 9.7.2
+      newrelic: 9.7.4
       winston: 3.8.2
       zod: 3.19.1
     devDependencies:
+      "@nuxt/image-edge": 1.0.0-27840416.dc1ed65
       "@nuxtjs/tailwindcss": 6.1.3
       nuxt: 3.0.0
 
@@ -981,7 +983,7 @@ packages:
       is-promise: 4.0.0
     dev: true
 
-  /@newrelic/aws-sdk/5.0.2_newrelic@9.7.2:
+  /@newrelic/aws-sdk/5.0.2_newrelic@9.7.4:
     resolution:
       {
         integrity: sha512-vn5Aj0ZznjzqqxR69mHIWi7QUjBeab9f0Dfra/UOPZlyLy3Q/HbK4/sYV9/q/Ifmx85B3kJI4ca7mytCx073VQ==,
@@ -990,10 +992,10 @@ packages:
     peerDependencies:
       newrelic: ">=8.7.0"
     dependencies:
-      newrelic: 9.7.2
+      newrelic: 9.7.4
     dev: false
 
-  /@newrelic/koa/7.1.0_newrelic@9.7.2:
+  /@newrelic/koa/7.1.0_newrelic@9.7.4:
     resolution:
       {
         integrity: sha512-jKYzlw8NGZpRMpxKmHv97F5ms+YxD+YZ0sC8fG3lQqjQ+Ie+IEgP8pbI/qVAMc07CBhe07ygstQthu86Rb5RZw==,
@@ -1002,7 +1004,7 @@ packages:
     peerDependencies:
       newrelic: ">=6.11.0"
     dependencies:
-      newrelic: 9.7.2
+      newrelic: 9.7.4
     dev: false
 
   /@newrelic/native-metrics/9.0.0:
@@ -1021,7 +1023,7 @@ packages:
     dev: false
     optional: true
 
-  /@newrelic/superagent/6.0.0_newrelic@9.7.2:
+  /@newrelic/superagent/6.0.0_newrelic@9.7.4:
     resolution:
       {
         integrity: sha512-5nClQp9ACd4BvLusAgFHjjKLDgAaC+dKmIsRNOPC82LOLFaoOgxxtbecnDIJ0NWCKQS+WOdmXdgYutwH+e5dsA==,
@@ -1030,7 +1032,7 @@ packages:
     peerDependencies:
       newrelic: ">=6.11.0"
     dependencies:
-      newrelic: 9.7.2
+      newrelic: 9.7.4
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -1065,6 +1067,29 @@ packages:
       {
         integrity: sha512-YBI/6o2EBz02tdEJRBK8xkt3zvOFOWlLBf7WKYGBsSYSRtjjgrqPe2skp6VLLmKx5WbHHDNcW+6oACaurxGzeA==,
       }
+    dev: true
+
+  /@nuxt/image-edge/1.0.0-27840416.dc1ed65:
+    resolution:
+      {
+        integrity: sha512-r+lRkdAeB49wCpYmZAHWrhXNtjTSt3kz8MuPoVPpZB40FOVEpPCIQF8dBI5tXM19YOg76yFCdvpt1TFq3irA7g==,
+      }
+    engines: { node: ^14.16.0 || ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 }
+    dependencies:
+      "@nuxt/kit": 3.0.0
+      consola: 2.15.3
+      defu: 6.1.1
+      h3: 1.0.1
+      image-meta: 0.1.1
+      node-fetch-native: 1.0.1
+      ohash: 1.0.0
+      pathe: 1.0.0
+      ufo: 1.0.0
+    optionalDependencies:
+      ipx: 1.0.0-2
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /@nuxt/kit/3.0.0:
@@ -2912,7 +2937,6 @@ packages:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
-    dev: false
 
   /color-support/1.1.3:
     resolution:
@@ -2931,6 +2955,18 @@ packages:
       color-convert: 1.9.3
       color-string: 1.9.1
     dev: false
+
+  /color/4.2.3:
+    resolution:
+      {
+        integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==,
+      }
+    engines: { node: ">=12.5.0" }
+    dependencies:
+      color-convert: 2.0.1
+      color-string: 1.9.1
+    dev: true
+    optional: true
 
   /colord/2.9.3:
     resolution:
@@ -3291,6 +3327,14 @@ packages:
     hasBin: true
     dev: true
 
+  /cssfilter/0.0.10:
+    resolution:
+      {
+        integrity: sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw==,
+      }
+    dev: true
+    optional: true
+
   /cssnano-preset-default/5.2.13_postcss@8.4.19:
     resolution:
       {
@@ -3469,12 +3513,32 @@ packages:
     engines: { node: ">=0.10.0" }
     dev: true
 
+  /decompress-response/6.0.0:
+    resolution:
+      {
+        integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==,
+      }
+    engines: { node: ">=10" }
+    dependencies:
+      mimic-response: 3.1.0
+    dev: true
+    optional: true
+
   /deep-equal/1.0.1:
     resolution:
       {
         integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==,
       }
     dev: true
+
+  /deep-extend/0.6.0:
+    resolution:
+      {
+        integrity: sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==,
+      }
+    engines: { node: ">=4.0.0" }
+    dev: true
+    optional: true
 
   /deep-is/0.1.4:
     resolution:
@@ -4316,6 +4380,15 @@ packages:
       strip-final-newline: 3.0.0
     dev: true
 
+  /expand-template/2.0.3:
+    resolution:
+      {
+        integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==,
+      }
+    engines: { node: ">=6" }
+    dev: true
+    optional: true
+
   /extend/3.0.2:
     resolution:
       {
@@ -4746,6 +4819,14 @@ packages:
     dependencies:
       git-up: 7.0.0
     dev: true
+
+  /github-from-package/0.0.0:
+    resolution:
+      {
+        integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==,
+      }
+    dev: true
+    optional: true
 
   /gittar/0.1.1:
     resolution:
@@ -5205,6 +5286,14 @@ packages:
       }
     engines: { node: ">= 4" }
 
+  /image-meta/0.1.1:
+    resolution:
+      {
+        integrity: sha512-+oXiHwOEPr1IE5zY0tcBLED/CYcre15J4nwL50x3o0jxWqEkyjrusiKP3YSU+tr9fvJp33ZcP5Gpj2295g3aEw==,
+      }
+    engines: { node: ">=10.18.0" }
+    dev: true
+
   /import-fresh/3.3.0:
     resolution:
       {
@@ -5305,6 +5394,28 @@ packages:
     engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
     dev: true
 
+  /ipx/1.0.0-2:
+    resolution:
+      {
+        integrity: sha512-WQJA3oYPavbNUNKU9wyvMq34PvWLaxsio2woPXVYhxDQ8W/5OaZQusrbof3rXe3FZ4oib4/L9YYSN1D71Pq7nA==,
+      }
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      consola: 2.15.3
+      defu: 6.1.1
+      destr: 1.2.1
+      etag: 1.8.1
+      image-meta: 0.1.1
+      listhen: 1.0.0
+      node-fetch-native: 1.0.1
+      pathe: 1.0.0
+      sharp: 0.31.3
+      ufo: 1.0.0
+      xss: 1.0.14
+    dev: true
+    optional: true
+
   /is-arrayish/0.2.1:
     resolution:
       {
@@ -5317,7 +5428,6 @@ packages:
       {
         integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==,
       }
-    dev: false
 
   /is-binary-path/2.1.0:
     resolution:
@@ -6425,6 +6535,15 @@ packages:
     engines: { node: ">=12" }
     dev: true
 
+  /mimic-response/3.1.0:
+    resolution:
+      {
+        integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==,
+      }
+    engines: { node: ">=10" }
+    dev: true
+    optional: true
+
   /min-indent/1.0.1:
     resolution:
       {
@@ -6523,6 +6642,14 @@ packages:
     engines: { node: ">=0.4.0" }
     dev: true
 
+  /mkdirp-classic/0.5.3:
+    resolution:
+      {
+        integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==,
+      }
+    dev: true
+    optional: true
+
   /mkdirp/0.5.6:
     resolution:
       {
@@ -6611,6 +6738,14 @@ packages:
     hasBin: true
     dev: true
 
+  /napi-build-utils/1.0.2:
+    resolution:
+      {
+        integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==,
+      }
+    dev: true
+    optional: true
+
   /negotiator/0.6.3:
     resolution:
       {
@@ -6619,19 +6754,19 @@ packages:
     engines: { node: ">= 0.6" }
     dev: true
 
-  /newrelic/9.7.2:
+  /newrelic/9.7.4:
     resolution:
       {
-        integrity: sha512-SzjngZYv4VNQpseBN1KkHoEOKo5dl0Hrtbs1uKi+kIO0899vh2u7fLKJuLtp6jBSgwTMp71dO6G2/cclbUXz7w==,
+        integrity: sha512-+K1C2L0Ynhl7dBcxUNMLl8SBvYQtFHoYU/WFqrF2JSAN035M4ZQ5ID8WBpS3xwzwDmAD0torr0uvttNbVo7gBw==,
       }
     engines: { node: ">=14", npm: ">=6.0.0" }
     hasBin: true
     dependencies:
       "@grpc/grpc-js": 1.7.3
       "@grpc/proto-loader": 0.7.3
-      "@newrelic/aws-sdk": 5.0.2_newrelic@9.7.2
-      "@newrelic/koa": 7.1.0_newrelic@9.7.2
-      "@newrelic/superagent": 6.0.0_newrelic@9.7.2
+      "@newrelic/aws-sdk": 5.0.2_newrelic@9.7.4
+      "@newrelic/koa": 7.1.0_newrelic@9.7.4
+      "@newrelic/superagent": 6.0.0_newrelic@9.7.4
       "@tyriar/fibonacci-heap": 2.0.9
       concat-stream: 2.0.0
       https-proxy-agent: 5.0.1
@@ -6719,6 +6854,25 @@ packages:
       - supports-color
       - utf-8-validate
     dev: true
+
+  /node-abi/3.30.0:
+    resolution:
+      {
+        integrity: sha512-qWO5l3SCqbwQavymOmtTVuCWZE23++S+rxyoHjXqUmPyzRcaoI4lA2gO55/drddGnedAyjA7sk76SfQ5lfUMnw==,
+      }
+    engines: { node: ">=10" }
+    dependencies:
+      semver: 7.3.8
+    dev: true
+    optional: true
+
+  /node-addon-api/5.0.0:
+    resolution:
+      {
+        integrity: sha512-CvkDw2OEnme7ybCykJpVcKH+uAOLV2qLqiyla128dN9TkEWfrYmxG6C2boDe5KcNQqZF3orkqzGgOMvZ/JNekA==,
+      }
+    dev: true
+    optional: true
 
   /node-domexception/1.0.0:
     resolution:
@@ -8151,6 +8305,29 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /prebuild-install/7.1.1:
+    resolution:
+      {
+        integrity: sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==,
+      }
+    engines: { node: ">=10" }
+    hasBin: true
+    dependencies:
+      detect-libc: 2.0.1
+      expand-template: 2.0.3
+      github-from-package: 0.0.0
+      minimist: 1.2.7
+      mkdirp-classic: 0.5.3
+      napi-build-utils: 1.0.2
+      node-abi: 3.30.0
+      pump: 3.0.0
+      rc: 1.2.8
+      simple-get: 4.0.1
+      tar-fs: 2.1.1
+      tunnel-agent: 0.6.0
+    dev: true
+    optional: true
+
   /prelude-ls/1.1.2:
     resolution:
       {
@@ -8258,7 +8435,6 @@ packages:
     dependencies:
       end-of-stream: 1.4.4
       once: 1.4.0
-    dev: false
 
   /pumpify/2.0.1:
     resolution:
@@ -8339,6 +8515,20 @@ packages:
       }
     engines: { node: ">= 0.6" }
     dev: true
+
+  /rc/1.2.8:
+    resolution:
+      {
+        integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==,
+      }
+    hasBin: true
+    dependencies:
+      deep-extend: 0.6.0
+      ini: 1.3.8
+      minimist: 1.2.7
+      strip-json-comments: 2.0.1
+    dev: true
+    optional: true
 
   /rc9/2.0.0:
     resolution:
@@ -8845,6 +9035,25 @@ packages:
       }
     dev: true
 
+  /sharp/0.31.3:
+    resolution:
+      {
+        integrity: sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==,
+      }
+    engines: { node: ">=14.15.0" }
+    requiresBuild: true
+    dependencies:
+      color: 4.2.3
+      detect-libc: 2.0.1
+      node-addon-api: 5.0.0
+      prebuild-install: 7.1.1
+      semver: 7.3.8
+      simple-get: 4.0.1
+      tar-fs: 2.1.1
+      tunnel-agent: 0.6.0
+    dev: true
+    optional: true
+
   /shebang-command/2.0.0:
     resolution:
       {
@@ -8870,6 +9079,26 @@ packages:
       }
     dev: true
 
+  /simple-concat/1.0.1:
+    resolution:
+      {
+        integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==,
+      }
+    dev: true
+    optional: true
+
+  /simple-get/4.0.1:
+    resolution:
+      {
+        integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==,
+      }
+    dependencies:
+      decompress-response: 6.0.0
+      once: 1.4.0
+      simple-concat: 1.0.1
+    dev: true
+    optional: true
+
   /simple-swizzle/0.2.2:
     resolution:
       {
@@ -8877,7 +9106,6 @@ packages:
       }
     dependencies:
       is-arrayish: 0.3.2
-    dev: false
 
   /slash/4.0.0:
     resolution:
@@ -9164,6 +9392,15 @@ packages:
       min-indent: 1.0.1
     dev: true
 
+  /strip-json-comments/2.0.1:
+    resolution:
+      {
+        integrity: sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==,
+      }
+    engines: { node: ">=0.10.0" }
+    dev: true
+    optional: true
+
   /strip-json-comments/3.1.1:
     resolution:
       {
@@ -9339,6 +9576,19 @@ packages:
       }
     engines: { node: ">=6" }
     dev: true
+
+  /tar-fs/2.1.1:
+    resolution:
+      {
+        integrity: sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==,
+      }
+    dependencies:
+      chownr: 1.1.4
+      mkdirp-classic: 0.5.3
+      pump: 3.0.0
+      tar-stream: 2.2.0
+    dev: true
+    optional: true
 
   /tar-stream/2.2.0:
     resolution:
@@ -9566,6 +9816,16 @@ packages:
       }
     engines: { node: ">=0.6.x" }
     dev: true
+
+  /tunnel-agent/0.6.0:
+    resolution:
+      {
+        integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==,
+      }
+    dependencies:
+      safe-buffer: 5.2.1
+    dev: true
+    optional: true
 
   /type-check/0.3.2:
     resolution:
@@ -10295,6 +10555,19 @@ packages:
         integrity: sha512-nquOebG4sngPmGPICTS5EnxqhKbCmz5Ox5hsszI2T6U5qdrJizBc+0ilYSEjTSzU0yZcmvppztXe/5Al5fUwdg==,
       }
     dev: false
+
+  /xss/1.0.14:
+    resolution:
+      {
+        integrity: sha512-og7TEJhXvn1a7kzZGQ7ETjdQVS2UfZyTlsEdDOqvQF7GoxNfY+0YLCzBy1kPdsDDx4QuNAonQPddpsn6Xl/7sw==,
+      }
+    engines: { node: ">= 0.10.0" }
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+      cssfilter: 0.0.10
+    dev: true
+    optional: true
 
   /xtend/4.0.2:
     resolution:
