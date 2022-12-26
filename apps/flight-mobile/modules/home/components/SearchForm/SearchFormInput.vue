@@ -32,6 +32,7 @@
 <template>
   <div
     class="mb-3 bg-neutral-tuna-25 py-2 px-3 rounded-t-xl border-b border-neutral-tuna-100 flex gap-4 items-center"
+    @click="emit('click')"
   >
     <nuxt-img class="w-6 h-6" :src="icon" alt="icon" />
     <div>

@@ -3,13 +3,15 @@
 </script>
 
 <template>
-  <header>
-    <h1>Cari Tiket Pesawat</h1>
-  </header>
+  <div class="min-h-screen flex flex-col">
+    <header>
+      <h1>Cari Tiket Pesawat</h1>
+    </header>
 
-  <main class="bg-[#ffc09a] mb-auto flex-grow block">
-    <SectionSearch />
-  </main>
+    <main class="bg-[#ffc09a] mb-auto flex-grow block">
+      <SectionSearch />
+    </main>
 
-  <footer>footer</footer>
+    <footer>footer</footer>
+  </div>
 </template>
