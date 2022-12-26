@@ -40,11 +40,11 @@
 </script>
 
 <template>
-  <section aria-labelledby="last-search-user" class="px-4 py-3">
-    <h1 id="last-search-user" class="mb-3 text-base font-bold">
+  <section aria-labelledby="last-search-user" class="py-3">
+    <h1 id="last-search-user" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
     </h1>
-    <div class="flex w-full space-x-[8px] overflow-x-auto">
+    <div class="flex w-full space-x-2 overflow-x-auto px-4">
       <template v-for="history in histories">
         <LastSearchItem :history="history" />
       </template>
