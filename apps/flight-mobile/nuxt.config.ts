@@ -1,28 +1,28 @@
-import { resolve } from "path";
+import { resolve } from 'path';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    "@nuxt/image-edge",
-    "@nuxtjs/tailwindcss",
-    ["@pinia/nuxt", { autoImports: ["defineStore"] }],
+    '@nuxt/image-edge',
+    '@nuxtjs/tailwindcss',
+    ['@pinia/nuxt', { autoImports: ['defineStore'] }],
   ],
   runtimeConfig: {
-    bannerApiKey: "",
+    bannerApiKey: '',
     public: {
-      authBaseUrl: "",
-      bannerApiBaseUrl: "",
-      apixBaseUrl: "",
+      authBaseUrl: '',
+      bannerApiBaseUrl: '',
+      apixBaseUrl: '',
     },
   },
   tailwindcss: {
-    cssPath: "@pegipegi/web-pegipegi-ui/style",
+    cssPath: '@pegipegi/web-pegipegi-ui/style',
   },
   typescript: {
     shim: false,
   },
   alias: {
-    "common-module": resolve(__dirname, "./modules/common"),
-    "home-module": resolve(__dirname, "./modules/home"),
+    'common-module': resolve(__dirname, './modules/common'),
+    'home-module': resolve(__dirname, './modules/home'),
   },
 });

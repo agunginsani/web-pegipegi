@@ -1,5 +1,5 @@
-const useAuthStore = defineStore("auth", () => {
-  const token = ref("");
+const useAuthStore = defineStore('auth', () => {
+  const token = ref('');
 
   function login(payload: string) {
     token.value = payload;
