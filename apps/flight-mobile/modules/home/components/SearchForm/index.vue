@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div class="p-3 bg-white rounded-2xl">
+  <div class="relative p-4 bg-white rounded-2xl z-1">
     <SearchFormInput
       id="origin"
       label="Asal"
@@ -24,6 +24,7 @@
       label="Pergi"
       :value="{ label: 'Jumat, 25 Jun 2022', value: '25-06-2022' }"
       icon="/icon-search-depart-date.svg"
+      toggleable
       @click="$router.push('/depart-date')"
     />
     <SearchFormInput
@@ -31,6 +32,12 @@
       label="Penumpang"
       :value="{ label: '1 Dewasa', value: '1' }"
       icon="/icon-search-passenger.svg"
+    />
+    <SearchFormInput
+      id="class"
+      label="Kelas"
+      :value="{ label: 'Ekonomi', value: 'EKO' }"
+      icon="/icon-search-class.svg"
     />
     <Button class="w-full mt-2">Cari Tiket Pesawat</Button>
   </div>

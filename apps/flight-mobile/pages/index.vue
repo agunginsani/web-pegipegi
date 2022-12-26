@@ -4,14 +4,16 @@
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <header>
-      <h1>Cari Tiket Pesawat</h1>
-    </header>
+    <div class="bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white">
+      <header class="bg-white">
+        <h1>Cari Tiket Pesawat</h1>
+      </header>
 
-    <main class="bg-[#ffc09a] mb-auto flex-grow block">
-      <SectionSearch />
-    </main>
+      <main>
+        <SectionSearch />
+      </main>
+    </div>
 
-    <footer>footer</footer>
+    <footer class="mt-auto">footer</footer>
   </div>
 </template>
