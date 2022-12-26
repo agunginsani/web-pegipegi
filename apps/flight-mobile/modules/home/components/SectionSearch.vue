@@ -46,6 +46,7 @@
 <template>
   <section aria-labelledby="search-form" class="p-3 pt-[200px]">
     <SearchForm>
+      <!-- TODO: drop v-for -->
       <SearchFormInput
         v-for="item in inputItems"
         :id="item.id"
