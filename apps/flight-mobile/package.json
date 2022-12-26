@@ -7,7 +7,6 @@
     "build-staging": "nuxt build --dotenv .env.staging",
     "dev-production": "nuxt dev --dotenv .env.production",
     "dev-staging": "nuxt dev --dotenv .env.staging",
-    "start": "nuxt preview --dotenv .env.staging",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
     "preview-staging": "nuxt preview --dotenv .env.staging"
