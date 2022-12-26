@@ -8,12 +8,14 @@ importers:
       husky: ^8.0.2
       lint-staged: ^13.0.4
       prettier: ^2.8.0
+      prettier-plugin-tailwindcss: ^0.2.1
     devDependencies:
       "@commitlint/cli": 17.3.0
       "@commitlint/config-conventional": 17.3.0
       husky: 8.0.2
       lint-staged: 13.0.4
       prettier: 2.8.0
+      prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.0
 
   apps/bus-mobile:
     specifiers:
@@ -8158,6 +8160,18 @@ packages:
       }
     engines: { node: ">= 0.8.0" }
     dev: false
+
+  /prettier-plugin-tailwindcss/0.2.1_prettier@2.8.0:
+    resolution:
+      {
+        integrity: sha512-aIO8IguumORyRsmT+E7JfJ3A9FEoyhqZR7Au7TBOege3VZkgMvHJMkufeYp4zjnDK2iq4ktkvGMNOQR9T8lisQ==,
+      }
+    engines: { node: ">=12.17.0" }
+    peerDependencies:
+      prettier: ">=2.2.0"
+    dependencies:
+      prettier: 2.8.0
+    dev: true
 
   /prettier/2.8.0:
     resolution:
