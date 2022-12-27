@@ -4,7 +4,6 @@ about: Template for defining component requirement
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 # PRD and Design

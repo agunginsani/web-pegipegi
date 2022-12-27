@@ -2,26 +2,26 @@ export default defineNuxtRouteMiddleware((to, from) => {
   type Transition = typeof to.meta.pageTransition;
 
   const leftTransition: Transition = {
-    enterActiveClass: "fixed left-0 right-0 top-0 transition-all duration-500",
-    leaveActiveClass: "fixed left-0 right-0 top-0 transition-all duration-500",
-    enterFromClass: "translate-x-full",
-    enterToClass: "translate-x-0",
+    enterActiveClass: 'fixed left-0 right-0 top-0 transition-all duration-500',
+    leaveActiveClass: 'fixed left-0 right-0 top-0 transition-all duration-500',
+    enterFromClass: 'translate-x-full',
+    enterToClass: 'translate-x-0',
     // leaveFromClass: "translate-x-[-100%] brightness-50",
-    leaveToClass: "translate-x-[-100%] brightness-50",
-    mode: "in-out",
+    leaveToClass: 'translate-x-[-100%] brightness-50',
+    mode: 'in-out',
   };
 
   const rightTransition: Transition = {
-    enterActiveClass: "fixed left-0 right-0 top-0 transition-all duration-500",
-    leaveActiveClass: "fixed left-0 right-0 top-0 transition-all duration-500",
-    enterFromClass: "translate-x-[-100%] brightness-50",
-    enterToClass: "translate-x-0",
-    leaveToClass: "translate-x-full",
-    mode: "in-out",
+    enterActiveClass: 'fixed left-0 right-0 top-0 transition-all duration-500',
+    leaveActiveClass: 'fixed left-0 right-0 top-0 transition-all duration-500',
+    enterFromClass: 'translate-x-[-100%] brightness-50',
+    enterToClass: 'translate-x-0',
+    leaveToClass: 'translate-x-full',
+    mode: 'in-out',
   };
 
   function getDepth(path: string) {
-    return path.split("/").filter((item) => item.length > 0).length;
+    return path.split('/').filter((item) => item.length > 0).length;
   }
 
   if (getDepth(to.path) > getDepth(from.path)) {

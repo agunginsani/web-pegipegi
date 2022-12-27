@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-  import { Button, Switch } from "@pegipegi/web-pegipegi-ui";
-  import SearchFormInput from "home-module/components/SearchFormInput.vue";
+  import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
+  import SearchFormInput from 'home-module/components/SearchFormInput.vue';
 </script>
 
 <template>
   <main aria-labelledby="search-form" class="relative p-4 pt-[180px]">
     <div
-      class="absolute h-[500px] inset-x-0 -top-16 w-full bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white"
+      class="absolute inset-x-0 -top-16 h-[500px] w-full bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white"
     />
 
     <NuxtImg
@@ -15,7 +15,7 @@
       alt="Naik Pesawat"
     />
 
-    <div class="relative p-3 bg-white rounded-2xl z-1">
+    <div class="z-1 relative rounded-2xl bg-white p-3">
       <SearchFormInput
         id="origin"
         label="Asal"
@@ -42,7 +42,7 @@
       >
         <label
           for="toggle-return"
-          class="text-xs whitespace-nowrap text-neutral-tuna-300"
+          class="text-neutral-tuna-300 whitespace-nowrap text-xs"
         >
           Pulang Pergi?
         </label>
@@ -63,7 +63,7 @@
         icon="/icon-search-class.svg"
       />
 
-      <Button class="w-full mt-2">Cari Tiket Pesawat</Button>
+      <Button class="mt-2 w-full">Cari Tiket Pesawat</Button>
     </div>
   </main>
 </template>
