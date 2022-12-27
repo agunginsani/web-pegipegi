@@ -20,7 +20,6 @@
   });
 
   const flightDate = computed(() => {
-    let dates = '';
     const departureDate = format(
       parse(props.history.departureDate, 'd-MM-yyyy', new Date()),
       'd MMM yyyy'
@@ -32,13 +31,9 @@
         )
       : '';
 
-    if (props.history.returnDate) {
-      dates = `${departureDate} - ${returnDate}`;
-    } else {
-      dates = `${departureDate}`;
-    }
-
-    return dates;
+    return props.history.returnDate
+      ? `${departureDate} - ${returnDate}`
+      : departureDate;
   });
 
   const totalPassenger = computed(() => {
