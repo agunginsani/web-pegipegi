@@ -45,7 +45,7 @@
 
 <template>
   <li
-    class="border-neutral-tuna-100 relative min-w-[280px] rounded-xl border px-4 py-3"
+    class="border-neutral-tuna-100 relative min-w-[280px] rounded-xl border bg-white px-4 py-3"
   >
     <div class="flex justify-between">
       <div
