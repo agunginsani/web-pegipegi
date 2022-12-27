@@ -47,6 +47,7 @@
         <div
           v-if="value.label"
           :id="id"
+          :aria-label="label"
           role="textbox"
           class="text-sm"
           readonly
