@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     bannerApiKey: "",
     public: {
+      homeUrl: "",
       authBaseUrl: "",
       bannerApiBaseUrl: "",
       apixBaseUrl: "",

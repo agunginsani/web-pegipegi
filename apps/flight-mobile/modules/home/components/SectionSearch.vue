@@ -4,14 +4,18 @@
 </script>
 
 <template>
-  <section aria-labelledby="search-form" class="relative p-4 pt-[200px]">
+  <main aria-labelledby="search-form" class="relative p-4 pt-[180px]">
+    <div
+      class="absolute h-[500px] inset-x-0 -top-16 w-full bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white"
+    />
+
     <NuxtImg
       src="/figure-search-hero.svg"
-      class="absolute left-0 top-0 w-full"
+      class="absolute left-0 top-[-48px] w-full"
       alt="Naik Pesawat"
     />
 
-    <div class="relative p-4 bg-white rounded-2xl z-1">
+    <div class="relative p-3 bg-white rounded-2xl z-1">
       <SearchFormInput
         id="origin"
         label="Asal"
@@ -61,5 +65,5 @@
 
       <Button class="w-full mt-2">Cari Tiket Pesawat</Button>
     </div>
-  </section>
+  </main>
 </template>

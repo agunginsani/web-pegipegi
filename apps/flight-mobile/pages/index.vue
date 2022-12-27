@@ -1,18 +1,12 @@
 <script lang="ts" setup>
   import SectionSearch from "home-module/components/SectionSearch.vue";
+  import Navbar from "home-module/components/Navbar.vue";
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
-    <div class="bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white">
-      <header class="bg-white">
-        <h1>Cari Tiket Pesawat</h1>
-      </header>
-
-      <main>
-        <SectionSearch />
-      </main>
-    </div>
+  <div id="body" class="h-screen overflow-y-auto flex flex-col bg-white">
+    <Navbar />
+    <SectionSearch />
 
     <footer class="mt-auto">footer</footer>
   </div>
