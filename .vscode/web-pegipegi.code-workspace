@@ -1,5 +1,6 @@
 {
   "settings": {
+    "editor.tabSize": 2,
     "editor.inlayHints.enabled": "offUnlessPressed",
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
