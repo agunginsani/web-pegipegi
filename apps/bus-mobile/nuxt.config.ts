@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ['@nuxtjs/tailwindcss'],
   tailwindcss: {
-    cssPath: "@pegipegi/web-pegipegi-ui/style",
+    cssPath: '@pegipegi/web-pegipegi-ui/style',
   },
   typescript: {
     shim: false,
