@@ -7,13 +7,10 @@
     icon: string;
     label: string;
     placeholder?: string;
-    toggleable?: boolean;
-    toggleValue?: boolean;
   };
 
   type InputEmits = {
     (e: "click"): void;
-    (e: "toggle", value: boolean): void;
   };
 
   withDefaults(defineProps<InputProps>(), {
@@ -23,7 +20,7 @@
     label: "",
   });
 
-  const emit = defineEmits<InputEmits>();
+  defineEmits<InputEmits>();
 </script>
 
 <template>
@@ -32,7 +29,7 @@
   >
     <NuxtImg class="w-6 h-6 mr-4" :src="icon" alt="icon" />
     <div class="flex flex-grow">
-      <button class="block flex-grow text-left" @click="emit('click')">
+      <button class="block flex-grow text-left" @click="$emit('click')">
         <label class="block font-bold text-neutral-tuna-300 text-sm" :for="id">
           {{ label }}
         </label>
@@ -46,13 +43,8 @@
         />
       </button>
 
-      <div v-if="toggleable" class="flex flex-col items-end ml-auto">
-        <label
-          :for="`toggle-${id}`"
-          class="text-xs whitespace-nowrap text-neutral-tuna-300"
-          >Pulang Pergi?</label
-        >
-        <Switch :id="`toggle-${id}`" />
+      <div v-if="$slots.default" class="flex flex-col items-end ml-auto">
+        <slot />
       </div>
     </div>
   </div>
