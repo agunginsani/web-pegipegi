@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import { PropType } from 'vue';
   import { format, parse } from 'date-fns';
 
   type History = {
@@ -14,14 +13,7 @@
     seatClass: string;
   };
 
-  const props = defineProps({
-    history: {
-      type: Object as PropType<History>,
-      default() {
-        return {};
-      },
-    },
-  });
+  const props = defineProps<{ history: History }>();
 
   const flightType = computed(() => {
     return props.history.returnDate === null ? 'oneway' : 'roundtrip';
@@ -57,7 +49,7 @@
 </script>
 
 <template>
-  <div
+  <li
     class="border-neutral-tuna-100 relative min-w-[280px] rounded-xl border px-4 py-3"
   >
     <div class="flex justify-between">
@@ -79,9 +71,9 @@
         <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
       </button>
     </div>
-    <div class="text-neutral-tuna-300 text-sm leading-5">
+    <span class="text-neutral-tuna-300 text-sm leading-5">
       <p class="truncate">{{ flightDate }}</p>
       <p class="truncate">{{ totalPassenger }} | {{ history.seatClass }}</p>
-    </div>
-  </div>
+    </span>
+  </li>
 </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import LastSearchItem from 'home-module/components/LastSearch/LastSearchItem.vue';
+  import LastSearchItem from 'home-module/components/LastSearchItem.vue';
 
   // TODO: get from cookies
   const histories = ref([
@@ -37,6 +37,8 @@
       seatClass: 'ECONOMY',
     },
   ]);
+
+  // TODO: handle max 5 history and remove if date expired
 </script>
 
 <template>
@@ -44,10 +46,8 @@
     <h1 id="last-search-user" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
     </h1>
-    <div class="flex w-full space-x-2 overflow-x-auto px-4">
-      <template v-for="history in histories">
-        <LastSearchItem :history="history" />
-      </template>
-    </div>
+    <ul class="flex w-full space-x-2 overflow-x-auto px-4">
+      <LastSearchItem v-for="history in histories" :history="history" />
+    </ul>
   </section>
 </template>
