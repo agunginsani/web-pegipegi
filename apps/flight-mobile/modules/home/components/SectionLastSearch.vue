@@ -37,8 +37,6 @@
       seatClass: 'ECONOMY',
     },
   ]);
-
-  // TODO: handle max 5 history and remove if date expired
 </script>
 
 <template>
