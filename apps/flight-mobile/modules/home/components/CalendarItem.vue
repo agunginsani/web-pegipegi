@@ -17,7 +17,7 @@
         @click="$emit('pick', new Date())"
       >
         <p class="mb-1 text-sm">{{ date }}</p>
-        <p class="text-neutral-tuna-300 text-[10px]">315</p>
+        <p class="text-neutral-tuna-300 text-xs">315</p>
       </button>
     </div>
   </li>
