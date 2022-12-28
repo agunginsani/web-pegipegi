@@ -1,17 +1,6 @@
 <script lang="ts" setup>
   import { format, parse } from 'date-fns';
-
-  type History = {
-    from: { airport: string; city: string };
-    to: { airport: string; city: string };
-    departureDate: string;
-    returnDate: string | null;
-    paxAdult: number;
-    paxChild: number;
-    paxInfant: number;
-    isNoTransit: boolean;
-    seatClass: string;
-  };
+  import { History } from 'home-module/types/last-search-types';
 
   const props = defineProps<{ history: History }>();
 
