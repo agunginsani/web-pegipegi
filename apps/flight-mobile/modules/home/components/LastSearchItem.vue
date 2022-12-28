@@ -1,8 +1,28 @@
 <script lang="ts" setup>
   import { format, parse } from 'date-fns';
-  import { History } from 'home-module/types/last-search-types';
 
-  const props = defineProps<{ history: History }>();
+  export type History = {
+    from: { airport: string; city: string };
+    to: { airport: string; city: string };
+    departureDate: string;
+    returnDate: string | null;
+    paxAdult: number;
+    paxChild: number;
+    paxInfant: number;
+    isNoTransit: boolean;
+    seatClass: string;
+  };
+
+  type DeleteEmits = {
+    (e: 'delete', id: number): void;
+  };
+
+  defineEmits<DeleteEmits>();
+
+  const props = defineProps<{
+    history: History;
+    index: number;
+  }>();
 
   const flightType = computed(() => {
     return props.history.returnDate === null ? 'oneway' : 'roundtrip';
@@ -51,6 +71,7 @@
       </div>
       <button
         class="absolute right-1 top-1 flex h-9 w-9 items-center justify-center"
+        @click="$emit('delete', index)"
       >
         <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
       </button>

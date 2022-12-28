@@ -1,50 +1,17 @@
 <script lang="ts" setup>
-  import LastSearchItem from 'home-module/components/LastSearchItem.vue';
-  import { History } from 'home-module/types/last-search-types';
-  // import Cookies from 'universal-cookie';
+  import LastSearchItem, {
+    History,
+  } from 'home-module/components/LastSearchItem.vue';
 
-  // TODO: get from cookies
-  // const cookies = new Cookies();
-  const histories: any = useCookie('flight-search');
+  const histories = useCookie<Array<History>>('flight-search');
   histories.value = histories.value || [];
 
-  // console.log(cookies.get('flight-search'));
-  console.log(histories.value);
-  // const histories = ref([
-  //   {
-  //     from: { airport: 'CGK', city: 'Jakarta' },
-  //     to: { airport: 'DPS', city: 'Bali / Denpasar' },
-  //     departureDate: '25-12-2022',
-  //     returnDate: null,
-  //     paxAdult: 1,
-  //     paxChild: 0,
-  //     paxInfant: 0,
-  //     isNoTransit: false,
-  //     seatClass: 'ECONOMY',
-  //   },
-  //   {
-  //     from: { airport: 'DPS', city: 'Bali / Denpasar' },
-  //     to: { airport: 'CGK', city: 'Jakarta' },
-  //     departureDate: '25-12-2022',
-  //     returnDate: '27-12-2022',
-  //     paxAdult: 1,
-  //     paxChild: 0,
-  //     paxInfant: 0,
-  //     isNoTransit: false,
-  //     seatClass: 'ECONOMY',
-  //   },
-  //   {
-  //     from: { airport: 'DPS', city: 'Bali / Denpasar' },
-  //     to: { airport: 'CGK', city: 'Jakarta' },
-  //     departureDate: '25-12-2022',
-  //     returnDate: null,
-  //     paxAdult: 1,
-  //     paxChild: 0,
-  //     paxInfant: 0,
-  //     isNoTransit: false,
-  //     seatClass: 'ECONOMY',
-  //   },
-  // ]);
+  function removeHistory(id: number): void {
+    if (histories.value && histories.value !== null) {
+      const newHistories = histories.value.filter((_, idx) => idx !== id);
+      histories.value = [...newHistories];
+    }
+  }
 </script>
 
 <template>
@@ -53,7 +20,12 @@
       Pencarian Terakhir
     </h1>
     <ul class="flex w-full space-x-2 overflow-x-auto px-4">
-      <LastSearchItem v-for="history in histories" :history="history" />
+      <LastSearchItem
+        v-for="(history, index) in histories"
+        :history="history"
+        :index="index"
+        @delete="removeHistory($event)"
+      />
     </ul>
   </section>
 </template>
