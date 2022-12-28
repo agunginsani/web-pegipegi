@@ -1,6 +1,9 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
   import SearchFormInput from 'home-module/components/SearchFormInput.vue';
+
+  const returnModel = ref([]);
+  const isReturn = computed(() => returnModel.value.length > 0);
 </script>
 
 <template>
@@ -38,7 +41,7 @@
         :value="{ label: 'Jumat, 25 Jun 2022', value: '25-06-2022' }"
         icon="/icon-search-depart-date.svg"
         toggleable
-        @click="$router.push('/depart-date')"
+        @click="$router.push('/departure-date')"
       >
         <label
           for="toggle-return"
@@ -46,8 +49,17 @@
         >
           Pulang Pergi?
         </label>
-        <Switch id="toggle-return" />
+        <Switch v-model="returnModel" value="return" id="toggle-return" />
       </SearchFormInput>
+
+      <SearchFormInput
+        v-if="isReturn"
+        id="returnDate"
+        label="Pulang"
+        :value="{ label: 'Jumat, 25 Jun 2022', value: '25-06-2022' }"
+        icon="/icon-search-return-date.svg"
+        @click="$router.push('/return-date')"
+      />
 
       <SearchFormInput
         id="passenger"
@@ -63,7 +75,7 @@
         icon="/icon-search-class.svg"
       />
 
-      <Button class="mt-2 w-full">Cari Tiket Pesawat</Button>
+      <Button block class="mt-2">Cari Tiket Pesawat</Button>
     </div>
   </main>
 </template>

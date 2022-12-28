@@ -20,10 +20,10 @@ importers:
   apps/bus-mobile:
     specifiers:
       '@nuxtjs/tailwindcss': ^6.0.1
-      '@pegipegi/web-pegipegi-ui': ^0.0.3
+      '@pegipegi/web-pegipegi-ui': latest
       nuxt: 3.0.0
     dependencies:
-      '@pegipegi/web-pegipegi-ui': 0.0.3
+      '@pegipegi/web-pegipegi-ui': 0.0.7
     devDependencies:
       '@nuxtjs/tailwindcss': 6.1.3
       nuxt: 3.0.0
@@ -33,7 +33,7 @@ importers:
       '@google-cloud/logging-winston': ^5.2.3
       '@nuxt/image-edge': 1.0.0-27840416.dc1ed65
       '@nuxtjs/tailwindcss': ^6.0.1
-      '@pegipegi/web-pegipegi-ui': ^0.0.3
+      '@pegipegi/web-pegipegi-ui': latest
       '@pinia/nuxt': ^0.4.3
       '@vueuse/core': ^9.8.2
       '@vueuse/nuxt': ^9.8.2
@@ -45,7 +45,7 @@ importers:
       zod: ^3.19.1
     dependencies:
       '@google-cloud/logging-winston': 5.2.3_winston@3.8.2
-      '@pegipegi/web-pegipegi-ui': 0.0.3
+      '@pegipegi/web-pegipegi-ui': 0.0.7
       '@pinia/nuxt': 0.4.5
       date-fns: 2.29.3
       dotenv: 16.0.3
@@ -1350,11 +1350,11 @@ packages:
       - webpack
     dev: true
 
-  /@pegipegi/web-pegipegi-ui/0.0.3:
+  /@pegipegi/web-pegipegi-ui/0.0.7:
     resolution:
       {
-        integrity: sha512-XG0ygbYSRBLs7EwZTt2tySCJgiUIiBFAgK2nI1Mku8Vv+4j4Anu1vBZgJTIqPAUgfYWkhv0P0z/r3S0+dwuC6Q==,
-        tarball: download/@pegipegi/web-pegipegi-ui/0.0.3/1ccdb8b586e8d601247bf38abd9f6d0be1373afc,
+        integrity: sha512-vzxFbi3k1Pkt5c7eLmxRiqmkMR39QpKT9Qa++aeMdTYnxn6cE3UXh0rKnpgWk1y8Xk2IOqVlvdef8i4oeevZnA==,
+        tarball: download/@pegipegi/web-pegipegi-ui/0.0.7/af4c40acdedb6ad38ad6bf312a62ecc22fd53315,
       }
     peerDependencies:
       tailwindcss: ^3.1.8

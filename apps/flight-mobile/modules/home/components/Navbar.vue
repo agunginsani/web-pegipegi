@@ -5,9 +5,8 @@
   const body = ref<Element | null>(null);
   const isTop = ref(true);
 
-  // TODO: set evet type
-  function onScroll(event: any) {
-    if (event.target.scrollTop <= 0 && !isTop.value) {
+  function onScroll(event: Event) {
+    if ((event.target as Element).scrollTop <= 0 && !isTop.value) {
       isTop.value = true;
     } else if (isTop.value) {
       isTop.value = false;

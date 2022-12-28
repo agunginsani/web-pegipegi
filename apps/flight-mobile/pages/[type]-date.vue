@@ -1,3 +1,15 @@
+<script lang="ts" setup>
+  import Calendar from 'home-module/components/Calendar.vue';
+
+  // TODO: validate route params
+  definePageMeta({
+    middleware(to, from) {
+      if (['/departure-date', '/return-date'].includes(from.path))
+        to.meta.pageTransition = false;
+    },
+  });
+</script>
+
 <template>
-  <div class="min-h-full">ini date picker - {{ $route.params.type }}</div>
+  <Calendar :is-return="$route.params.type === 'return'" />
 </template>

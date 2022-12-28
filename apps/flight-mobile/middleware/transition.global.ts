@@ -6,7 +6,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     leaveActiveClass: 'fixed left-0 right-0 top-0 transition-all duration-500',
     enterFromClass: 'translate-x-full',
     enterToClass: 'translate-x-0',
-    // leaveFromClass: "translate-x-[-100%] brightness-50",
     leaveToClass: 'translate-x-[-100%] brightness-50',
     mode: 'in-out',
   };
@@ -21,10 +20,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
   };
 
   function getDepth(path: string) {
+    // TODO: properly compare from route stack
     return path.split('/').filter((item) => item.length > 0).length;
   }
 
-  if (getDepth(to.path) > getDepth(from.path)) {
+  if (getDepth(to.path) >= getDepth(from.path)) {
     to.meta.pageTransition = leftTransition;
     from.meta.pageTransition = leftTransition;
   } else {
