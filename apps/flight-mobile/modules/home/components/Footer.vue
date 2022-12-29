@@ -3,7 +3,7 @@
     baseUrl: string;
   };
 
-  const currLocation = ref('');
+  const currLocation = ref<string>('');
   const props = withDefaults(defineProps<urlProps>(), {
     baseUrl: 'https://www.pegipegi.com',
   });
