@@ -14,7 +14,7 @@
 <template>
   <header
     class="sticky left-0 right-0 top-0 z-10 flex h-12 items-center transition-all"
-    :class="isTop ? 'bg-transparent' : 'bg-white'"
+    :class="isTop ? 'bg-transparent' : 'shadow-floating bg-white'"
   >
     <a
       :href="backUrl"
