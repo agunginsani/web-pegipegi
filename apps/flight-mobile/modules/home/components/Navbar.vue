@@ -1,25 +1,13 @@
 <script lang="ts" setup>
-  const config = useRuntimeConfig();
-  const url = config.public.homeUrl || 'https://pegipegi.com';
+  import { useScroll } from '@vueuse/core';
 
-  const body = ref<Element | null>(null);
-  const isTop = ref(true);
+  const backUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
 
-  function onScroll(event: Event) {
-    if ((event.target as Element).scrollTop <= 0 && !isTop.value) {
-      isTop.value = true;
-    } else if (isTop.value) {
-      isTop.value = false;
-    }
-  }
-
+  const body = ref<HTMLElement | null>(null);
+  const { y: scrollPosition } = useScroll(body);
+  const isTop = computed(() => scrollPosition.value === 0);
   onMounted(() => {
     body.value = document.querySelector('#body');
-    body.value?.addEventListener('scroll', onScroll);
-  });
-
-  onBeforeUnmount(() => {
-    body.value?.removeEventListener('scroll', onScroll);
   });
 </script>
 
@@ -29,7 +17,7 @@
     :class="isTop ? 'bg-transparent' : 'bg-white'"
   >
     <a
-      :href="url"
+      :href="backUrl"
       class="flex h-12 w-12 items-center justify-center"
       aria-label="Back to Pegipegi.com homepage"
     >
