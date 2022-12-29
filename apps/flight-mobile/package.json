@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@google-cloud/logging-winston": "^5.2.3",
-    "@pegipegi/web-pegipegi-ui": "^0.0.3",
+    "@pegipegi/web-pegipegi-ui": "latest",
     "@pinia/nuxt": "^0.4.3",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",

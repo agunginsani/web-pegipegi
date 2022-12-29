@@ -39,6 +39,7 @@ export default defineNuxtConfig({
       meta: [
         { 'http-equiv': 'content-type', content: 'text/html; charset=utf-8' },
         { hid: 'robots', name: 'robots', content: 'noindex, follow' },
+        { name: 'theme-color', content: '#ffdc8e' },
         {
           name: 'viewport',
           content: 'width=device-width, initial-scale=1.0',

@@ -20,10 +20,10 @@ importers:
   apps/bus-mobile:
     specifiers:
       '@nuxtjs/tailwindcss': ^6.0.1
-      '@pegipegi/web-pegipegi-ui': ^0.0.3
+      '@pegipegi/web-pegipegi-ui': latest
       nuxt: 3.0.0
     dependencies:
-      '@pegipegi/web-pegipegi-ui': 0.0.3
+      '@pegipegi/web-pegipegi-ui': 0.0.8
     devDependencies:
       '@nuxtjs/tailwindcss': 6.1.3
       nuxt: 3.0.0
@@ -33,7 +33,7 @@ importers:
       '@google-cloud/logging-winston': ^5.2.3
       '@nuxt/image-edge': 1.0.0-27840416.dc1ed65
       '@nuxtjs/tailwindcss': ^6.0.1
-      '@pegipegi/web-pegipegi-ui': ^0.0.3
+      '@pegipegi/web-pegipegi-ui': latest
       '@pinia/nuxt': ^0.4.3
       '@vueuse/core': ^9.8.2
       '@vueuse/nuxt': ^9.8.2
@@ -45,7 +45,7 @@ importers:
       zod: ^3.19.1
     dependencies:
       '@google-cloud/logging-winston': 5.2.3_winston@3.8.2
-      '@pegipegi/web-pegipegi-ui': 0.0.3
+      '@pegipegi/web-pegipegi-ui': 0.0.8_@vueuse+core@9.9.0
       '@pinia/nuxt': 0.4.5
       date-fns: 2.29.3
       dotenv: 16.0.3
@@ -1350,13 +1350,14 @@ packages:
       - webpack
     dev: true
 
-  /@pegipegi/web-pegipegi-ui/0.0.3:
+  /@pegipegi/web-pegipegi-ui/0.0.8:
     resolution:
       {
-        integrity: sha512-XG0ygbYSRBLs7EwZTt2tySCJgiUIiBFAgK2nI1Mku8Vv+4j4Anu1vBZgJTIqPAUgfYWkhv0P0z/r3S0+dwuC6Q==,
-        tarball: download/@pegipegi/web-pegipegi-ui/0.0.3/1ccdb8b586e8d601247bf38abd9f6d0be1373afc,
+        integrity: sha512-j99BDGQ7amW6DH+YqQbIl+/TdVchSLZLk+1hKSnzb83qb6qSmjBW6YxpS8mUdxlvIHZKtgJU2JENQI3N8BaWnA==,
+        tarball: download/@pegipegi/web-pegipegi-ui/0.0.8/cbecb72c2d5cf0b70dba11b8612ae9702b9c1fe1,
       }
     peerDependencies:
+      '@vueuse/core': ^9.7.0
       tailwindcss: ^3.1.8
       vue: ^3.2.37
     peerDependenciesMeta:
@@ -1364,6 +1365,25 @@ packages:
         optional: true
       vue:
         optional: true
+    dev: false
+
+  /@pegipegi/web-pegipegi-ui/0.0.8_@vueuse+core@9.9.0:
+    resolution:
+      {
+        integrity: sha512-j99BDGQ7amW6DH+YqQbIl+/TdVchSLZLk+1hKSnzb83qb6qSmjBW6YxpS8mUdxlvIHZKtgJU2JENQI3N8BaWnA==,
+        tarball: download/@pegipegi/web-pegipegi-ui/0.0.8/cbecb72c2d5cf0b70dba11b8612ae9702b9c1fe1,
+      }
+    peerDependencies:
+      '@vueuse/core': ^9.7.0
+      tailwindcss: ^3.1.8
+      vue: ^3.2.37
+    peerDependenciesMeta:
+      tailwindcss:
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      '@vueuse/core': 9.9.0
     dev: false
 
   /@pinia/nuxt/0.4.5:
@@ -1759,7 +1779,6 @@ packages:
       {
         integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==,
       }
-    dev: true
 
   /@tyriar/fibonacci-heap/2.0.9:
     resolution:
@@ -2036,7 +2055,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@vueuse/head/1.0.18_vue@3.2.45:
     resolution:
@@ -2061,7 +2079,6 @@ packages:
       {
         integrity: sha512-pgxsUJv/d7IjKpLeB6TthggEsaBwM3ffc5jPrr5TmxAm/fup0mGR5VTzrdA/PSx85tpb+CIvP92D+55qBNc8ag==,
       }
-    dev: true
 
   /@vueuse/nuxt/9.9.0_nuxt@3.0.0:
     resolution:
@@ -2094,7 +2111,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@zhead/schema/1.0.4:
     resolution:
