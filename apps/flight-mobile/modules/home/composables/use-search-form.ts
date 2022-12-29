@@ -11,7 +11,7 @@ export type SearchFormValue = {
   label: string;
 };
 
-type SearchForm = {
+export type SearchForm = {
   origin: SearchFormValue;
   destination: SearchFormValue;
   departureDate: SearchFormValue;
@@ -20,7 +20,7 @@ type SearchForm = {
   class: SearchFormValue;
 };
 
-type SearchFormKey =
+export type SearchFormKey =
   | 'origin'
   | 'destination'
   | 'departureDate'
@@ -39,8 +39,8 @@ export default defineStore('searchForm', () => {
       value: 'DPS',
     },
     departureDate: {
-      label: format(new Date(), 'EEEE, dd MMM yyyy'),
-      value: startOfDay(new Date()).toString(),
+      label: '',
+      value: '',
     },
     returnDate: undefined,
     passenger: {

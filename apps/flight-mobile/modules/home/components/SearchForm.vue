@@ -1,28 +1,54 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
   import SearchFormInput from 'home-module/components/SearchFormInput.vue';
-  import useSearchForm from 'home-module/composables/use-search-form';
+  import useSearchForm, {
+    SearchForm,
+    SearchFormKey,
+  } from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
   const { searchForm, setSearchForm } = useSearchForm();
+
   const returnModel = ref([]);
+
   const isReturn = computed(() => returnModel.value.length > 0);
 
-  watch(
-    () => isReturn.value,
-    () => {
-      const tommorow = date.add(
-        new Date(String(searchForm.departureDate.value)),
-        { days: 1 }
-      );
+  function setReturn() {
+    const today = new Date(String(searchForm.departureDate.value));
+    const tommorow = date.add(today, { days: 1 });
+    if (isReturn.value) {
       setSearchForm({
         returnDate: {
           label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
           value: tommorow.toString(),
         },
       });
+    } else {
+      setSearchForm({ returnDate: undefined });
     }
+  }
+
+  watch(
+    () => isReturn.value,
+    () => setReturn()
   );
+
+  function setDefault() {
+    if (!searchForm.departureDate.value) {
+      /* date needs to be initiated from client side
+         due to server & client tz difference possibility */
+      setSearchForm({
+        departureDate: {
+          label: date.format(new Date(), 'EEEE, dd MMM yyyy'),
+          value: date.startOfDay(new Date()).toString(),
+        },
+      });
+    }
+  }
+
+  onMounted(() => {
+    setDefault();
+  });
 
   function onSearch() {
     console.log('search', JSON.stringify(searchForm));
@@ -35,6 +61,7 @@
       id="origin"
       label="Asal"
       :value="searchForm.origin"
+      placeholder="Pilih Keberangkatan"
       icon="/icon-search-origin.svg"
       @click="$router.push('/origin-location')"
     />
@@ -43,6 +70,7 @@
       id="destination"
       label="Tujuan"
       :value="searchForm.destination"
+      placeholder="Pilih Tujuan"
       icon="/icon-search-destination.svg"
       @click="$router.push('/destination-location')"
     />
@@ -51,17 +79,20 @@
       id="departureDate"
       label="Pergi"
       :value="searchForm.departureDate"
+      placeholder="Pilih Tanggal"
       icon="/icon-search-departure-date.svg"
       toggleable
       @click="$router.push('/departure-date')"
     >
-      <label
-        for="toggle-return"
-        class="text-neutral-tuna-300 whitespace-nowrap text-xs"
-      >
-        Pulang Pergi?
-      </label>
-      <Switch v-model="returnModel" value="return" id="toggle-return" />
+      <template v-if="searchForm.departureDate.value">
+        <label
+          for="toggle-return"
+          class="text-neutral-tuna-300 whitespace-nowrap text-xs"
+        >
+          Pulang Pergi?
+        </label>
+        <Switch v-model="returnModel" value="return" id="toggle-return" />
+      </template>
     </SearchFormInput>
 
     <SearchFormInput
@@ -69,6 +100,7 @@
       id="returnDate"
       label="Pulang"
       :value="searchForm.returnDate"
+      placeholder="Pilih Tanggal"
       icon="/icon-search-return-date.svg"
       @click="$router.push('/return-date')"
     />
@@ -77,6 +109,7 @@
       id="passenger"
       label="Penumpang"
       :value="searchForm.passenger"
+      placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
     />
 
@@ -84,6 +117,7 @@
       id="class"
       label="Kelas"
       :value="searchForm.class"
+      placeholder="Pilih Kelas"
       icon="/icon-search-class.svg"
     />
 
