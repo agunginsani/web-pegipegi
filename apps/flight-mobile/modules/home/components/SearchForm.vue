@@ -1,15 +1,12 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
   import SearchFormInput from 'home-module/components/SearchFormInput.vue';
-  import useSearchForm, {
-    SearchForm,
-    SearchFormKey,
-  } from 'home-module/composables/use-search-form';
+  import useSearchForm from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
   const { searchForm, setSearchForm } = useSearchForm();
 
-  const returnModel = ref([]);
+  const returnModel = ref(searchForm.returnDate ? ['return'] : []);
 
   const isReturn = computed(() => returnModel.value.length > 0);
 

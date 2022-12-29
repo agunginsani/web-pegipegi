@@ -9,7 +9,7 @@ export type SearchFormValue = {
   label: string;
 };
 
-export type SearchForm = {
+type SearchForm = {
   origin: SearchFormValue;
   destination: SearchFormValue;
   departureDate: SearchFormValue;
@@ -18,7 +18,7 @@ export type SearchForm = {
   class: SearchFormValue;
 };
 
-export type SearchFormKey =
+type SearchFormKey =
   | 'origin'
   | 'destination'
   | 'departureDate'

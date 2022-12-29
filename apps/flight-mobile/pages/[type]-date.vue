@@ -1,30 +1,102 @@
 <script lang="ts" setup>
+  import date from 'common-module/utils/date';
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
+  import useSearchForm from 'home-module/composables/use-search-form';
 
-  // TODO: validate route params
   definePageMeta({
     middleware(to, from) {
+      // TODO: find a more elegant way to reintroduce composables inside middleware
+      const { searchForm } = useSearchForm();
+      if (
+        !['/departure-date', '/return-date'].includes(to.path) ||
+        !searchForm.departureDate.value
+      )
+        return '/';
       if (['/departure-date', '/return-date'].includes(from.path))
         to.meta.pageTransition = false;
     },
   });
 
-  const router = useRouter();
+  const { searchForm, setSearchForm } = useSearchForm();
   const route = useRoute();
-  const isReturn = computed(() => route.params.type === 'return');
+  const router = useRouter();
+
+  const tempValue = {
+    departureDate: searchForm.departureDate,
+    returnDate: searchForm.returnDate,
+  };
+
   function onBack() {
-    // TODO: check history stack first
+    setSearchForm(tempValue);
+    router.go(-1);
+  }
+
+  function onSave() {
     router.go(-1);
   }
 
   function onClearReturn() {
-    // TODO; integration
-    router.replace('/departure-date');
+    setSearchForm({
+      returnDate: undefined,
+    });
   }
 
+  const startDate = computed(() => date.startOfMonth(new Date()));
+  const endDate = computed(() =>
+    date.endOfMonth(date.add(startDate.value, { months: 12 }))
+  );
+  const monthDifference = computed(() =>
+    date.differenceInMonths(endDate.value, startDate.value)
+  );
+
+  // TODO: simplify
+  const renderedMonths = computed(() => {
+    const months = [];
+    let pointer = new Date(startDate.value);
+
+    for (let i = 0; i <= monthDifference.value; i++) {
+      months.push(pointer);
+      pointer = date.add(pointer, { months: 1 });
+    }
+
+    return months;
+  });
+
+  function parseDate(input: any) {
+    return new Date(String(input));
+  }
+
+  const modelValue = computed<[Date, Date | undefined]>(() => [
+    new Date(String(searchForm.departureDate.value)),
+    searchForm.returnDate ? parseDate(searchForm.returnDate?.value) : undefined,
+  ]);
+
+  const departureDateText = computed(() => {
+    return date.format(parseDate(searchForm.departureDate.value), 'd MMM yyyy');
+  });
+
+  const returnDateText = computed(() => {
+    if (modelValue.value[1])
+      return date.format(
+        parseDate(searchForm.departureDate.value),
+        'd MMM yyyy'
+      );
+    return 'Pilih Tanggal';
+  });
+
   function onPick(event: Date) {
-    console.log(event);
+    // TODO: handle picking depart after return & return before depart
+    const newValue = {
+      label: date.format(event, 'EEEE, dd MMM yyyy'),
+      value: event.toString(),
+    };
+
+    if (route.params.type === 'return') {
+      setSearchForm({ returnDate: newValue });
+    } else {
+      setSearchForm({ departureDate: newValue });
+    }
   }
 </script>
 
@@ -44,7 +116,7 @@
             <NuxtImg
               class="mx-1 inline-block h-4 w-4"
               :src="
-                isReturn
+                searchForm.returnDate
                   ? '/icon-arrow-roundtrip.svg'
                   : '/icon-arrow-oneway.svg'
               "
@@ -73,11 +145,18 @@
         </li>
       </ul>
     </header>
-
     <main>
       <ul>
         <!-- TODO: scroll to selected date on mounted -->
-        <CalendarItem v-for="i in 6" @pick="onPick" />
+        <CalendarItem
+          v-for="month in renderedMonths"
+          :date="month"
+          :modelValue="modelValue"
+          @pick="onPick"
+        >
+          <!-- TODO: integarte cheapest price -->
+          <p class="text-neutral-tuna-300 text-xs">315</p>
+        </CalendarItem>
       </ul>
     </main>
 
@@ -97,22 +176,23 @@
         <div class="mb-2 flex justify-between">
           <div>
             <p class="text-neutral-tuna-300 text-sm">Pergi</p>
-            <NuxtLink class="font-bold" to="/departure-date" replace
-              >9 Jun 2022</NuxtLink
-            >
-          </div>
-
-          <div class="text-right" v-if="!isReturn">
-            <p class="text-neutral-tuna-300 text-sm">Untuk lebih murah</p>
             <NuxtLink
-              class="text-orange-inter-600 font-bold"
-              to="/return-date"
+              class="font-bold"
+              :class="{
+                'text-orange-inter-600':
+                  !!searchForm.returnDate && $route.params.type === 'departure',
+              }"
+              to="/departure-date"
               replace
-              >Pilih Pulang Juga</NuxtLink
             >
+              {{ departureDateText }}
+            </NuxtLink>
           </div>
 
-          <div class="text-right" v-else>
+          <div
+            class="text-right"
+            v-if="!!searchForm.returnDate || $route.params.type === 'return'"
+          >
             <p class="text-neutral-tuna-300 text-sm">
               <span>Pulang</span>
               <button class="ml-1" @click="onClearReturn">
@@ -123,11 +203,32 @@
                 />
               </button>
             </p>
-            <p class="font-bold">Pilih Tanggal</p>
+            <NuxtLink
+              class="font-bold"
+              :class="{
+                'text-orange-inter-600':
+                  !!searchForm.returnDate && $route.params.type === 'return',
+              }"
+              to="/return-date"
+              replace
+            >
+              {{ returnDateText }}
+            </NuxtLink>
+          </div>
+
+          <div class="text-right" v-else>
+            <p class="text-neutral-tuna-300 text-sm">Untuk lebih murah</p>
+            <NuxtLink
+              class="text-orange-inter-600 font-bold"
+              to="/return-date"
+              replace
+            >
+              Pilih Pulang Juga
+            </NuxtLink>
           </div>
         </div>
 
-        <Button block @click="onBack">Simpan</Button>
+        <Button block @click="onSave">Simpan</Button>
       </div>
     </footer>
   </div>
