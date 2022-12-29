@@ -1,33 +1,23 @@
 <script lang="ts" setup>
-  type urlProps = {
-    baseUrl: string;
-  };
-
   const currLocation = ref<string>('');
-  const props = withDefaults(defineProps<urlProps>(), {
-    baseUrl: 'https://www.pegipegi.com',
-  });
+  const baseUrl = useRuntimeConfig().public.homeUrl;
 
-  const footerMenus = ref([
+  const footerMenus = computed(() => [
     {
       title: 'FAQ',
-      link: computed(
-        () => `${props.baseUrl}/help?referrer=${currLocation.value}`
-      ),
+      link: `${baseUrl}/help?referrer=${currLocation.value}`,
     },
     {
       title: 'Tentang Kami',
-      link: `${props.baseUrl}/about-us`,
+      link: `${baseUrl}/about-us`,
     },
     {
       title: 'Contact Us',
-      link: computed(
-        () => `${props.baseUrl}/help?referrer=${currLocation.value}`
-      ),
+      link: `${baseUrl}/help?referrer=${currLocation.value}`,
     },
     {
       title: 'Karir',
-      link: `${props.baseUrl}/career`,
+      link: `${baseUrl}/career`,
     },
     {
       title: 'Register Hotel',
@@ -45,10 +35,10 @@
 </script>
 
 <template>
-  <footer class="bg-[#47495D]">
-    <div class="mx-[64px]">
+  <footer class="bg-neutral-tuna-600">
+    <div class="mx-16">
       <NuxtImg
-        class="mx-auto mt-[24px] mb-[18px]"
+        class="mx-auto mt-6 mb-[18px]"
         src="/icon-pegipegi-logo.svg"
         alt="icon"
       />
@@ -58,14 +48,14 @@
           :key="index"
           class="flex justify-between"
         >
-          <p class="text-sm text-[#FFFFFF]">{{ menu.title }}</p>
+          <p class="text-sm text-white">{{ menu.title }}</p>
           <a :href="`${menu.link}`"
             ><NuxtImg src="/icon-chevron-right.svg" alt="icon"
           /></a>
         </div>
       </div>
-      <div class="mt-[26px] mb-[24px] text-center">
-        <p class="text-sm font-bold text-[#FFFFFF]">Temukan Kami</p>
+      <div class="mt-[26px] mb-6 text-center">
+        <p class="text-sm font-bold text-white">Temukan Kami</p>
         <div class="mt-2 flex justify-center gap-x-[18px]">
           <a href="https://www.facebook.com/Pegipegi/"
             ><NuxtImg src="/icon-facebook.svg" alt="icon"
