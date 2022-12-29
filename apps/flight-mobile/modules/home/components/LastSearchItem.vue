@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { format, parse } from 'date-fns';
+  import date from 'common-module/utils/date';
 
   type History = {
     from: { airport: string; city: string };
@@ -20,13 +20,13 @@
   });
 
   const flightDate = computed(() => {
-    const departureDate = format(
-      parse(props.history.departureDate, 'd-MM-yyyy', new Date()),
+    const departureDate = date.format(
+      date.parse(props.history.departureDate, 'd-MM-yyyy', new Date()),
       'd MMM yyyy'
     );
     const returnDate = props.history.returnDate
-      ? format(
-          parse(props.history.returnDate, 'd-MM-yyyy', new Date()),
+      ? date.format(
+          date.parse(props.history.returnDate, 'd-MM-yyyy', new Date()),
           'd MMM yyyy'
         )
       : '';
