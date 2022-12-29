@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import { Switch } from '@pegipegi/web-pegipegi-ui';
+  import { SearchFormValue } from 'home-module/composables/use-search-form';
 
   type InputProps = {
     id: string;
-    value: { label: string; value: string };
+    value: SearchFormValue;
     icon: string;
     label: string;
     placeholder?: string;

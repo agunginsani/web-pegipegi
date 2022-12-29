@@ -1,9 +1,32 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
   import SearchFormInput from 'home-module/components/SearchFormInput.vue';
+  import useSearchForm from 'home-module/composables/use-search-form';
+  import date from 'common-module/utils/date';
 
+  const { searchForm, setSearchForm } = useSearchForm();
   const returnModel = ref([]);
   const isReturn = computed(() => returnModel.value.length > 0);
+
+  watch(
+    () => isReturn.value,
+    () => {
+      const tommorow = date.add(
+        new Date(String(searchForm.departureDate.value)),
+        { days: 1 }
+      );
+      setSearchForm({
+        returnDate: {
+          label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
+          value: tommorow.toString(),
+        },
+      });
+    }
+  );
+
+  function onSearch() {
+    console.log('search', JSON.stringify(searchForm));
+  }
 </script>
 
 <template>
@@ -11,7 +34,7 @@
     <SearchFormInput
       id="origin"
       label="Asal"
-      :value="{ label: 'Jakarta (JKT)', value: 'JKT' }"
+      :value="searchForm.origin"
       icon="/icon-search-origin.svg"
       @click="$router.push('/origin-location')"
     />
@@ -19,16 +42,16 @@
     <SearchFormInput
       id="destination"
       label="Tujuan"
-      :value="{ label: 'Bali (DPS)', value: 'DPS' }"
+      :value="searchForm.destination"
       icon="/icon-search-destination.svg"
       @click="$router.push('/destination-location')"
     />
 
     <SearchFormInput
-      id="departDate"
+      id="departureDate"
       label="Pergi"
-      :value="{ label: 'Jumat, 25 Jun 2022', value: '25-06-2022' }"
-      icon="/icon-search-depart-date.svg"
+      :value="searchForm.departureDate"
+      icon="/icon-search-departure-date.svg"
       toggleable
       @click="$router.push('/departure-date')"
     >
@@ -45,7 +68,7 @@
       v-if="isReturn"
       id="returnDate"
       label="Pulang"
-      :value="{ label: 'Jumat, 25 Jun 2022', value: '25-06-2022' }"
+      :value="searchForm.returnDate"
       icon="/icon-search-return-date.svg"
       @click="$router.push('/return-date')"
     />
@@ -53,17 +76,17 @@
     <SearchFormInput
       id="passenger"
       label="Penumpang"
-      :value="{ label: '1 Dewasa', value: '1' }"
+      :value="searchForm.passenger"
       icon="/icon-search-passenger.svg"
     />
 
     <SearchFormInput
       id="class"
       label="Kelas"
-      :value="{ label: 'Ekonomi', value: 'EKO' }"
+      :value="searchForm.class"
       icon="/icon-search-class.svg"
     />
 
-    <Button block class="mt-2">Cari Tiket Pesawat</Button>
+    <Button block class="mt-2" @click="onSearch">Cari Tiket Pesawat</Button>
   </div>
 </template>
