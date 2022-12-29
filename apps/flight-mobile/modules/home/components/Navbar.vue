@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-  import { useScroll } from '@vueuse/core';
-
   const backUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
 
   const body = ref<HTMLElement | null>(null);
