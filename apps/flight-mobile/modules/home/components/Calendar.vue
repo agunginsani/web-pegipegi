@@ -1,10 +1,14 @@
 <script lang="ts" setup>
-  import date from 'common-module/utils/date';
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
+  import dateUtil from 'common-module/utils/date';
+
+  type CalendarItem = InstanceType<typeof CalendarItem>;
 
   const { searchForm, setSearchForm } = useSearchForm();
+
+  const router = useRouter();
 
   const props = defineProps<{
     isReturn: boolean;
@@ -15,7 +19,6 @@
     (name: 'back'): void;
   }>();
 
-  // TODO: handle temp value properly, maybe dont use store here.. idk fuck..
   const tempValue = {
     departureDate: JSON.parse(JSON.stringify(searchForm.departureDate)),
     returnDate: searchForm.returnDate
@@ -38,24 +41,20 @@
     });
   }
 
-  const startDate = computed(() => date.startOfMonth(new Date()));
+  const startDate = computed(() => dateUtil.startOfMonth(new Date()));
   const endDate = computed(() =>
-    date.endOfMonth(date.add(startDate.value, { months: 12 }))
+    dateUtil.endOfMonth(dateUtil.add(startDate.value, { months: 12 }))
   );
   const monthDifference = computed(() =>
-    date.differenceInMonths(endDate.value, startDate.value)
+    dateUtil.differenceInMonths(endDate.value, startDate.value)
   );
-
-  // TODO: simplify
   const renderedMonths = computed(() => {
     const months = [];
     let pointer = new Date(startDate.value);
-
     for (let i = 0; i <= monthDifference.value; i++) {
       months.push(pointer);
-      pointer = date.add(pointer, { months: 1 });
+      pointer = dateUtil.add(pointer, { months: 1 });
     }
-
     return months;
   });
 
@@ -69,34 +68,70 @@
   ]);
 
   const departureDateText = computed(() => {
-    return date.format(parseDate(searchForm.departureDate.value), 'd MMM yyyy');
+    return dateUtil.format(modelValue.value[0], 'd MMM yyyy');
   });
 
   const returnDateText = computed(() => {
-    if (modelValue.value[1])
-      return date.format(parseDate(searchForm.returnDate?.value), 'd MMM yyyy');
+    if (modelValue.value[1]) {
+      return dateUtil.format(modelValue.value[1], 'd MMM yyyy');
+    }
     return 'Pilih Tanggal';
   });
 
   function onPick(event: Date) {
-    // TODO: handle picking depart after return & return before depart
     const newValue = {
-      label: date.format(event, 'EEEE, dd MMM yyyy'),
+      label: dateUtil.format(event, 'EEEE, dd MMM yyyy'),
       value: event.toString(),
     };
 
-    if (props.isReturn) {
-      setSearchForm({ returnDate: newValue });
-    } else {
+    if (!props.isReturn && !modelValue.value[1]) {
       setSearchForm({ departureDate: newValue });
+    } else if (
+      props.isReturn &&
+      !!modelValue.value[1] &&
+      dateUtil.isBefore(event, modelValue.value[0])
+    ) {
+      setSearchForm({ departureDate: newValue, returnDate: undefined });
+    } else if (
+      !props.isReturn &&
+      !!modelValue.value[1] &&
+      dateUtil.isAfter(event, modelValue.value[1])
+    ) {
+      setSearchForm({ departureDate: newValue, returnDate: undefined });
+      router.replace('pick-date?type=return');
+    } else if (
+      !props.isReturn &&
+      !!modelValue.value[1] &&
+      dateUtil.isBefore(event, modelValue.value[1])
+    ) {
+      setSearchForm({ departureDate: newValue });
+      router.replace('pick-date?type=return');
+    } else {
+      setSearchForm({ returnDate: newValue });
     }
   }
+
+  const activeMonthRef = ref<CalendarItem | null>(null);
+  const headerRef = ref<HTMLElement | null>(null);
+  onMounted(() => {
+    const headerHeight = headerRef.value?.offsetHeight ?? 100;
+    const scrollTarget = activeMonthRef.value?.$el.getBoundingClientRect().top;
+
+    // timeout used to wait for page transition
+    setTimeout(() => {
+      window.scrollTo({
+        top: scrollTarget - headerHeight - 8,
+        behavior: 'smooth',
+      });
+    }, 550);
+  });
 </script>
 
 <template>
   <div class="bg-[#fffbe7]">
     <header
-      class="shadow-floating sticky inset-x-0 top-0 z-10 flex flex-col rounded-b-2xl bg-white"
+      ref="headerRef"
+      class="shadow-lifted sticky inset-x-0 top-0 z-10 flex flex-col rounded-b-2xl bg-white"
     >
       <div class="flex">
         <button
@@ -142,10 +177,14 @@
     </header>
     <main>
       <ul>
-        <!-- TODO: scroll to selected date on mounted -->
         <CalendarItem
-          v-for="month in renderedMonths"
-          :date="month"
+          v-for="(date, i) in renderedMonths"
+          :ref="(el) => { 
+            if(dateUtil.isSameMonth(date, parseDate(searchForm.departureDate.value))) {
+              activeMonthRef = el as CalendarItem
+            }
+          }"
+          :date="date"
           :modelValue="modelValue"
           :disabledDates="disabledDates"
           @pick="onPick"
@@ -155,7 +194,7 @@
       </ul>
     </main>
 
-    <footer class="shadow-floating sticky inset-x-0 bottom-0">
+    <footer class="shadow-lifted sticky inset-x-0 bottom-0">
       <div class="bg-neutral-tuna-50 rounded-t-2xl py-2 px-4 text-sm">
         <p>
           <NuxtImg
@@ -176,7 +215,7 @@
               :class="{
                 'text-orange-inter-600': !!searchForm.returnDate && !isReturn,
               }"
-              to="/departure-date"
+              to="/pick-date?type=depature"
               replace
             >
               {{ departureDateText }}
@@ -199,7 +238,7 @@
               :class="{
                 'text-orange-inter-600': !!searchForm.returnDate && isReturn,
               }"
-              to="/return-date"
+              to="/pick-date?type=return"
               replace
             >
               {{ returnDateText }}
@@ -210,7 +249,7 @@
             <p class="text-neutral-tuna-300 text-sm">Untuk lebih murah</p>
             <NuxtLink
               class="text-orange-inter-600 font-bold"
-              to="/return-date"
+              to="/pick-date?type=return"
               replace
             >
               Pilih Pulang Juga

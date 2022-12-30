@@ -1,7 +1,8 @@
 import * as dateFns from 'date-fns';
-// TODO: resolve locale issue on prod build
-// import { id } from 'date-fns/locale';
+import { id } from 'date-fns/locale/index.js';
 
-// dateFns.setDefaultOptions({ locale: id });
+// TODO: only import used stuff, or find a way to treeshake this library
+
+dateFns.setDefaultOptions({ locale: id });
 
 export default dateFns;

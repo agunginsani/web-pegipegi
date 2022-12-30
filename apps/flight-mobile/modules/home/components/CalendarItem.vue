@@ -69,7 +69,7 @@
         isPast: date.isBefore(fullDate, today),
         isToday: date.isSameDay(fullDate, today),
         isDisabled: props.disabledDates?.(fullDate) || false,
-        // TODO: compute values below
+        // TODO: use props for holiday
         isHoliday: dayNum >= 6,
       });
     }
@@ -91,30 +91,37 @@
         <button
           v-if="date"
           class="relative mb-4 w-full"
-          :class="{ 'pointer-events-none opacity-50': date.isDisabled }"
-          @click="$emit('pick', date.fullDate)"
+          :class="{ 'pointer-events-none': date.isDisabled }"
+          @click="emit('pick', date.fullDate)"
         >
+          <p
+            v-if="date.isToday"
+            class="text-neutral-tuna-300 absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs"
+          >
+            Hari ini
+          </p>
           <div
             v-if="date.isStart && modelValue[1]"
             class="bg-orange-inter-50 absolute left-1/2 top-0 h-9 w-1/2"
-          ></div>
+          />
           <div
             v-if="date.isEnd"
             class="bg-orange-inter-50 absolute right-1/2 top-0 h-9 w-1/2"
-          ></div>
+          />
           <div
             v-if="date.isInRange"
             class="bg-orange-inter-50 absolute left-0 top-0 h-9 w-full"
-          ></div>
+          />
           <div
             v-if="date.isActive"
-            class="bg-orange-inter-600 absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full"
-          ></div>
+            class="active-date bg-orange-inter-600 absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full"
+          />
           <p
             class="relative mb-1 h-9 text-sm leading-9"
             :class="{
               '!text-white': date.isActive,
               '!text-orange-inter-600': date.isInRange,
+              '!text-neutral-tuna-300': date.isDisabled,
               'text-red-flower-700': date.isHoliday,
             }"
           >

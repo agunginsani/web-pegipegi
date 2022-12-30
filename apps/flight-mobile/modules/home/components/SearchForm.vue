@@ -79,7 +79,7 @@
       placeholder="Pilih Tanggal"
       icon="/icon-search-departure-date.svg"
       toggleable
-      @click="$router.push('/departure-date')"
+      @click="$router.push('/pick-date?type=departure')"
     >
       <template v-if="searchForm.departureDate.value">
         <label
@@ -99,7 +99,7 @@
       :value="searchForm.returnDate"
       placeholder="Pilih Tanggal"
       icon="/icon-search-return-date.svg"
-      @click="$router.push('/return-date')"
+      @click="$router.push('/pick-date?type=return')"
     />
 
     <SearchFormInput
