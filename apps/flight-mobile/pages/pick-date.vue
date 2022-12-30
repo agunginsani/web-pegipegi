@@ -12,9 +12,9 @@
 
       const transition = {
         enterActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-500',
+          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
         leaveActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-500',
+          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
         enterFromClass: 'translate-x-full',
         enterToClass: 'translate-x-0',
         leaveToClass: 'translate-x-[-100%] brightness-50',

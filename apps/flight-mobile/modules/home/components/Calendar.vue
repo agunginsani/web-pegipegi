@@ -115,15 +115,11 @@
   const headerRef = ref<HTMLElement | null>(null);
   onMounted(() => {
     const headerHeight = headerRef.value?.offsetHeight ?? 100;
-    const scrollTarget = activeMonthRef.value?.$el.getBoundingClientRect().top;
+    const monthPosition = activeMonthRef.value?.$el.getBoundingClientRect().top;
+    const scrollTarget = monthPosition - headerHeight - 12;
 
     // timeout used to wait for page transition
-    setTimeout(() => {
-      window.scrollTo({
-        top: scrollTarget - headerHeight - 8,
-        behavior: 'smooth',
-      });
-    }, 550);
+    setTimeout(() => window.scrollTo({ top: scrollTarget }), 440);
   });
 </script>
 
@@ -131,7 +127,7 @@
   <div class="bg-[#fffbe7]">
     <header
       ref="headerRef"
-      class="shadow-lifted sticky inset-x-0 top-0 z-10 flex flex-col rounded-b-2xl bg-white"
+      class="shadow-lifted sticky inset-x-0 top-0 z-30 flex flex-col rounded-b-2xl bg-white"
     >
       <div class="flex">
         <button
@@ -194,7 +190,7 @@
       </ul>
     </main>
 
-    <footer class="shadow-lifted sticky inset-x-0 bottom-0">
+    <footer class="shadow-lifted sticky inset-x-0 bottom-0 z-30">
       <div class="bg-neutral-tuna-50 rounded-t-2xl py-2 px-4 text-sm">
         <p>
           <NuxtImg
