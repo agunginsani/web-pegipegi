@@ -50,6 +50,12 @@
   function onSearch() {
     console.log('search', JSON.stringify(searchForm));
   }
+
+  function onSwap() {
+    const origin = JSON.parse(JSON.stringify(searchForm.destination));
+    const destination = JSON.parse(JSON.stringify(searchForm.origin));
+    setSearchForm({ origin, destination });
+  }
 </script>
 
 <template>
@@ -61,7 +67,14 @@
       placeholder="Pilih Keberangkatan"
       icon="/icon-search-origin.svg"
       @click="$router.push('/origin-location')"
-    />
+    >
+      <button
+        class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
+        @click="onSwap"
+      >
+        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" />
+      </button>
+    </SearchFormInput>
 
     <SearchFormInput
       id="destination"
