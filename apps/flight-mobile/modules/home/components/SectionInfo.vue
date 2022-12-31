@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import useFetchInfos from '../composables/use-fetch-section-info';
+  import useFetchInfos from '../composables/use-fetch-important-information';
   const { data, pending } = await useFetchInfos();
   const infos = ref(data.value.data);
 </script>
