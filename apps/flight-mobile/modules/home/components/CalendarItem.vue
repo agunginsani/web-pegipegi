@@ -1,5 +1,7 @@
 <script lang="ts" setup>
   import date from 'common-module/utils/date';
+  import { CalendarModelValue } from 'home-module/components/Calendar.vue';
+
   type CalendarItemEmits = {
     (e: 'pick', payload: Date): void;
   };
@@ -8,7 +10,7 @@
 
   type CalendarItemProps = {
     date: DateValue;
-    modelValue: [DateValue, DateValue | undefined];
+    modelValue: CalendarModelValue;
     disabledDates?: (date: Date) => boolean;
   };
 

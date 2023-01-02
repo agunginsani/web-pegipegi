@@ -1,33 +1,31 @@
 <script lang="ts" setup>
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
-  import useSearchForm from 'home-module/composables/use-search-form';
   import dateUtil from 'common-module/utils/date';
 
-  type CalendarItem = InstanceType<typeof CalendarItem>;
+  export type CalendarModelValue = [Date | undefined, Date | undefined];
 
-  const { searchForm, setSearchForm } = useSearchForm();
+  type CalendarItem = InstanceType<typeof CalendarItem>;
 
   const router = useRouter();
 
   const props = defineProps<{
+    modelValue: CalendarModelValue;
     isReturn: boolean;
     disabledDates?: (date: Date) => boolean;
   }>();
 
   const emit = defineEmits<{
     (name: 'back'): void;
+    (name: 'update:modelValue', payload: CalendarModelValue): void;
   }>();
 
-  const tempValue = {
-    departureDate: JSON.parse(JSON.stringify(searchForm.departureDate)),
-    returnDate: searchForm.returnDate
-      ? JSON.parse(JSON.stringify(searchForm.returnDate))
-      : undefined,
-  };
+  const tempValue = JSON.parse(
+    JSON.stringify([props.modelValue[0], props.modelValue[1]])
+  );
 
   function onBack() {
-    setSearchForm(tempValue);
+    emit('update:modelValue', tempValue);
     emit('back');
   }
 
@@ -36,9 +34,7 @@
   }
 
   function onClearReturn() {
-    setSearchForm({
-      returnDate: undefined,
-    });
+    emit('update:modelValue', [props.modelValue[0], undefined]);
   }
 
   const startDate = computed(() => dateUtil.startOfMonth(new Date()));
@@ -58,56 +54,50 @@
     return months;
   });
 
-  function parseDate(input: any) {
-    return new Date(String(input));
-  }
-
-  const modelValue = computed<[Date, Date | undefined]>(() => [
-    new Date(String(searchForm.departureDate.value)),
-    searchForm.returnDate ? parseDate(searchForm.returnDate?.value) : undefined,
-  ]);
-
   const departureDateText = computed(() => {
-    return dateUtil.format(modelValue.value[0], 'd MMM yyyy');
+    if (props.modelValue[0]) {
+      return dateUtil.format(props.modelValue[0], 'd MMM yyyy');
+    }
+    return '-';
   });
 
   const returnDateText = computed(() => {
-    if (modelValue.value[1]) {
-      return dateUtil.format(modelValue.value[1], 'd MMM yyyy');
+    if (props.modelValue[1]) {
+      return dateUtil.format(props.modelValue[1], 'd MMM yyyy');
     }
     return 'Pilih Tanggal';
   });
 
   function onPick(event: Date) {
-    const newValue = {
-      label: dateUtil.format(event, 'EEEE, dd MMM yyyy'),
-      value: event.toString(),
-    };
-
-    if (!props.isReturn && !modelValue.value[1]) {
-      setSearchForm({ departureDate: newValue });
+    if (!props.isReturn && !props.modelValue[1]) {
+      // set depature
+      emit('update:modelValue', [event, props.modelValue[1]]);
     } else if (
       props.isReturn &&
-      !!modelValue.value[1] &&
-      dateUtil.isBefore(event, modelValue.value[0])
+      !!props.modelValue[0] &&
+      dateUtil.isBefore(event, props.modelValue[0])
     ) {
-      setSearchForm({ departureDate: newValue, returnDate: undefined });
+      // set departure, clear return
+      emit('update:modelValue', [event, undefined]);
     } else if (
       !props.isReturn &&
-      !!modelValue.value[1] &&
-      dateUtil.isAfter(event, modelValue.value[1])
+      !!props.modelValue[1] &&
+      dateUtil.isAfter(event, props.modelValue[1])
     ) {
-      setSearchForm({ departureDate: newValue, returnDate: undefined });
+      // set departure, clear return, go to return
+      emit('update:modelValue', [event, undefined]);
       router.replace('pick-date?type=return');
     } else if (
       !props.isReturn &&
-      !!modelValue.value[1] &&
-      dateUtil.isBefore(event, modelValue.value[1])
+      !!props.modelValue[1] &&
+      dateUtil.isBefore(event, props.modelValue[1])
     ) {
-      setSearchForm({ departureDate: newValue });
+      // set departure, go to return
+      emit('update:modelValue', [event, props.modelValue[1]]);
       router.replace('pick-date?type=return');
     } else {
-      setSearchForm({ returnDate: newValue });
+      // set return
+      emit('update:modelValue', [props.modelValue[0], event]);
     }
   }
 
@@ -142,7 +132,7 @@
             <NuxtImg
               class="mx-1 inline-block h-4 w-4"
               :src="
-                searchForm.returnDate
+                modelValue[1]
                   ? '/icon-arrow-roundtrip.svg'
                   : '/icon-arrow-oneway.svg'
               "
@@ -176,7 +166,7 @@
         <CalendarItem
           v-for="(date, i) in renderedMonths"
           :ref="(el) => { 
-            if(dateUtil.isSameMonth(date, parseDate(searchForm.departureDate.value))) {
+            if(modelValue[0] && dateUtil.isSameMonth(date, modelValue[0])) {
               activeMonthRef = el as CalendarItem
             }
           }"
@@ -209,7 +199,7 @@
             <NuxtLink
               class="font-bold"
               :class="{
-                'text-orange-inter-600': !!searchForm.returnDate && !isReturn,
+                'text-orange-inter-600': !!modelValue[1] && !isReturn,
               }"
               to="/pick-date?type=depature"
               replace
@@ -218,7 +208,7 @@
             </NuxtLink>
           </div>
 
-          <div class="text-right" v-if="!!searchForm.returnDate || isReturn">
+          <div class="text-right" v-if="!!modelValue[1] || isReturn">
             <p class="text-neutral-tuna-300 text-sm">
               <span>Pulang</span>
               <button class="ml-1" @click="onClearReturn">
@@ -232,7 +222,7 @@
             <NuxtLink
               class="font-bold"
               :class="{
-                'text-orange-inter-600': !!searchForm.returnDate && isReturn,
+                'text-orange-inter-600': !!modelValue[1] && isReturn,
               }"
               to="/pick-date?type=return"
               replace
