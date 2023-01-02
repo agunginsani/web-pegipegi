@@ -61,7 +61,7 @@
       : 'Pilih Tanggal',
   ]);
 
-  function onPick(event: Date) {
+  function onSelect(event: Date) {
     if (!props.isReturn && !props.modelValue[1]) {
       // set depature
       emit('update:modelValue', [event, props.modelValue[1]]);
@@ -166,7 +166,7 @@
           :date="monthPointer"
           :modelValue="modelValue"
           :disabledDates="disabledDates"
-          @pick="onPick"
+          @select="onSelect"
         >
           <template #default="{ ...date }: CalendarItemSlotProps">
             <slot v-bind="date"></slot>

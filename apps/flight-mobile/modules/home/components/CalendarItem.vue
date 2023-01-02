@@ -18,7 +18,7 @@
   };
 
   type CalendarItemEmits = {
-    (e: 'pick', payload: Date): void;
+    (e: 'select', payload: Date): void;
   };
 
   type DateValue = Date | string;
@@ -99,7 +99,7 @@
           v-if="date"
           class="relative mb-4 w-full"
           :class="{ 'pointer-events-none': date.isDisabled }"
-          @click="emit('pick', date.fullDate)"
+          @click="emit('select', date.fullDate)"
         >
           <p
             v-if="date.isToday"
