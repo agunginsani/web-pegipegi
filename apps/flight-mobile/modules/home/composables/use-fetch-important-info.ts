@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import useAuthStore from '~~/modules/common/composables/use-auth-store';
 
-const Infos = z.object({
+const Info = z.object({
   message: z.string(),
   status: z.number(),
   title: z.string(),
@@ -17,16 +17,16 @@ const Infos = z.object({
   ),
 });
 
-type Infos = z.infer<typeof Infos>;
+type Info = z.infer<typeof Info>;
 
-export default function useFetchInfos() {
+export default function useFetchImportantInfo() {
   const { token } = useAuthStore();
   const config = useRuntimeConfig();
   return useFetch('/v1/flight-search/v2/banners', {
     baseURL: config.public.authBaseUrl,
     headers: { authorization: `Bearer ${token}` },
     transform(data) {
-      return Infos.parse(data);
+      return Info.parse(data);
     },
   });
 }

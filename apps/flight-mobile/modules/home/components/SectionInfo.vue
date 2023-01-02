@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import useFetchInfos from '../composables/use-fetch-important-information';
-  const { data, pending } = await useFetchInfos();
+  import useFetchImportantInfo from '../composables/use-fetch-important-info';
+  const { data, pending } = await useFetchImportantInfo();
   const infos = ref(data.value.data);
 </script>
 
