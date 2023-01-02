@@ -8,8 +8,7 @@
 
   function removeHistory(id: number): void {
     if (histories.value && histories.value !== null) {
-      const newHistories = histories.value.filter((_, idx) => idx !== id);
-      histories.value = [...newHistories];
+      histories.value = histories.value.filter((_, idx) => idx !== id);
     }
   }
 </script>
@@ -19,9 +18,10 @@
     <h1 id="last-search-user" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
     </h1>
-    <ul class="flex w-full space-x-2 overflow-x-auto px-4">
+    <ul class="flex flex-row space-x-2 overflow-x-auto px-4">
       <LastSearchItem
         v-for="(history, index) in histories"
+        :key="`history-${index}`"
         :history="history"
         :index="index"
         @delete="removeHistory($event)"
