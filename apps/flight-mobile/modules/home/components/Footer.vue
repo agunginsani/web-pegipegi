@@ -37,14 +37,10 @@
 <template>
   <footer class="bg-neutral-tuna-600">
     <div class="mx-16">
-      <NuxtImg
-        class="mx-auto mt-6 mb-[18px]"
-        src="/icon-pegipegi-logo.svg"
-        alt="icon"
-      />
+      <NuxtImg class="mx-auto mt-6" src="/icon-pegipegi-logo.svg" alt="icon" />
 
-      <ul class="flex flex-col gap-y-2">
-        <li v-for="(menu, index) in footerMenus" :key="index" class="">
+      <ul class="mt-[18px]">
+        <li v-for="(menu, index) in footerMenus" :key="index" class="mb-2">
           <a
             class="flex justify-between"
             :href="`${menu.link}`"
@@ -56,7 +52,7 @@
         </li>
       </ul>
 
-      <div class="mt-[26px] mb-6 text-center">
+      <div class="mt-[18px] mb-6 text-center">
         <p class="text-sm font-bold text-white">Temukan Kami</p>
         <ul class="mt-2 flex justify-center gap-x-[18px]">
           <li>
