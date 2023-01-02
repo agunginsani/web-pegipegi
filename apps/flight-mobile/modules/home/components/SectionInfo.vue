@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import useFetchImportantInfo from '../composables/use-fetch-important-info';
   const { data, pending } = await useFetchImportantInfo();
-  const infos = ref(data.value.data);
+  const infos = computed(() => data.value.data);
 </script>
 
 <template>
@@ -17,7 +17,7 @@
           <div class="flex items-center gap-x-2">
             <NuxtImg
               :src="`${info.imageUrlIcon}`"
-              alt="icon"
+              :alt="`${info.description}`"
               width="28px"
               height="28px"
             />
