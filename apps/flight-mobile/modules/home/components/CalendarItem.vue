@@ -2,6 +2,21 @@
   import date from 'common-module/utils/date';
   import { CalendarModelValue } from 'home-module/components/Calendar.vue';
 
+  export type CalendarItemSlotProps = {
+    date: number;
+    dayNum: number;
+    fullDate: Date;
+    isActive: boolean;
+    isInBetween: boolean;
+    isInRange: boolean;
+    isPast: boolean;
+    isToday: boolean;
+    isHoliday: boolean;
+    isStart: boolean;
+    isEnd: boolean;
+    isDisabled: boolean;
+  };
+
   type CalendarItemEmits = {
     (e: 'pick', payload: Date): void;
   };
@@ -31,19 +46,7 @@
     const month = Number(date.format(pointer, 'M'));
     const numOfDays = Number(date.format(date.endOfMonth(pointer), 'd'));
 
-    const returnValue: Array<{
-      date: number;
-      dayNum: number;
-      fullDate: Date;
-      isActive: boolean;
-      isInRange: boolean;
-      isPast: boolean;
-      isToday: boolean;
-      isHoliday: boolean;
-      isStart: boolean;
-      isEnd: boolean;
-      isDisabled: boolean;
-    }> = [];
+    const returnValue: Array<CalendarItemSlotProps> = [];
 
     for (let i = 1; i <= numOfDays; i++) {
       const fullDate = new Date(year, month - 1, i);
@@ -57,6 +60,9 @@
         props.modelValue[1] ? new Date(props.modelValue[1]) : 0
       );
       const isActive = isStart || isEnd;
+      const isInBetween =
+        date.isBefore(fullDate, parseDate(props.modelValue[1])) &&
+        date.isAfter(fullDate, parseDate(props.modelValue[0]));
 
       returnValue.push({
         date: i,
@@ -65,9 +71,8 @@
         isActive,
         isStart,
         isEnd,
-        isInRange:
-          date.isBefore(fullDate, parseDate(props.modelValue[1])) &&
-          date.isAfter(fullDate, parseDate(props.modelValue[0])),
+        isInBetween,
+        isInRange: isInBetween || isActive,
         isPast: date.isBefore(fullDate, today),
         isToday: date.isSameDay(fullDate, today),
         isDisabled: props.disabledDates?.(fullDate) || false,
@@ -111,7 +116,7 @@
             class="bg-orange-inter-50 absolute right-1/2 top-0 h-9 w-1/2"
           />
           <div
-            v-if="date.isInRange"
+            v-if="date.isInBetween"
             class="bg-orange-inter-50 absolute left-0 top-0 h-9 w-full"
           />
           <div
@@ -122,7 +127,7 @@
             class="relative mb-1 h-9 text-sm leading-9"
             :class="{
               '!text-white': date.isActive,
-              '!text-orange-inter-600': date.isInRange,
+              '!text-orange-inter-600': date.isInBetween,
               '!text-neutral-tuna-300': date.isDisabled,
               'text-red-flower-700': date.isHoliday,
             }"
@@ -130,7 +135,7 @@
             {{ date.date }}
           </p>
           <div class="relative">
-            <slot v-if="!date.isDisabled" />
+            <slot v-bind="date" />
           </div>
         </button>
       </div>

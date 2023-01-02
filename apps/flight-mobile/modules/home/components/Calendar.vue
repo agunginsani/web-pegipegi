@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import { Button } from '@pegipegi/web-pegipegi-ui';
-  import CalendarItem from 'home-module/components/CalendarItem.vue';
+  import CalendarItem, {
+    CalendarItemSlotProps,
+  } from 'home-module/components/CalendarItem.vue';
   import dateUtil from 'common-module/utils/date';
 
   export type CalendarModelValue = [Date | undefined, Date | undefined];
@@ -10,6 +12,8 @@
   const router = useRouter();
 
   const props = defineProps<{
+    startDate: Date;
+    endDate: Date;
     modelValue: CalendarModelValue;
     isReturn: boolean;
     disabledDates?: (date: Date) => boolean;
@@ -20,12 +24,12 @@
     (name: 'update:modelValue', payload: CalendarModelValue): void;
   }>();
 
-  const tempValue = JSON.parse(
-    JSON.stringify([props.modelValue[0], props.modelValue[1]])
-  );
-
+  const previousValue: CalendarModelValue = [
+    props.modelValue[0],
+    props.modelValue[1],
+  ];
   function onBack() {
-    emit('update:modelValue', tempValue);
+    emit('update:modelValue', previousValue);
     emit('back');
   }
 
@@ -37,36 +41,25 @@
     emit('update:modelValue', [props.modelValue[0], undefined]);
   }
 
-  const startDate = computed(() => dateUtil.startOfMonth(new Date()));
-  const endDate = computed(() =>
-    dateUtil.endOfMonth(dateUtil.add(startDate.value, { months: 12 }))
-  );
-  const monthDifference = computed(() =>
-    dateUtil.differenceInMonths(endDate.value, startDate.value)
-  );
   const renderedMonths = computed(() => {
-    const months = [];
-    let pointer = new Date(startDate.value);
-    for (let i = 0; i <= monthDifference.value; i++) {
-      months.push(pointer);
-      pointer = dateUtil.add(pointer, { months: 1 });
-    }
-    return months;
+    const monthDifference = Number(
+      dateUtil.differenceInMonths(props.endDate, props.startDate)
+    );
+    let pointer = dateUtil.startOfMonth(new Date(props.startDate));
+
+    return Array.from({ length: monthDifference + 1 }, (_, i) => {
+      return dateUtil.add(pointer, { months: i });
+    });
   });
 
-  const departureDateText = computed(() => {
-    if (props.modelValue[0]) {
-      return dateUtil.format(props.modelValue[0], 'd MMM yyyy');
-    }
-    return '-';
-  });
-
-  const returnDateText = computed(() => {
-    if (props.modelValue[1]) {
-      return dateUtil.format(props.modelValue[1], 'd MMM yyyy');
-    }
-    return 'Pilih Tanggal';
-  });
+  const dateText = computed(() => [
+    props.modelValue[0]
+      ? dateUtil.format(props.modelValue[0], 'd MMM yyyy')
+      : 'Pilih Tanggal',
+    props.modelValue[1]
+      ? dateUtil.format(props.modelValue[1], 'd MMM yyyy')
+      : 'Pilih Tanggal',
+  ]);
 
   function onPick(event: Date) {
     if (!props.isReturn && !props.modelValue[1]) {
@@ -164,18 +157,20 @@
     <main>
       <ul>
         <CalendarItem
-          v-for="(date, i) in renderedMonths"
+          v-for="(monthPointer, i) in renderedMonths"
           :ref="(el) => { 
-            if(modelValue[0] && dateUtil.isSameMonth(date, modelValue[0])) {
+            if(modelValue[0] && dateUtil.isSameMonth(monthPointer, modelValue[0])) {
               activeMonthRef = el as CalendarItem
             }
           }"
-          :date="date"
+          :date="monthPointer"
           :modelValue="modelValue"
           :disabledDates="disabledDates"
           @pick="onPick"
         >
-          <slot></slot>
+          <template #default="{ ...date }: CalendarItemSlotProps">
+            <slot v-bind="date"></slot>
+          </template>
         </CalendarItem>
       </ul>
     </main>
@@ -204,7 +199,7 @@
               to="/pick-date?type=depature"
               replace
             >
-              {{ departureDateText }}
+              {{ dateText[0] }}
             </NuxtLink>
           </div>
 
@@ -227,7 +222,7 @@
               to="/pick-date?type=return"
               replace
             >
-              {{ returnDateText }}
+              {{ dateText[1] }}
             </NuxtLink>
           </div>
 

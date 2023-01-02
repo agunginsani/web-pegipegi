@@ -67,20 +67,24 @@
     },
   });
 
-  // const modelValue = ref<CalendarModelValue>([
-  //   dateUtil.startOfDay(new Date()),
-  //   dateUtil.startOfDay(dateUtil.add(new Date(), { days: 1 }))
-  // ])
+  const startDate = new Date();
+  const endDate = dateUtil.add(startDate, { months: 12 });
 </script>
 
 <template>
   <Calendar
+    :startDate="startDate"
+    :endDate="endDate"
     :isReturn="$route.query.type === 'return'"
     :disabledDates="disabledDates"
     v-model="modelValue"
     @back="$router.go(-1)"
   >
     <!-- TODO: integrate cheapest price -->
-    <p class="text-neutral-tuna-300 text-[10px]">315</p>
+    <template #default="{ isDisabled }">
+      <p class="text-neutral-tuna-300 text-[10px]">
+        {{ isDisabled ? '-' : '315' }}
+      </p>
+    </template>
   </Calendar>
 </template>
