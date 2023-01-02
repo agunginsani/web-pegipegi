@@ -6,13 +6,15 @@
 
 <template>
   <section>
-    <div class="mx-4">
+    <ul class="mx-4">
       <h1 class="font-bold">Informasi Penting</h1>
-      <div class="mt-2">
-        <div
+      <li class="mt-2">
+        <a
           class="relative flex justify-between py-3.5"
           v-for="(info, index) in infos"
           :key="index"
+          :href="`${info.landingPageUrl}`"
+          target="_blank"
         >
           <div class="flex items-center gap-x-2">
             <NuxtImg
@@ -25,14 +27,12 @@
               {{ info.description }}
             </p>
           </div>
-          <a :href="`${info.landingPageUrl}`">
-            <NuxtImg src="/icon-chevron-right-orange.svg" alt="icon" />
-          </a>
+          <NuxtImg src="/icon-chevron-right-orange.svg" alt="icon" />
           <div
             class="border-neutral-tuna-50 absolute bottom-0 w-[calc(100%+16px)] border-b"
           />
-        </div>
-      </div>
-    </div>
+        </a>
+      </li>
+    </ul>
   </section>
 </template>
