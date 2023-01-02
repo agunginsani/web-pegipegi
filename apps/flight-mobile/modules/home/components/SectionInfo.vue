@@ -15,22 +15,25 @@
           :key="index"
         >
           <a
-            class="relative flex justify-between pr-4"
+            class="relative flex items-center pr-4"
             :href="`${info.landingPageUrl}`"
             target="_blank"
           >
-            <div class="flex items-center gap-x-2">
-              <NuxtImg
-                :src="`${info.imageUrlIcon}`"
-                :alt="`${info.description}`"
-                width="28px"
-                height="28px"
-              />
-              <p class="text-neutral-tuna-300 text-sm">
-                {{ info.description }}
-              </p>
-            </div>
-            <NuxtImg src="/icon-chevron-right-orange.svg" alt="icon" />
+            <NuxtImg
+              class="mr-2"
+              :src="`${info.imageUrlIcon}`"
+              :alt="`${info.description}`"
+              width="28px"
+              height="28px"
+            />
+            <p class="text-neutral-tuna-300 text-sm">
+              {{ info.description }}
+            </p>
+            <NuxtImg
+              class="ml-auto"
+              src="/icon-chevron-right-orange.svg"
+              alt="icon"
+            />
           </a>
         </li>
       </ul>
