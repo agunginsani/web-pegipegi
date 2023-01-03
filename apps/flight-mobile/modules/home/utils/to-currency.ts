@@ -1,4 +1,4 @@
-function toCurrencyFormat(value, prefix = '') {
+export default function toCurrencyFormat(value: number, prefix = ''): string {
   if (isNaN(value)) return '';
   const { format } = new Intl.NumberFormat('id');
   const rawValue = Math.abs(value);
@@ -8,5 +8,3 @@ function toCurrencyFormat(value, prefix = '') {
 
   return rupiah;
 }
-
-export { toCurrencyFormat };

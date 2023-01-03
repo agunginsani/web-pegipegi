@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { toCurrencyFormat } from 'home-module/utils/formartter.js';
+  import toCurrency from 'home-module/utils/to-currency';
 
   type Flight = {
     city: string;
@@ -10,14 +10,14 @@
 
   const props = defineProps<{ flight: Flight }>();
 
-  const flightPrice = computed(() =>
-    toCurrencyFormat(props.flight.price, 'Rp')
-  );
+  const homeUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
+
+  const flightPrice = computed(() => toCurrency(props.flight.price, 'Rp'));
 </script>
 
 <template>
   <li class="relative h-full min-w-[120px]">
-    <NuxtLink :to="`/${flight.link}`">
+    <a :href="`${homeUrl}/flight/${flight.link}`">
       <NuxtImg
         :src="flight.image"
         width="120"
@@ -40,6 +40,6 @@
           }}</span>
         </p>
       </div>
-    </NuxtLink>
+    </a>
   </li>
 </template>

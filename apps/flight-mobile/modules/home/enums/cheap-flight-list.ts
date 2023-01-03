@@ -1,13 +1,13 @@
 export default [
   {
     city: 'Bali',
-    image: '/figure-bali.png',
+    image: '/figure-bali.jpg',
     price: 724385,
     link: 'ke-bali',
   },
   {
     city: 'Jakarta',
-    image: '/figure-jakarta.png',
+    image: '/figure-jakarta.jpg',
     price: 987800,
     link: 'ke-jakarta',
   },
