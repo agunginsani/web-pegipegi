@@ -21,10 +21,8 @@
     (e: 'select', payload: Date): void;
   };
 
-  type DateValue = Date | string;
-
   type CalendarItemProps = {
-    date: DateValue;
+    date: Date;
     modelValue: CalendarModelValue;
     disabledDates?: (date: Date) => boolean;
   };

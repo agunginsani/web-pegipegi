@@ -10,6 +10,7 @@
   type CalendarItem = InstanceType<typeof CalendarItem>;
 
   const router = useRouter();
+  const route = useRoute();
 
   const props = defineProps<{
     startDate: Date;
@@ -63,7 +64,7 @@
 
   function onSelect(event: Date) {
     if (!props.isReturn && !props.modelValue[1]) {
-      // set depature
+      // set departure
       emit('update:modelValue', [event, props.modelValue[1]]);
     } else if (
       props.isReturn &&
@@ -79,7 +80,7 @@
     ) {
       // set departure, clear return, go to return
       emit('update:modelValue', [event, undefined]);
-      router.replace('pick-date?type=return');
+      router.replace(`${route.path}?type=return`);
     } else if (
       !props.isReturn &&
       !!props.modelValue[1] &&
@@ -87,7 +88,7 @@
     ) {
       // set departure, go to return
       emit('update:modelValue', [event, props.modelValue[1]]);
-      router.replace('pick-date?type=return');
+      router.replace(`${route.path}?type=return`);
     } else {
       // set return
       emit('update:modelValue', [props.modelValue[0], event]);
@@ -196,7 +197,7 @@
               :class="{
                 'text-orange-inter-600': !!modelValue[1] && !isReturn,
               }"
-              to="/pick-date?type=depature"
+              :to="`${route.path}?type=departure`"
               replace
             >
               {{ dateText[0] }}
@@ -219,7 +220,7 @@
               :class="{
                 'text-orange-inter-600': !!modelValue[1] && isReturn,
               }"
-              to="/pick-date?type=return"
+              :to="`${route.path}?type=return`"
               replace
             >
               {{ dateText[1] }}
@@ -230,7 +231,7 @@
             <p class="text-neutral-tuna-300 text-sm">Untuk lebih murah</p>
             <NuxtLink
               class="text-orange-inter-600 font-bold"
-              to="/pick-date?type=return"
+              :to="`${route.path}?type=return`"
               replace
             >
               Pilih Pulang Juga

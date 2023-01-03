@@ -71,8 +71,9 @@
       <button
         class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
         @click="onSwap"
+        aria-label="Swap Origin and Destination"
       >
-        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" />
+        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" alt="Swap" />
       </button>
     </SearchFormInput>
 
