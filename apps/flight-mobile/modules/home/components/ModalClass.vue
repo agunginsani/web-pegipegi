@@ -28,7 +28,7 @@
         </div>
         <ul class="p-4">
           <li v-for="i in 4" class="mb-4 flex items-center">
-            <div>
+            <div class="mr-auto">
               <p>Ekonomi</p>
               <p class="text-neutral-tuna-300 text-sm">
                 Pilihan paling hemat untuk sampai ke destinasi
