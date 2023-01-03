@@ -32,6 +32,8 @@
             class="ml-auto"
             src="/icon-chevron-right-orange.svg"
             alt="icon"
+            width="24px"
+            height="24px"
           />
         </a>
       </li>

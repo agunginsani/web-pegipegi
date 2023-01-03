@@ -37,7 +37,13 @@
 <template>
   <footer class="bg-neutral-tuna-600">
     <div class="mx-16">
-      <NuxtImg class="mx-auto mt-6" src="/icon-pegipegi-logo.svg" alt="icon" />
+      <NuxtImg
+        class="mx-auto mt-6"
+        src="/icon-pegipegi-logo.svg"
+        alt="icon"
+        width="86px"
+        height="16px"
+      />
 
       <ul class="mt-[18px]">
         <li v-for="(menu, index) in footerMenus" :key="index" class="mb-2">
@@ -47,7 +53,12 @@
             target="_blank"
           >
             <p class="text-sm text-white">{{ menu.title }}</p>
-            <NuxtImg src="/icon-chevron-right.svg" alt="icon" />
+            <NuxtImg
+              src="/icon-chevron-right.svg"
+              alt="icon"
+              width="24px"
+              height="24px"
+            />
           </a>
         </li>
       </ul>
@@ -57,17 +68,29 @@
         <ul class="mt-2 flex justify-center gap-x-[18px]">
           <li>
             <a href="https://www.facebook.com/Pegipegi/" target="_blank"
-              ><NuxtImg src="/icon-facebook.svg" alt="icon"
+              ><NuxtImg
+                src="/icon-facebook.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
             /></a>
           </li>
           <li>
             <a href="https://www.instagram.com/pegipegi/" target="_blank"
-              ><NuxtImg src="/icon-instagram.svg" alt="icon"
+              ><NuxtImg
+                src="/icon-instagram.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
             /></a>
           </li>
           <li>
             <a href="https://twitter.com/pegipegi" target="_blank"
-              ><NuxtImg src="/icon-twitter.svg" alt="icon"
+              ><NuxtImg
+                src="/icon-twitter.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
             /></a>
           </li>
         </ul>
