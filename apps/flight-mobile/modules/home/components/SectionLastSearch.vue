@@ -4,17 +4,17 @@
   } from 'home-module/components/LastSearchItem.vue';
 
   const histories = useCookie<Array<History>>('flight-search');
-  histories.value = histories.value || [];
 
   function removeHistory(id: number): void {
     if (histories.value && histories.value !== null) {
-      histories.value = histories.value.filter((_, idx) => idx !== id);
+      const newHistories = histories.value.filter((_, idx) => idx !== id);
+      histories.value = newHistories.length > 0 ? newHistories : null;
     }
   }
 </script>
 
 <template>
-  <section aria-labelledby="last-search-user" class="pb-3">
+  <section aria-labelledby="last-search-user" class="pb-3" v-if="histories">
     <h1 id="last-search-user" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
     </h1>
