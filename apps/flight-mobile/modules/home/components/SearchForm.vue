@@ -1,50 +1,45 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
   import SearchFormInput from 'home-module/components/SearchFormInput.vue';
+  import ModalPassenger from 'home-module/components/ModalPassenger.vue';
+  import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
   const { searchForm, setSearchForm } = useSearchForm();
 
   const returnModel = ref(searchForm.returnDate ? ['return'] : []);
-
   const isReturn = computed(() => returnModel.value.length > 0);
-
-  function setReturn() {
-    const today = new Date(String(searchForm.departureDate.value));
-    const tommorow = date.add(today, { days: 1 });
-    if (isReturn.value) {
-      setSearchForm({
-        returnDate: {
-          label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
-          value: tommorow.toString(),
-        },
-      });
-    } else {
-      setSearchForm({ returnDate: undefined });
-    }
-  }
-
   watch(
     () => isReturn.value,
-    () => setReturn()
+    () => {
+      const today = new Date(String(searchForm.departureDate.value));
+      const tommorow = date.add(today, { days: 1 });
+      if (isReturn.value) {
+        setSearchForm({
+          returnDate: {
+            label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
+            value: tommorow.toString(),
+          },
+        });
+      } else {
+        setSearchForm({ returnDate: undefined });
+      }
+    }
   );
 
-  function setDefault() {
+  onMounted(() => {
     if (!searchForm.departureDate.value) {
       /* date needs to be initiated from client side
          due to server & client tz difference possibility */
       setSearchForm({
+        // TODO: set departure based on last search
         departureDate: {
           label: date.format(new Date(), 'EEEE, dd MMM yyyy'),
           value: date.startOfDay(new Date()).toString(),
         },
       });
     }
-  }
-
-  onMounted(() => {
-    setDefault();
   });
 
   function onSearch() {
@@ -122,6 +117,7 @@
       :value="searchForm.passenger"
       placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
+      @click="$router.push(`${$route.path}?showPassenger=1`)"
     />
 
     <SearchFormInput
@@ -130,8 +126,12 @@
       :value="searchForm.class"
       placeholder="Pilih Kelas"
       icon="/icon-search-class.svg"
+      @click="$router.push(`${$route.path}?showClass=1`)"
     />
 
     <Button block class="mt-2" @click="onSearch">Cari Tiket Pesawat</Button>
   </div>
+
+  <ModalPassenger />
+  <ModalClass />
 </template>
