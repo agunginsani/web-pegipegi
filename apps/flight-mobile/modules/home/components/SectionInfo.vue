@@ -5,8 +5,8 @@
 </script>
 
 <template>
-  <section class="pl-4">
-    <h1 class="font-bold">Informasi Penting</h1>
+  <section class="pl-4" aria-labelledby="important-info">
+    <h2 id="important-info" class="font-bold">Informasi Penting</h2>
     <ul class="mt-2">
       <li
         class="border-neutral-tuna-50 border-b py-3.5"
