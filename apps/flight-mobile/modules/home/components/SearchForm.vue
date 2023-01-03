@@ -8,14 +8,14 @@
 
   const { searchForm, setSearchForm } = useSearchForm();
 
-  const returnModel = ref(searchForm.returnDate ? ['return'] : []);
-  const isReturn = computed(() => returnModel.value.length > 0);
-  watch(
-    () => isReturn.value,
-    () => {
-      const today = new Date(String(searchForm.departureDate.value));
-      const tommorow = date.add(today, { days: 1 });
-      if (isReturn.value) {
+  const returnModel = computed({
+    get() {
+      return searchForm.returnDate ? ['return'] : [];
+    },
+    set(value) {
+      if (value.length > 0) {
+        const today = new Date(String(searchForm.departureDate.value));
+        const tommorow = date.add(today, { days: 1 });
         setSearchForm({
           returnDate: {
             label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
@@ -25,8 +25,8 @@
       } else {
         setSearchForm({ returnDate: undefined });
       }
-    }
-  );
+    },
+  });
 
   onMounted(() => {
     if (!searchForm.departureDate.value) {
@@ -102,7 +102,7 @@
     </SearchFormInput>
 
     <SearchFormInput
-      v-if="isReturn"
+      v-if="returnModel.length > 0"
       id="returnDate"
       label="Pulang"
       :value="searchForm.returnDate"
