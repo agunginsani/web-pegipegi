@@ -14,8 +14,12 @@
 </script>
 
 <template>
-  <section aria-labelledby="last-search-user" class="pb-3" v-if="histories">
-    <h2 id="last-search-user" class="mb-4 px-4 text-base font-bold">
+  <section
+    aria-labelledby="last-search-user-title"
+    class="pb-3"
+    v-if="histories"
+  >
+    <h2 id="last-search-user-title" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
     </h2>
     <ul class="flex flex-row space-x-2 overflow-x-auto px-4">
