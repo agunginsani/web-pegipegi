@@ -46,6 +46,17 @@
     },
   }));
 
+  function onPassengerIncrement(key: string, increment: number) {
+    passengersValue[key] = passengersValue[key] + increment;
+    if (
+      key === 'adult' &&
+      increment === -1 &&
+      passengersValue.infant > passengersValue.adult
+    ) {
+      passengersValue.infant = passengersValue.adult;
+    }
+  }
+
   function onReset() {
     passengersValue.adult = 1;
     passengersValue.child = 0;
@@ -104,10 +115,10 @@
               <button
                 class="bg-neutral-tuna-50 flex h-8 w-8 items-center justify-center rounded-full"
                 :disabled="passenger.isPrevDisabled"
-                @click="passengersValue[key] = passengersValue[key] - 1"
+                @click="onPassengerIncrement(key, -1)"
               >
                 <NuxtImg
-                  :class="{ 'opacity-50': passenger.isPrevDisabled }"
+                  :class="{ 'opacity-30': passenger.isPrevDisabled }"
                   src="/icon-subtract.svg"
                   alt="Subtract"
                 />
@@ -118,10 +129,10 @@
               <button
                 class="bg-neutral-tuna-50 flex h-8 w-8 items-center justify-center rounded-full"
                 :disabled="passenger.isNextDisabled"
-                @click="passengersValue[key] = passengersValue[key] + 1"
+                @click="onPassengerIncrement(key, 1)"
               >
                 <NuxtImg
-                  :class="{ 'opacity-50': passenger.isNextDisabled }"
+                  :class="{ 'opacity-30': passenger.isNextDisabled }"
                   src="/icon-add.svg"
                   alt="Add"
                 />
