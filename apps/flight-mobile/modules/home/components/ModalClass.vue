@@ -38,40 +38,37 @@
 </script>
 
 <template>
-  <!-- TODO: drop ClientOnly -->
-  <ClientOnly>
-    <BottomSheet v-model="isActive">
-      <section aria-labelledby="class-selection">
-        <div class="border-neutral-tuna-50 flex border-b px-4 py-2">
-          <h2 id="class-selection" class="text-lg font-bold">Pilih Kelas</h2>
-        </div>
-        <ul class="p-4">
-          <li
-            v-for="item in availableClass"
-            class="pb-4 last-of-type:pb-0"
-            :key="`class-${item.code}`"
+  <BottomSheet v-model="isActive">
+    <section aria-labelledby="class-selection">
+      <div class="border-neutral-tuna-50 flex border-b px-4 py-2">
+        <h2 id="class-selection" class="text-lg font-bold">Pilih Kelas</h2>
+      </div>
+      <ul class="p-4">
+        <li
+          v-for="item in availableClass"
+          class="pb-4 last-of-type:pb-0"
+          :key="`class-${item.code}`"
+        >
+          <label
+            class="flex items-center gap-1"
+            :for="`flight-class-${item.code}`"
           >
-            <label
-              class="flex items-center gap-1"
-              :for="`flight-class-${item.code}`"
-            >
-              <div class="mr-auto">
-                <p>
-                  {{ item.displayName }}
-                </p>
-                <p class="text-neutral-tuna-300 text-sm">
-                  {{ item.description }}
-                </p>
-              </div>
-              <Radio
-                :id="`flight-class-${item.code}`"
-                :value="item.code"
-                v-model="classModel"
-              />
-            </label>
-          </li>
-        </ul>
-      </section>
-    </BottomSheet>
-  </ClientOnly>
+            <div class="mr-auto">
+              <p>
+                {{ item.displayName }}
+              </p>
+              <p class="text-neutral-tuna-300 text-sm">
+                {{ item.description }}
+              </p>
+            </div>
+            <Radio
+              :id="`flight-class-${item.code}`"
+              :value="item.code"
+              v-model="classModel"
+            />
+          </label>
+        </li>
+      </ul>
+    </section>
+  </BottomSheet>
 </template>
