@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import useAuthStore from '~~/modules/common/composables/use-auth-store';
 
-const Info = z.object({
+const ImportantInfo = z.object({
   message: z.string(),
   status: z.number(),
   title: z.string(),
@@ -17,7 +17,7 @@ const Info = z.object({
   ),
 });
 
-type Info = z.infer<typeof Info>;
+type ImportantInfo = z.infer<typeof ImportantInfo>;
 
 export default function useFetchImportantInfo() {
   const { token } = useAuthStore();
@@ -26,7 +26,7 @@ export default function useFetchImportantInfo() {
     baseURL: config.public.authBaseUrl,
     headers: { authorization: `Bearer ${token}` },
     transform(data) {
-      return Info.parse(data);
+      return ImportantInfo.parse(data);
     },
   });
 }
