@@ -9,22 +9,22 @@ export type SearchFormValue = {
   label: string;
 };
 
-type SearchForm = {
-  origin: SearchFormValue;
-  destination: SearchFormValue;
-  departureDate: SearchFormValue;
-  returnDate?: SearchFormValue;
-  passenger: SearchFormValue;
-  class: SearchFormValue;
-};
-
 type SearchFormKey =
   | 'origin'
   | 'destination'
   | 'departureDate'
   | 'returnDate'
-  | 'passenger'
+  | 'passengers'
   | 'class';
+
+type SearchForm = {
+  origin: SearchFormValue;
+  destination: SearchFormValue;
+  departureDate: SearchFormValue;
+  returnDate?: SearchFormValue;
+  passengers: SearchFormValue;
+  class: SearchFormValue;
+};
 
 export default defineStore('searchForm', () => {
   const searchForm = reactive<SearchForm>({
@@ -41,7 +41,7 @@ export default defineStore('searchForm', () => {
       value: '',
     },
     returnDate: undefined,
-    passenger: {
+    passengers: {
       label: '1 Dewasa • 0 Anak • 0 Bayi',
       value: {
         adult: 1,

@@ -114,7 +114,7 @@
     <SearchFormInput
       id="passenger"
       label="Penumpang"
-      :value="searchForm.passenger"
+      :value="searchForm.passengers"
       placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
       @click="$router.push(`${$route.path}?showPassenger=1`)"
