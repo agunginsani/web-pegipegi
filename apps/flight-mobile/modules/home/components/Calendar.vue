@@ -120,22 +120,7 @@
         >
           <NuxtImg class="h-5 w-5" src="/icon-back.svg" alt="Back" />
         </button>
-        <div class="flex flex-col justify-center">
-          <h1 class="font-bold">
-            <span>Jakarta</span>
-            <NuxtImg
-              class="mx-1 inline-block h-4 w-4"
-              :src="
-                localValue[1]
-                  ? '/icon-arrow-roundtrip.svg'
-                  : '/icon-arrow-oneway.svg'
-              "
-              alt="To"
-            />
-            <span>Bali / Denpasar</span>
-          </h1>
-          <p class="text-neutral-tuna-300 text-xs">Ekonomi</p>
-        </div>
+        <slot name="header" :value="localValue" />
       </div>
       <ul class="flex w-full justify-between py-3 px-4">
         <li
@@ -170,7 +155,7 @@
           @select="onSelect"
         >
           <template #default="date: CalendarItemSlotProps">
-            <slot v-bind="date"></slot>
+            <slot name="addon" v-bind="date"></slot>
           </template>
         </CalendarItem>
       </ul>
