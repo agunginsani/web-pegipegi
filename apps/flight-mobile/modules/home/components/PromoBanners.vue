@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { vIntersectionObserver } from '@vueuse/components';
-  import { is } from 'date-fns/locale';
 
   const promoBanners = ref([
     {
@@ -39,22 +38,22 @@
 <template>
   <ul
     class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto px-4"
-    ref="root"
   >
     <li
       v-for="banner in promoBanners"
       :key="banner.id"
       class="snap-center snap-always"
-      v-intersection-observer="[onIntersectionObserver, { root }]"
     >
       <div
         class="relative min-w-[312px] flex-shrink-0 overflow-hidden rounded-xl"
+        ref="root"
       >
         <NuxtImg
           :src="banner.image"
           alt="promo-banner"
           width="312"
           height="156"
+          v-intersection-observer="[onIntersectionObserver, { root }]"
         />
       </div>
     </li>
