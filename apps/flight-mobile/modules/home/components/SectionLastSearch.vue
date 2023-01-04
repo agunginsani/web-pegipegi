@@ -15,9 +15,9 @@
 
 <template>
   <section aria-labelledby="last-search-user" class="pb-3" v-if="histories">
-    <h1 id="last-search-user" class="mb-4 px-4 text-base font-bold">
+    <h2 id="last-search-user" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
-    </h1>
+    </h2>
     <ul class="flex flex-row space-x-2 overflow-x-auto px-4">
       <LastSearchItem
         v-for="(history, index) in histories"
