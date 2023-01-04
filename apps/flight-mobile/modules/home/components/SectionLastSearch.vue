@@ -3,7 +3,7 @@
     History,
   } from 'home-module/components/LastSearchItem.vue';
 
-  const histories = useCookie<Array<History>>('flight-search');
+  const histories = useCookie<Array<History> | null>('flight-search');
 
   function removeHistory(id: number): void {
     if (histories.value && histories.value !== null) {
