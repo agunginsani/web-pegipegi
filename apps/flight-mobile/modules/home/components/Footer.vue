@@ -45,7 +45,7 @@
       <div class="flex flex-col gap-y-2">
         <div
           v-for="(menu, index) in footerMenus"
-          :key="index"
+          :key="`footer-${index}`"
           class="flex justify-between"
         >
           <p class="text-sm text-white">{{ menu.title }}</p>

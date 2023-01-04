@@ -89,6 +89,7 @@
         <ul class="p-4">
           <li
             v-for="(passenger, key) in passengers"
+            :key="`passenger-${key}`"
             class="mb-3 flex last-of-type:mb-0"
           >
             <div>

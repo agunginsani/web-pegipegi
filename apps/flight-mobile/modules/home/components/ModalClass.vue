@@ -46,7 +46,11 @@
           <h2 id="class-selection" class="text-lg font-bold">Pilih Kelas</h2>
         </div>
         <ul class="p-4">
-          <li v-for="item in availableClass" class="pb-4 last-of-type:pb-0">
+          <li
+            v-for="item in availableClass"
+            class="pb-4 last-of-type:pb-0"
+            :key="`class-${item.code}`"
+          >
             <label
               class="flex items-center gap-1"
               :for="`flight-class-${item.code}`"

@@ -148,6 +148,7 @@
             'Sab',
             'Min',
           ]"
+          :key="`day-${index}`"
           class="w-9 text-center"
           :class="index >= 5 ? 'text-red-flower-700' : ''"
         >
@@ -158,7 +159,8 @@
     <main>
       <ul>
         <CalendarItem
-          v-for="(monthPointer, i) in renderedMonths"
+          v-for="(monthPointer, index) in renderedMonths"
+          :key="`month-${index}`"
           :ref="(el) => { 
             if(modelValue[0] && dateUtil.isSameMonth(monthPointer, modelValue[0])) {
               activeMonthRef = el as CalendarItem

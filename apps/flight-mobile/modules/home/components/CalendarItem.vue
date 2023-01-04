@@ -5,6 +5,7 @@
   export type CalendarItemSlotProps = {
     date: number;
     dayNum: number;
+    monthNum: number;
     fullDate: Date;
     isActive: boolean;
     isInBetween: boolean;
@@ -41,13 +42,13 @@
 
     const today = date.startOfDay(new Date());
     const year = Number(date.format(pointer, 'yyyy'));
-    const month = Number(date.format(pointer, 'M'));
+    const monthNum = Number(date.format(pointer, 'M'));
     const numOfDays = Number(date.format(date.endOfMonth(pointer), 'd'));
 
     const returnValue: Array<CalendarItemSlotProps> = [];
 
     for (let i = 1; i <= numOfDays; i++) {
-      const fullDate = new Date(year, month - 1, i);
+      const fullDate = new Date(year, monthNum - 1, i);
       const dayNum = Number(date.format(fullDate, 'i'));
       const isStart = date.isSameDay(
         fullDate,
@@ -65,6 +66,7 @@
       returnValue.push({
         date: i,
         dayNum,
+        monthNum,
         fullDate,
         isActive,
         isStart,
@@ -81,7 +83,10 @@
 
     const lastMonthDates = Array.from(
       { length: returnValue[0].dayNum - 1 },
-      () => null
+      () => ({
+        monthNum,
+        date: null,
+      })
     );
 
     return [...lastMonthDates, ...returnValue];
@@ -92,10 +97,14 @@
   <li class="border-yellow-candle-400 m-3 rounded-xl border bg-white">
     <h2 class="mb-2 p-3 font-bold">{{ header }}</h2>
     <div class="grid grid-cols-7">
-      <div v-for="date in dates">
+      <div
+        v-for="(date, index) in dates"
+        :key="`date-${date.monthNum}-${index}`"
+        class="mb-4"
+      >
         <button
-          v-if="date"
-          class="relative mb-4 w-full"
+          v-if="date.date"
+          class="relative w-full"
           :class="{ 'pointer-events-none': date.isDisabled }"
           @click="emit('select', date.fullDate)"
         >
