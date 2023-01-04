@@ -24,6 +24,7 @@
         height="120"
         format="webp"
         fit="cover"
+        :alt="flight.city"
         class="rounded"
       />
       <div
