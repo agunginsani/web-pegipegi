@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import SectionLastSearch from 'home-module/components/SectionLastSearch.vue';
   import SectionSearch from 'home-module/components/SectionSearch.vue';
+  import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
   import Navbar from 'home-module/components/Navbar.vue';
   import Footer from 'home-module/components/Footer.vue';
 </script>
@@ -10,6 +11,7 @@
     <Navbar />
     <SectionSearch />
     <SectionLastSearch />
+    <SectionCheapFlight />
     <Footer />
   </div>
 </template>
