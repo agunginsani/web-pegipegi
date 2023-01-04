@@ -7,8 +7,6 @@
 
   export type CalendarModelValue = [Date | undefined, Date | undefined];
 
-  type CalendarItem = InstanceType<typeof CalendarItem>;
-
   const router = useRouter();
   const route = useRoute();
 
@@ -25,21 +23,19 @@
     (name: 'update:modelValue', payload: CalendarModelValue): void;
   }>();
 
-  const previousValue: CalendarModelValue = [
-    props.modelValue[0],
-    props.modelValue[1],
-  ];
+  const localValue = reactive<CalendarModelValue>(props.modelValue);
+
   function onBack() {
-    emit('update:modelValue', previousValue);
     emit('back');
   }
 
   function onSave() {
+    emit('update:modelValue', localValue);
     emit('back');
   }
 
   function onClearReturn() {
-    emit('update:modelValue', [props.modelValue[0], undefined]);
+    localValue[1] = undefined;
   }
 
   const renderedMonths = computed(() => {
@@ -54,48 +50,52 @@
   });
 
   const dateText = computed(() => [
-    props.modelValue[0]
-      ? dateUtil.format(props.modelValue[0], 'd MMM yyyy')
+    localValue[0]
+      ? dateUtil.format(localValue[0], 'd MMM yyyy')
       : 'Pilih Tanggal',
-    props.modelValue[1]
-      ? dateUtil.format(props.modelValue[1], 'd MMM yyyy')
+    localValue[1]
+      ? dateUtil.format(localValue[1], 'd MMM yyyy')
       : 'Pilih Tanggal',
   ]);
 
   function onSelect(event: Date) {
-    if (!props.isReturn && !props.modelValue[1]) {
+    if (!props.isReturn && !localValue[1]) {
       // set departure
-      emit('update:modelValue', [event, props.modelValue[1]]);
+      localValue[0] = event;
     } else if (
       props.isReturn &&
-      !!props.modelValue[0] &&
-      dateUtil.isBefore(event, props.modelValue[0])
+      !!localValue[0] &&
+      dateUtil.isBefore(event, localValue[0])
     ) {
       // set departure, clear return
-      emit('update:modelValue', [event, undefined]);
+      localValue[0] = event;
+      localValue[1] = undefined;
     } else if (
       !props.isReturn &&
-      !!props.modelValue[1] &&
-      dateUtil.isAfter(event, props.modelValue[1])
+      !!localValue[1] &&
+      dateUtil.isAfter(event, localValue[1])
     ) {
       // set departure, clear return, go to return
-      emit('update:modelValue', [event, undefined]);
+      localValue[0] = event;
+      localValue[1] = undefined;
       router.replace(`${route.path}?type=return`);
     } else if (
       !props.isReturn &&
-      !!props.modelValue[1] &&
-      dateUtil.isBefore(event, props.modelValue[1])
+      !!localValue[1] &&
+      dateUtil.isBefore(event, localValue[1])
     ) {
       // set departure, go to return
-      emit('update:modelValue', [event, props.modelValue[1]]);
+      localValue[0] = event;
       router.replace(`${route.path}?type=return`);
     } else {
       // set return
-      emit('update:modelValue', [props.modelValue[0], event]);
+      localValue[1] = event;
     }
   }
 
-  const activeMonthRef = ref<CalendarItem | null>(null);
+  // scroll to active month
+  type CalendarItemComponentRef = InstanceType<typeof CalendarItem>;
+  const activeMonthRef = ref<CalendarItemComponentRef | null>(null);
   const headerRef = ref<HTMLElement | null>(null);
   onMounted(() => {
     const headerHeight = headerRef.value?.offsetHeight ?? 100;
@@ -126,7 +126,7 @@
             <NuxtImg
               class="mx-1 inline-block h-4 w-4"
               :src="
-                modelValue[1]
+                localValue[1]
                   ? '/icon-arrow-roundtrip.svg'
                   : '/icon-arrow-oneway.svg'
               "
@@ -160,12 +160,12 @@
         <CalendarItem
           v-for="(monthPointer, i) in renderedMonths"
           :ref="(el) => { 
-            if(modelValue[0] && dateUtil.isSameMonth(monthPointer, modelValue[0])) {
-              activeMonthRef = el as CalendarItem
+            if(localValue[0] && dateUtil.isSameMonth(monthPointer, localValue[0])) {
+              activeMonthRef = el as CalendarItemComponentRef
             }
           }"
           :date="monthPointer"
-          :modelValue="modelValue"
+          :modelValue="localValue"
           :disabledDates="disabledDates"
           @select="onSelect"
         >
@@ -195,7 +195,7 @@
             <NuxtLink
               class="font-bold"
               :class="{
-                'text-orange-inter-600': !!modelValue[1] && !isReturn,
+                'text-orange-inter-600': !!localValue[1] && !isReturn,
               }"
               :to="`${route.path}?type=departure`"
               replace
@@ -204,7 +204,7 @@
             </NuxtLink>
           </div>
 
-          <div class="text-right" v-if="!!modelValue[1] || isReturn">
+          <div class="text-right" v-if="!!localValue[1] || isReturn">
             <p class="text-neutral-tuna-300 text-sm">
               <span>Pulang</span>
               <button class="ml-1" @click="onClearReturn">
@@ -218,7 +218,7 @@
             <NuxtLink
               class="font-bold"
               :class="{
-                'text-orange-inter-600': !!modelValue[1] && isReturn,
+                'text-orange-inter-600': !!localValue[1] && isReturn,
               }"
               :to="`${route.path}?type=return`"
               replace
