@@ -9,14 +9,6 @@ export type SearchFormValue = {
   label: string;
 };
 
-type SearchFormKey =
-  | 'origin'
-  | 'destination'
-  | 'departureDate'
-  | 'returnDate'
-  | 'passengers'
-  | 'class';
-
 type SearchForm = {
   origin: SearchFormValue;
   destination: SearchFormValue;
@@ -26,7 +18,15 @@ type SearchForm = {
   class: SearchFormValue;
 };
 
+type FlightClassItem = {
+  code: string;
+  displayName: string;
+  description: string;
+};
+
 export default defineStore('searchForm', () => {
+  const availableClass = reactive<Array<FlightClassItem>>([]);
+
   const searchForm = reactive<SearchForm>({
     origin: {
       label: 'Jakarta (JKT)',
@@ -50,19 +50,53 @@ export default defineStore('searchForm', () => {
       },
     },
     class: {
-      label: 'Ekonomi',
-      value: 'EKO',
+      label: '',
+      value: '',
     },
   });
 
   function setSearchForm(payload: Partial<SearchForm>) {
-    Object.entries(payload).forEach(([key, value]) => {
-      searchForm[key as SearchFormKey] = value;
+    Object.assign(searchForm, { ...searchForm, ...payload });
+  }
+
+  function fetchAvailableClass() {
+    // TODO: fetch from api
+    const response = [
+      {
+        code: 'ECONOMY',
+        displayName: 'Ekonomi',
+        description: 'Pilihan paling hemat untuk sampai ke destinasi',
+      },
+      {
+        code: 'PREMIUMECONOMY',
+        displayName: 'Premium Ekonomi',
+        description:
+          'Mau terbang tetap hemat dengan ruang kaki ekstra? Pilih yang ini!',
+      },
+      {
+        code: 'BUSINESS',
+        displayName: 'Bisnis',
+        description: 'Lupakan terbang hemat! Kelas ini bikin kamu serasa bos',
+      },
+      {
+        code: 'FIRST',
+        displayName: 'First Class',
+        description: 'Kelas konglomerat dengan kemewahan maksimal',
+      },
+    ];
+    Object.assign(availableClass, response);
+    setSearchForm({
+      class: {
+        label: response[0].displayName,
+        value: response[0].code,
+      },
     });
   }
 
   return {
     searchForm,
     setSearchForm,
+    availableClass,
+    fetchAvailableClass,
   };
 });

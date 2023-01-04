@@ -4,7 +4,7 @@
 
   const route = useRoute();
   const router = useRouter();
-  const isPaxActive = computed({
+  const isActive = computed({
     get() {
       return !!route.query.showPassenger;
     },
@@ -66,7 +66,7 @@
 <template>
   <!-- TODO: drop ClientOnly -->
   <ClientOnly>
-    <BottomSheet v-model="isPaxActive">
+    <BottomSheet v-model="isActive">
       <section aria-labelledby="passenger-count">
         <div class="border-neutral-tuna-50 flex gap-3 border-b px-4 py-2">
           <div>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { BottomSheet, Radio } from '@pegipegi/web-pegipegi-ui';
+  import useSearchForm from 'home-module/composables/use-search-form';
 
   const route = useRoute();
   const router = useRouter();
-
-  const isClassActive = computed({
+  const isActive = computed({
     get() {
       return !!route.query.showClass;
     },
@@ -16,25 +16,55 @@
       }
     },
   });
+
+  const { availableClass, searchForm, setSearchForm } = useSearchForm();
+
+  const classModel = computed({
+    get() {
+      return searchForm.class.value as string;
+    },
+    set(value) {
+      setSearchForm({
+        class: {
+          label:
+            availableClass.find((item) => item.code === value)?.displayName ??
+            '',
+          value,
+        },
+      });
+      router.go(-1);
+    },
+  });
 </script>
 
 <template>
   <!-- TODO: drop ClientOnly -->
   <ClientOnly>
-    <BottomSheet v-model="isClassActive">
+    <BottomSheet v-model="isActive">
       <section aria-labelledby="class-selection">
         <div class="border-neutral-tuna-50 flex border-b px-4 py-2">
           <h2 id="class-selection" class="text-lg font-bold">Pilih Kelas</h2>
         </div>
         <ul class="p-4">
-          <li v-for="i in 4" class="mb-4 flex items-center last-of-type:mb-0">
-            <div class="mr-auto">
-              <p>Ekonomi</p>
-              <p class="text-neutral-tuna-300 text-sm">
-                Pilihan paling hemat untuk sampai ke destinasi
-              </p>
-            </div>
-            <Radio />
+          <li v-for="item in availableClass" class="pb-4 last-of-type:pb-0">
+            <label
+              class="flex items-center gap-1"
+              :for="`flight-class-${item.code}`"
+            >
+              <div class="mr-auto">
+                <p>
+                  {{ item.displayName }}
+                </p>
+                <p class="text-neutral-tuna-300 text-sm">
+                  {{ item.description }}
+                </p>
+              </div>
+              <Radio
+                :id="`flight-class-${item.code}`"
+                :value="item.code"
+                v-model="classModel"
+              />
+            </label>
           </li>
         </ul>
       </section>
