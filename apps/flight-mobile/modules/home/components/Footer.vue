@@ -38,35 +38,62 @@
   <footer class="bg-neutral-tuna-600">
     <div class="mx-16">
       <NuxtImg
-        class="mx-auto mt-6 mb-[18px]"
+        class="mx-auto mt-6"
         src="/icon-pegipegi-logo.svg"
         alt="icon"
+        width="86px"
+        height="16px"
       />
-      <div class="flex flex-col gap-y-2">
-        <div
-          v-for="(menu, index) in footerMenus"
-          :key="index"
-          class="flex justify-between"
-        >
-          <p class="text-sm text-white">{{ menu.title }}</p>
-          <a :href="`${menu.link}`"
-            ><NuxtImg src="/icon-chevron-right.svg" alt="icon"
-          /></a>
-        </div>
-      </div>
-      <div class="mt-[26px] mb-6 text-center">
+
+      <ul class="mt-[18px]">
+        <li v-for="(menu, index) in footerMenus" :key="index" class="mb-2">
+          <a
+            class="flex justify-between"
+            :href="`${menu.link}`"
+            target="_blank"
+          >
+            <p class="text-sm text-white">{{ menu.title }}</p>
+            <NuxtImg
+              src="/icon-chevron-right.svg"
+              alt="icon"
+              width="24px"
+              height="24px"
+            />
+          </a>
+        </li>
+      </ul>
+
+      <div class="mt-[18px] mb-6 text-center">
         <p class="text-sm font-bold text-white">Temukan Kami</p>
-        <div class="mt-2 flex justify-center gap-x-[18px]">
-          <a href="https://www.facebook.com/Pegipegi/"
-            ><NuxtImg src="/icon-facebook.svg" alt="icon"
-          /></a>
-          <a href="https://www.instagram.com/pegipegi/"
-            ><NuxtImg src="/icon-instagram.svg" alt="icon"
-          /></a>
-          <a href="https://twitter.com/pegipegi"
-            ><NuxtImg src="/icon-twitter.svg" alt="icon"
-          /></a>
-        </div>
+        <ul class="mt-2 flex justify-center gap-x-[18px]">
+          <li>
+            <a href="https://www.facebook.com/Pegipegi/" target="_blank"
+              ><NuxtImg
+                src="/icon-facebook.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
+            /></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/pegipegi/" target="_blank"
+              ><NuxtImg
+                src="/icon-instagram.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
+            /></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/pegipegi" target="_blank"
+              ><NuxtImg
+                src="/icon-twitter.svg"
+                alt="icon"
+                width="24px"
+                height="24px"
+            /></a>
+          </li>
+        </ul>
       </div>
     </div>
   </footer>
