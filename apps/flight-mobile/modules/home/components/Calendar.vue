@@ -171,7 +171,7 @@
           :disabledDates="disabledDates"
           @select="onSelect"
         >
-          <template #default="{ ...date }: CalendarItemSlotProps">
+          <template #default="date: CalendarItemSlotProps">
             <slot v-bind="date"></slot>
           </template>
         </CalendarItem>
