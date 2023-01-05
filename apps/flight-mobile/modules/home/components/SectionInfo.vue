@@ -1,15 +1,15 @@
 <script lang="ts" setup>
   import useFetchImportantInfo from '../composables/use-fetch-important-info';
   const { data, pending } = await useFetchImportantInfo();
-  const infos = computed(() => data.value.data);
+  const infos = computed(() => data.value?.data || []);
 </script>
 
 <template>
-  <section class="pl-4" aria-labelledby="important-info-title">
+  <section class="mb-2 pl-4" aria-labelledby="important-info-title">
     <h2 id="important-info-title" class="font-bold">Informasi Penting</h2>
     <ul class="mt-2">
       <li
-        class="border-neutral-tuna-50 border-b py-3.5"
+        class="border-neutral-tuna-50 border-b py-3.5 last-of-type:border-transparent"
         v-for="(info, index) in infos"
         :key="index"
       >
@@ -22,8 +22,8 @@
             class="mr-2"
             :src="`${info.imageUrlIcon}`"
             :alt="`${info.description}`"
-            width="28px"
-            height="28px"
+            width="28"
+            height="28"
           />
           <p class="text-neutral-tuna-300 text-sm">
             {{ info.description }}
@@ -32,8 +32,8 @@
             class="ml-auto"
             src="/icon-chevron-right-orange.svg"
             alt="icon"
-            width="24px"
-            height="24px"
+            width="24"
+            height="24"
           />
         </a>
       </li>
