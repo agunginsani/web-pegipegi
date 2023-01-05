@@ -37,9 +37,9 @@
         </p>
         <p class="truncate text-xs text-white">
           Mulai dari <br />
-          <span class="text-yellow-candle-400 text-sm font-bold">{{
-            flightPrice
-          }}</span>
+          <span class="text-yellow-candle-400 text-sm font-bold">
+            {{ flightPrice }}
+          </span>
         </p>
       </div>
     </a>
