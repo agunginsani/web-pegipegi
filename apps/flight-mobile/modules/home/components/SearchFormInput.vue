@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import { Switch } from '@pegipegi/web-pegipegi-ui';
+  import { SearchFormValue } from 'home-module/composables/use-search-form';
 
   type InputProps = {
     id: string;
-    value: { label: string; value: string };
+    value: SearchFormValue;
     icon: string;
     label: string;
     placeholder?: string;
@@ -25,7 +25,7 @@
 
 <template>
   <div
-    class="bg-neutral-tuna-25 border-neutral-tuna-100 mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
+    class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
   >
     <NuxtImg class="mr-4 h-6 w-6" :src="icon" :alt="label" />
     <div class="flex flex-grow">

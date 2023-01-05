@@ -2,7 +2,7 @@ import useFetchAirports, {
   Airports,
 } from 'home-module/composables/use-fetch-airports';
 
-export default defineStore('home', () => {
+export default defineStore('airports', () => {
   const airports = ref<Airports>([]);
 
   async function fetch() {

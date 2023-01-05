@@ -3,6 +3,7 @@
   import SectionSearch from 'home-module/components/SectionSearch.vue';
   import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
   import Navbar from 'home-module/components/Navbar.vue';
+  import Footer from 'home-module/components/Footer.vue';
 </script>
 
 <template>
@@ -11,6 +12,6 @@
     <SectionSearch />
     <SectionLastSearch />
     <SectionCheapFlight />
-    <footer class="mt-auto">footer</footer>
+    <Footer />
   </div>
 </template>

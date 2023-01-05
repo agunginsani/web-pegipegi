@@ -2,7 +2,9 @@
   const backUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
 
   const body = ref<HTMLElement | null>(null);
-  const { arrivedState } = useScroll(body);
+  const { arrivedState } = useScroll(body, {
+    offset: { top: 80 },
+  });
   onMounted(() => {
     body.value = document.querySelector('#body');
   });
@@ -10,8 +12,12 @@
 
 <template>
   <header
-    class="sticky left-0 right-0 top-0 z-10 flex h-12 items-center transition-all"
-    :class="arrivedState.top ? 'bg-transparent' : 'shadow-floating bg-white'"
+    class="sticky left-0 right-0 top-0 z-30 flex h-12 items-center transition-all"
+    :class="
+      arrivedState.top
+        ? 'bg-gradient-to-b from-[#ffdc8e] to-transparent'
+        : 'shadow-raised bg-white'
+    "
   >
     <a
       :href="backUrl"

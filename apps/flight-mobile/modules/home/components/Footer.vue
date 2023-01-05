@@ -35,7 +35,7 @@
 </script>
 
 <template>
-  <footer class="bg-neutral-tuna-600">
+  <footer class="bg-neutral-tuna-600 mt-auto">
     <div class="mx-16">
       <NuxtImg
         class="mx-auto mt-6"
