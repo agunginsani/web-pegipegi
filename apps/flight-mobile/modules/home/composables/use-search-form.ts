@@ -1,11 +1,14 @@
-type PassangerValue = {
-  adult: number;
-  child: number;
-  infant: number;
+export type PassangerValue = {
+  value: {
+    adult: number;
+    child: number;
+    infant: number;
+  };
+  label: string;
 };
 
 export type SearchFormValue = {
-  value: string | PassangerValue;
+  value: string;
   label: string;
 };
 
@@ -14,7 +17,7 @@ type SearchForm = {
   destination: SearchFormValue;
   departureDate: SearchFormValue;
   returnDate?: SearchFormValue;
-  passengers: SearchFormValue;
+  passengers: PassangerValue;
   class: SearchFormValue;
 };
 

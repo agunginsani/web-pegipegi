@@ -4,24 +4,20 @@
 
   const route = useRoute();
   const router = useRouter();
-  const isActive = computed({
-    get() {
-      return !!route.query.showClass;
-    },
-    set(value) {
-      if (value) {
-        router.push(`${route.path}?showClass=true`);
-      } else if (!!route.query.showClass) {
-        router.go(-1);
-      }
-    },
-  });
+
+  function onBottomSheetToggle(value: boolean) {
+    if (value) {
+      router.push(`${route.path}?showClass=true`);
+    } else if (!!route.query.showClass) {
+      router.go(-1);
+    }
+  }
 
   const { availableClass, searchForm, setSearchForm } = useSearchForm();
 
   const classModel = computed({
     get() {
-      return searchForm.class.value as string;
+      return searchForm.class.value;
     },
     set(value) {
       setSearchForm({
@@ -32,16 +28,26 @@
           value,
         },
       });
-      router.go(-1);
     },
   });
+  watch(
+    () => searchForm.class.value,
+    () => {
+      router.go(-1);
+    }
+  );
 </script>
 
 <template>
-  <BottomSheet v-model="isActive">
-    <section aria-labelledby="class-selection">
+  <BottomSheet
+    :modelValue="!!$route.query.showClass"
+    @update:modelValue="onBottomSheetToggle"
+  >
+    <section aria-labelledby="class-selection-title">
       <div class="border-neutral-tuna-50 flex border-b px-4 py-2">
-        <h2 id="class-selection" class="text-lg font-bold">Pilih Kelas</h2>
+        <h2 id="class-selection-title" class="text-lg font-bold">
+          Pilih Kelas
+        </h2>
       </div>
       <ul class="p-4">
         <li

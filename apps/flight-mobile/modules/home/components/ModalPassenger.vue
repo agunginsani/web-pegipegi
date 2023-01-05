@@ -4,18 +4,15 @@
 
   const route = useRoute();
   const router = useRouter();
-  const isActive = computed({
-    get() {
-      return !!route.query.showPassenger;
-    },
-    set(value) {
-      if (value) {
-        router.push(`${route.path}?showPassenger=true`);
-      } else if (!!route.query.showPassenger) {
-        router.go(-1);
-      }
-    },
-  });
+
+  const isActive = computed(() => !!route.query.showPassenger);
+  function onBottomSheetToggle(value: boolean) {
+    if (value) {
+      router.push(`${route.path}?showPassenger=true`);
+    } else if (!!route.query.showPassenger) {
+      router.go(-1);
+    }
+  }
 
   const { searchForm, setSearchForm } = useSearchForm();
 
@@ -75,11 +72,11 @@
 </script>
 
 <template>
-  <BottomSheet v-model="isActive">
-    <section aria-labelledby="passenger-count">
+  <BottomSheet :modelValue="isActive" @update:modelValue="onBottomSheetToggle">
+    <section aria-labelledby="passenger-count-title">
       <div class="border-neutral-tuna-50 flex gap-3 border-b px-4 py-2">
         <div>
-          <h2 id="passenger-count" class="text-lg font-bold">
+          <h2 id="passenger-count-title" class="text-lg font-bold">
             Jumlah Penumpang
           </h2>
           <p class="text-neutral-tuna-300 text-sm">
