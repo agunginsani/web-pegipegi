@@ -4,7 +4,7 @@
   import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
   import Navbar from 'home-module/components/Navbar.vue';
   import Footer from 'home-module/components/Footer.vue';
-  import SectionPromoBanners from 'home-module/components/SectionPromoBanners.vue';
+  import SectionPromo from 'home-module/components/SectionPromoBanners.vue';
 </script>
 
 <template>
@@ -12,7 +12,7 @@
     <Navbar />
     <SectionSearch />
     <SectionLastSearch />
-    <SectionPromoBanners />
+    <SectionPromo />
     <SectionCheapFlight />
     <Footer />
   </div>
