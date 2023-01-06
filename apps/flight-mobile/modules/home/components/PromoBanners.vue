@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
 
-  const banners = ref([
+  const promoBanners = ref([
     {
       id: 1,
       image:
@@ -24,40 +24,40 @@
     },
   ]);
 
-  const root = ref<Element | null>(null);
+  const root = ref<HTMLElement | null>(null);
   const targetRef = ref([]);
+  const activeBanner = ref('');
 
-  const isActive = ref(false);
+  onMounted(() => {
+    const options = {
+      root: root.value,
+      threshold: 0,
+      rootMargin: '0px -100px 0px -100px',
+    };
 
-  const options = {
-    root: root.value,
-    threshold: 0,
-    rootMargin: '-100px',
-  };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeBanner.value = entry.target.dataset.index;
+        }
+      });
+    }, options);
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      console.log(entry);
-    });
-  }, options);
-
-  console.log(observer);
-
-  if (targetRef instanceof Array) {
-    targetRef.map((target: HTMLElement) => console.log(target));
-  }
+    targetRef.value.forEach((target: HTMLElement) => observer.observe(target));
+  });
 </script>
 
 <template>
   <ul
-    class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto border-2 border-dashed px-4"
+    class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto px-4"
     ref="root"
   >
     <li
-      v-for="banner in banners"
+      v-for="(banner, index) in promoBanners"
       :key="banner.id"
       class="snap-center snap-always"
       ref="targetRef"
+      :data-index="`banner-${index}`"
     >
       <div
         class="relative min-w-[312px] flex-shrink-0 overflow-hidden rounded-xl"
@@ -71,13 +71,15 @@
       </div>
     </li>
   </ul>
-  {{ isActive }}
   <ul class="mt-2 flex justify-center gap-x-1 align-middle">
     <li
-      v-for="banner in promoBanners"
+      v-for="(banner, index) in promoBanners"
       :key="banner.id"
       class="bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full"
-      :class="{ 'bg-orange-inter-600 h-1.5 w-3 rounded-full': isActive }"
+      :class="{
+        'bg-orange-inter-600 w-3': activeBanner === `banner-${index}`,
+        'bg-neutral-tuna-300 w-1.5': activeBanner !== `banner-${index}`,
+      }"
     ></li>
   </ul>
 </template>
