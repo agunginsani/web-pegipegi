@@ -29,35 +29,24 @@
 <template>
   <div
     class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
+    :aria-labelledby="id"
   >
     <NuxtImg class="mr-4 h-6 w-6" :src="icon" role="presentation" />
     <button class="flex-grow text-left" @click="$emit('click')">
-      <label
-        class="text-neutral-tuna-300 mb-1 block text-xs font-bold"
-        :for="id"
-      >
+      <p class="text-neutral-tuna-300 mb-1 block text-xs font-bold" :id="id">
         {{ label }}
-      </label>
+      </p>
 
-      <span
-        class="text-neutral-tuna-300 text-sm"
+      <p
         v-if="!!placeholder && !value.label"
+        class="text-neutral-tuna-300 text-sm"
       >
         {{ placeholder }}
-      </span>
+      </p>
 
-      <div
-        v-if="value.label"
-        :id="id"
-        :aria-label="label"
-        role="textbox"
-        class="text-sm"
-        readonly
-        :value="value"
-        @focus="$emit('click')"
-      >
+      <p v-if="value.label" class="text-sm">
         {{ value.label }}
-      </div>
+      </p>
     </button>
 
     <div
