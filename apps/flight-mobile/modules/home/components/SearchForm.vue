@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
-  import SearchFormInput from 'home-module/components/SearchFormInput.vue';
+  import SearchFormItem from 'home-module/components/SearchFormItem.vue';
   import ModalPassenger from 'home-module/components/ModalPassenger.vue';
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
@@ -58,7 +58,7 @@
 
 <template>
   <div class="z-1 relative rounded-2xl bg-white p-3">
-    <SearchFormInput
+    <SearchFormItem
       id="origin"
       label="Asal"
       :value="searchForm.origin"
@@ -73,9 +73,9 @@
       >
         <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" alt="Swap" />
       </button>
-    </SearchFormInput>
+    </SearchFormItem>
 
-    <SearchFormInput
+    <SearchFormItem
       id="destination"
       label="Tujuan"
       :value="searchForm.destination"
@@ -84,7 +84,7 @@
       @click="$router.push('/destination-location')"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="departureDate"
       label="Pergi"
       :value="searchForm.departureDate"
@@ -102,9 +102,9 @@
         </label>
         <Switch v-model="returnModel" value="return" id="toggle-return" />
       </template>
-    </SearchFormInput>
+    </SearchFormItem>
 
-    <SearchFormInput
+    <SearchFormItem
       v-if="returnModel.length > 0"
       id="returnDate"
       label="Pulang"
@@ -114,7 +114,7 @@
       @click="$router.push('/select-date?type=return')"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="passenger"
       label="Penumpang"
       :value="searchForm.passengers"
@@ -123,7 +123,7 @@
       @click="$router.push(`${$route.path}?showPassenger=1`)"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="class"
       label="Kelas"
       :value="searchForm.class"
