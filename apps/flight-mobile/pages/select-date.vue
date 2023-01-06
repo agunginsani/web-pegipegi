@@ -6,10 +6,14 @@
   import dateUtil from 'common-module/utils/date';
 
   definePageMeta({
-    middleware(from, to) {
+    middleware(to, from) {
       const { searchForm } = useSearchForm();
       if (!searchForm.departureDate.value) {
-        return '/';
+        return navigateTo('/');
+      }
+
+      if (!['departure', 'return'].includes(String(to.query.type))) {
+        return navigateTo('/select-date?type=departure');
       }
 
       const transition = {
