@@ -118,7 +118,7 @@
           class="flex h-12 w-12 items-center justify-center"
           @click="onBack"
         >
-          <NuxtImg class="h-5 w-5" src="/icon-back.svg" alt="Back" />
+          <NuxtImg width="20" height="20" src="/icon-back.svg" alt="Back" />
         </button>
         <slot name="header" :value="localValue" />
       </div>
@@ -167,7 +167,9 @@
       <div class="bg-neutral-tuna-50 rounded-t-2xl py-2 px-4 text-sm">
         <p>
           <NuxtImg
-            class="mr-2 inline-block h-5 w-5"
+            class="mr-2 inline-block"
+            width="20"
+            height="20"
             src="/icon-info-round.svg"
             alt="Info"
           />
@@ -196,7 +198,9 @@
               <span>Pulang</span>
               <button class="ml-1" @click="onClearReturn">
                 <NuxtImg
-                  class="h-3 w-3 align-middle"
+                  class="align-middle"
+                  width="12"
+                  height="12"
                   src="/icon-close-round.svg"
                   alt="Clear"
                 />

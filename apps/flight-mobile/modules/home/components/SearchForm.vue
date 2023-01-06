@@ -71,7 +71,12 @@
         @click="onSwap"
         aria-label="Swap Origin and Destination"
       >
-        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" alt="Swap" />
+        <NuxtImg
+          src="/icon-search-swap.svg"
+          alt="Swap"
+          width="24"
+          height="24"
+        />
       </button>
     </SearchFormItem>
 

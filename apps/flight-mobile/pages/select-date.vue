@@ -95,7 +95,9 @@
             {{ parseTitle(searchForm.origin.label) }}
           </span>
           <NuxtImg
-            class="mx-1 inline-block h-4 w-4"
+            class="mx-1 inline-block"
+            width="16"
+            height="16"
             :src="
               value[1] ? '/icon-arrow-roundtrip.svg' : '/icon-arrow-oneway.svg'
             "
