@@ -56,7 +56,7 @@
           :key="`class-${item.code}`"
         >
           <label
-            class="flex items-center gap-1"
+            class="flex items-center gap-2"
             :for="`flight-class-${item.code}`"
           >
             <div class="mr-auto">

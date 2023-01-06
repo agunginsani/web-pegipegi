@@ -64,7 +64,7 @@
       :value="searchForm.origin"
       placeholder="Pilih Keberangkatan"
       icon="/icon-search-origin.svg"
-      @click="$router.push('/origin-location')"
+      @click="$router.push('/select-location?type=origin')"
     >
       <button
         class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
@@ -81,7 +81,7 @@
       :value="searchForm.destination"
       placeholder="Pilih Tujuan"
       icon="/icon-search-destination.svg"
-      @click="$router.push('/destination-location')"
+      @click="$router.push('/select-location?type=destination')"
     />
 
     <SearchFormItem
