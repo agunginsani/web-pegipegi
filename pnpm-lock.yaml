@@ -49,7 +49,7 @@ importers:
       '@pinia/nuxt': 0.4.5
       date-fns: 2.29.3
       dotenv: 16.0.3
-      newrelic: 9.7.4
+      newrelic: 9.7.5
       winston: 3.8.2
       zod: 3.19.1
     devDependencies:
@@ -991,7 +991,7 @@ packages:
       is-promise: 4.0.0
     dev: true
 
-  /@newrelic/aws-sdk/5.0.2_newrelic@9.7.4:
+  /@newrelic/aws-sdk/5.0.2_newrelic@9.7.5:
     resolution:
       {
         integrity: sha512-vn5Aj0ZznjzqqxR69mHIWi7QUjBeab9f0Dfra/UOPZlyLy3Q/HbK4/sYV9/q/Ifmx85B3kJI4ca7mytCx073VQ==,
@@ -1000,10 +1000,10 @@ packages:
     peerDependencies:
       newrelic: '>=8.7.0'
     dependencies:
-      newrelic: 9.7.4
+      newrelic: 9.7.5
     dev: false
 
-  /@newrelic/koa/7.1.0_newrelic@9.7.4:
+  /@newrelic/koa/7.1.0_newrelic@9.7.5:
     resolution:
       {
         integrity: sha512-jKYzlw8NGZpRMpxKmHv97F5ms+YxD+YZ0sC8fG3lQqjQ+Ie+IEgP8pbI/qVAMc07CBhe07ygstQthu86Rb5RZw==,
@@ -1012,7 +1012,7 @@ packages:
     peerDependencies:
       newrelic: '>=6.11.0'
     dependencies:
-      newrelic: 9.7.4
+      newrelic: 9.7.5
     dev: false
 
   /@newrelic/native-metrics/9.0.0:
@@ -1031,7 +1031,7 @@ packages:
     dev: false
     optional: true
 
-  /@newrelic/superagent/6.0.0_newrelic@9.7.4:
+  /@newrelic/superagent/6.0.0_newrelic@9.7.5:
     resolution:
       {
         integrity: sha512-5nClQp9ACd4BvLusAgFHjjKLDgAaC+dKmIsRNOPC82LOLFaoOgxxtbecnDIJ0NWCKQS+WOdmXdgYutwH+e5dsA==,
@@ -1040,7 +1040,7 @@ packages:
     peerDependencies:
       newrelic: '>=6.11.0'
     dependencies:
-      newrelic: 9.7.4
+      newrelic: 9.7.5
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -1779,6 +1779,7 @@ packages:
       {
         integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==,
       }
+    dev: true
 
   /@tyriar/fibonacci-heap/2.0.9:
     resolution:
@@ -6848,19 +6849,19 @@ packages:
     engines: { node: '>= 0.6' }
     dev: true
 
-  /newrelic/9.7.4:
+  /newrelic/9.7.5:
     resolution:
       {
-        integrity: sha512-+K1C2L0Ynhl7dBcxUNMLl8SBvYQtFHoYU/WFqrF2JSAN035M4ZQ5ID8WBpS3xwzwDmAD0torr0uvttNbVo7gBw==,
+        integrity: sha512-rQK8J+7q+w8hkzco+jAH42oxRCC1MV0GJvExYL9dBg1vb+XQc2cGk2485qtRGkDDDcHRMA6w6R5av9IMHmYF2Q==,
       }
     engines: { node: '>=14', npm: '>=6.0.0' }
     hasBin: true
     dependencies:
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
-      '@newrelic/aws-sdk': 5.0.2_newrelic@9.7.4
-      '@newrelic/koa': 7.1.0_newrelic@9.7.4
-      '@newrelic/superagent': 6.0.0_newrelic@9.7.4
+      '@newrelic/aws-sdk': 5.0.2_newrelic@9.7.5
+      '@newrelic/koa': 7.1.0_newrelic@9.7.5
+      '@newrelic/superagent': 6.0.0_newrelic@9.7.5
       '@tyriar/fibonacci-heap': 2.0.9
       concat-stream: 2.0.0
       https-proxy-agent: 5.0.1
