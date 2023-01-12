@@ -6,10 +6,10 @@
   import useSearchForm from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
-  const { searchForm, availableClass, setSearchForm, fetchAvailableClass } =
+  const { searchForm, availableClass, setSearchForm, initiateAvailableClass } =
     useSearchForm();
 
-  if (availableClass.length === 0) fetchAvailableClass();
+  if (availableClass.length === 0) initiateAvailableClass();
 
   const returnModel = computed({
     get() {
