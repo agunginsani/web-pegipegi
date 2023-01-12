@@ -20,10 +20,11 @@
         >
           <NuxtImg
             class="mr-2"
-            :src="`${info.imageUrlIcon}`"
-            :alt="`${info.description}`"
+            :src="info.imageUrlIcon"
+            :alt="info.description"
             width="28"
             height="28"
+            loading="lazy"
           />
           <p class="text-neutral-tuna-300 text-sm">
             {{ info.description }}

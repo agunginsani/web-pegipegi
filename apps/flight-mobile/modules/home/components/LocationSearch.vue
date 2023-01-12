@@ -8,6 +8,7 @@
   type LocationSeachEmits = {
     (name: 'update:modelValue', payload: string): void;
     (name: 'input', payload: Event): void;
+    (name: 'back'): void;
   };
 
   const props = defineProps<LocationSearchProps>();
@@ -19,11 +20,9 @@
   }
 
   const body = ref<Window | null>(null);
-  const input = ref<HTMLElement | null>(null);
   const { arrivedState } = useScroll(body);
   onMounted(() => {
     body.value = window;
-    input.value?.focus();
   });
 </script>
 
@@ -49,7 +48,7 @@
       </div>
       <button
         class="text-orange-inter-600 px-4 text-sm font-bold"
-        @click="$router.go(-1)"
+        @click="$emit('back')"
       >
         Batal
       </button>

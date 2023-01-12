@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import useAuthStore from '~~/modules/common/composables/use-auth-store';
+import useAuthStore from 'common-module/composables/use-auth-store';
 
 const ImportantInfo = z.object({
   message: z.string(),
