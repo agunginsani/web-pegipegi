@@ -63,6 +63,8 @@ export default defineStore('searchForm', () => {
   }
 
   function initiateAvailableClass() {
+    if (availableClass.length > 0) return;
+
     // TODO: fetch from api
     const response = [
       {
