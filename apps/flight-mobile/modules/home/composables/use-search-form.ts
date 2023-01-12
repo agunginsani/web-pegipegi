@@ -1,11 +1,14 @@
-type PassangerValue = {
-  adult: number;
-  child: number;
-  infant: number;
+export type PassangerValue = {
+  value: {
+    adult: number;
+    child: number;
+    infant: number;
+  };
+  label: string;
 };
 
 export type SearchFormValue = {
-  value: string | PassangerValue;
+  value: string;
   label: string;
 };
 
@@ -14,19 +17,19 @@ type SearchForm = {
   destination: SearchFormValue;
   departureDate: SearchFormValue;
   returnDate?: SearchFormValue;
-  passenger: SearchFormValue;
+  passengers: PassangerValue;
   class: SearchFormValue;
 };
 
-type SearchFormKey =
-  | 'origin'
-  | 'destination'
-  | 'departureDate'
-  | 'returnDate'
-  | 'passenger'
-  | 'class';
+type FlightClassItem = {
+  code: string;
+  displayName: string;
+  description: string;
+};
 
 export default defineStore('searchForm', () => {
+  const availableClass = reactive<Array<FlightClassItem>>([]);
+
   const searchForm = reactive<SearchForm>({
     origin: {
       label: 'Jakarta (JKT)',
@@ -41,7 +44,7 @@ export default defineStore('searchForm', () => {
       value: '',
     },
     returnDate: undefined,
-    passenger: {
+    passengers: {
       label: '1 Dewasa • 0 Anak • 0 Bayi',
       value: {
         adult: 1,
@@ -50,19 +53,55 @@ export default defineStore('searchForm', () => {
       },
     },
     class: {
-      label: 'Ekonomi',
-      value: 'EKO',
+      label: '',
+      value: '',
     },
   });
 
   function setSearchForm(payload: Partial<SearchForm>) {
-    Object.entries(payload).forEach(([key, value]) => {
-      searchForm[key as SearchFormKey] = value;
+    Object.assign(searchForm, { ...searchForm, ...payload });
+  }
+
+  function initiateAvailableClass() {
+    if (availableClass.length > 0) return;
+
+    // TODO: fetch from api
+    const response = [
+      {
+        code: 'ECONOMY',
+        displayName: 'Ekonomi',
+        description: 'Pilihan paling hemat untuk sampai ke destinasi',
+      },
+      {
+        code: 'PREMIUMECONOMY',
+        displayName: 'Premium Ekonomi',
+        description:
+          'Mau terbang tetap hemat dengan ruang kaki ekstra? Pilih yang ini!',
+      },
+      {
+        code: 'BUSINESS',
+        displayName: 'Bisnis',
+        description: 'Lupakan terbang hemat! Kelas ini bikin kamu serasa bos',
+      },
+      {
+        code: 'FIRST',
+        displayName: 'First Class',
+        description: 'Kelas konglomerat dengan kemewahan maksimal',
+      },
+    ];
+    Object.assign(availableClass, response);
+    setSearchForm({
+      class: {
+        label: response[0].displayName,
+        value: response[0].code,
+      },
     });
   }
 
   return {
     searchForm,
     setSearchForm,
+    availableClass,
+    initiateAvailableClass,
   };
 });

@@ -46,7 +46,11 @@
       />
 
       <ul class="mt-[18px]">
-        <li v-for="(menu, index) in footerMenus" :key="index" class="mb-2">
+        <li
+          v-for="(menu, index) in footerMenus"
+          :key="`footer-item-${index}`"
+          class="mb-2"
+        >
           <a
             class="flex justify-between"
             :href="`${menu.link}`"

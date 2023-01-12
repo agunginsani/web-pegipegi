@@ -27,7 +27,7 @@
   <div
     class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
   >
-    <NuxtImg class="mr-4 h-6 w-6" :src="icon" :alt="label" />
+    <NuxtImg class="mr-4" width="24" height="24" :src="icon" :alt="label" />
     <div class="flex flex-grow">
       <button class="block flex-grow text-left" @click="$emit('click')">
         <label

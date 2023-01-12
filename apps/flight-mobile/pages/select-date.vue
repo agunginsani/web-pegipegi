@@ -6,10 +6,14 @@
   import dateUtil from 'common-module/utils/date';
 
   definePageMeta({
-    middleware(from, to) {
+    middleware(to, from) {
       const { searchForm } = useSearchForm();
       if (!searchForm.departureDate.value) {
-        return '/';
+        return navigateTo('/');
+      }
+
+      if (!['departure', 'return'].includes(String(to.query.type))) {
+        return navigateTo('/select-date?type=departure');
       }
 
       const transition = {
@@ -91,7 +95,9 @@
             {{ parseTitle(searchForm.origin.label) }}
           </span>
           <NuxtImg
-            class="mx-1 inline-block h-4 w-4"
+            class="mx-1 inline-block"
+            width="16"
+            height="16"
             :src="
               value[1] ? '/icon-arrow-roundtrip.svg' : '/icon-arrow-oneway.svg'
             "

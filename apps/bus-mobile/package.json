@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.0.1",
-    "nuxt": "3.0.0"
+    "nuxt": "3.0.0",
+    "@vueuse/core": "^9.8.2"
   },
   "dependencies": {
     "@pegipegi/web-pegipegi-ui": "latest"

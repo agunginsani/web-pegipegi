@@ -1,50 +1,47 @@
 <script lang="ts" setup>
   import { Button, Switch } from '@pegipegi/web-pegipegi-ui';
-  import SearchFormInput from 'home-module/components/SearchFormInput.vue';
+  import SearchFormItem from 'home-module/components/SearchFormItem.vue';
+  import ModalPassenger from 'home-module/components/ModalPassenger.vue';
+  import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
-  const { searchForm, setSearchForm } = useSearchForm();
+  const { searchForm, setSearchForm, initiateAvailableClass } = useSearchForm();
 
-  const returnModel = ref(searchForm.returnDate ? ['return'] : []);
+  initiateAvailableClass();
 
-  const isReturn = computed(() => returnModel.value.length > 0);
+  const returnModel = computed({
+    get() {
+      return searchForm.returnDate ? ['return'] : [];
+    },
+    set(value) {
+      if (value.length > 0) {
+        const today = new Date(String(searchForm.departureDate.value));
+        const tommorow = date.add(today, { days: 1 });
+        setSearchForm({
+          returnDate: {
+            label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
+            value: tommorow.toString(),
+          },
+        });
+      } else {
+        setSearchForm({ returnDate: undefined });
+      }
+    },
+  });
 
-  function setReturn() {
-    const today = new Date(String(searchForm.departureDate.value));
-    const tommorow = date.add(today, { days: 1 });
-    if (isReturn.value) {
-      setSearchForm({
-        returnDate: {
-          label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
-          value: tommorow.toString(),
-        },
-      });
-    } else {
-      setSearchForm({ returnDate: undefined });
-    }
-  }
-
-  watch(
-    () => isReturn.value,
-    () => setReturn()
-  );
-
-  function setDefault() {
+  onMounted(() => {
     if (!searchForm.departureDate.value) {
       /* date needs to be initiated from client side
          due to server & client tz difference possibility */
       setSearchForm({
+        // TODO: set departure based on last search
         departureDate: {
           label: date.format(new Date(), 'EEEE, dd MMM yyyy'),
           value: date.startOfDay(new Date()).toString(),
         },
       });
     }
-  }
-
-  onMounted(() => {
-    setDefault();
   });
 
   function onSearch() {
@@ -60,7 +57,7 @@
 
 <template>
   <div class="z-1 relative rounded-2xl bg-white p-3">
-    <SearchFormInput
+    <SearchFormItem
       id="origin"
       label="Asal"
       :value="searchForm.origin"
@@ -73,11 +70,16 @@
         @click="onSwap"
         aria-label="Swap Origin and Destination"
       >
-        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" alt="Swap" />
+        <NuxtImg
+          src="/icon-search-swap.svg"
+          alt="Swap"
+          width="24"
+          height="24"
+        />
       </button>
-    </SearchFormInput>
+    </SearchFormItem>
 
-    <SearchFormInput
+    <SearchFormItem
       id="destination"
       label="Tujuan"
       :value="searchForm.destination"
@@ -86,7 +88,7 @@
       @click="$router.push('/destination-location')"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="departureDate"
       label="Pergi"
       :value="searchForm.departureDate"
@@ -104,10 +106,10 @@
         </label>
         <Switch v-model="returnModel" value="return" id="toggle-return" />
       </template>
-    </SearchFormInput>
+    </SearchFormItem>
 
-    <SearchFormInput
-      v-if="isReturn"
+    <SearchFormItem
+      v-if="returnModel.length > 0"
       id="returnDate"
       label="Pulang"
       :value="searchForm.returnDate"
@@ -116,22 +118,27 @@
       @click="$router.push('/select-date?type=return')"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="passenger"
       label="Penumpang"
-      :value="searchForm.passenger"
+      :value="searchForm.passengers"
       placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
+      @click="$router.push(`${$route.path}?showPassenger=1`)"
     />
 
-    <SearchFormInput
+    <SearchFormItem
       id="class"
       label="Kelas"
       :value="searchForm.class"
       placeholder="Pilih Kelas"
       icon="/icon-search-class.svg"
+      @click="$router.push(`${$route.path}?showClass=1`)"
     />
 
     <Button block class="mt-2" @click="onSearch">Cari Tiket Pesawat</Button>
   </div>
+
+  <ModalPassenger />
+  <ModalClass />
 </template>
