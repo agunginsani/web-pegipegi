@@ -35,7 +35,7 @@
       /* date needs to be initiated from client side
          due to server & client tz difference possibility */
       setSearchForm({
-        // TODO: set departure based on last search
+        // TODO: set searchform based on last search
         departureDate: {
           label: date.format(new Date(), 'EEEE, dd MMM yyyy'),
           value: date.startOfDay(new Date()).toString(),
