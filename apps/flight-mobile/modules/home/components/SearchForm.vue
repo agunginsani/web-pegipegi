@@ -6,10 +6,9 @@
   import useSearchForm from 'home-module/composables/use-search-form';
   import date from 'common-module/utils/date';
 
-  const { searchForm, availableClass, setSearchForm, fetchAvailableClass } =
-    useSearchForm();
+  const { searchForm, setSearchForm, initiateAvailableClass } = useSearchForm();
 
-  if (availableClass.length === 0) fetchAvailableClass();
+  initiateAvailableClass();
 
   const returnModel = computed({
     get() {
@@ -71,7 +70,12 @@
         @click="onSwap"
         aria-label="Swap Origin and Destination"
       >
-        <NuxtImg class="h-6 w-6" src="/icon-search-swap.svg" alt="Swap" />
+        <NuxtImg
+          src="/icon-search-swap.svg"
+          alt="Swap"
+          width="24"
+          height="24"
+        />
       </button>
     </SearchFormItem>
 

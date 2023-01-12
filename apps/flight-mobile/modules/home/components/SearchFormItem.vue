@@ -31,7 +31,14 @@
     class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
     :aria-labelledby="id"
   >
-    <NuxtImg class="mr-4 h-6 w-6" :src="icon" role="presentation" />
+    <NuxtImg
+      class="mr-4"
+      width="24"
+      height="24"
+      :src="icon"
+      role="presentation"
+    />
+
     <button class="flex-grow text-left" @click="$emit('click')">
       <p class="text-neutral-tuna-300 mb-1 block text-xs font-bold" :id="id">
         {{ label }}

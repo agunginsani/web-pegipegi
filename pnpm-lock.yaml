@@ -1764,6 +1764,7 @@ packages:
       {
         integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==,
       }
+    dev: true
 
   /@tyriar/fibonacci-heap/2.0.9:
     resolution:

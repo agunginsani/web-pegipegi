@@ -9,4 +9,5 @@ module.exports = {
     './middleware/transition.global.ts',
   ],
   presets: [require('@pegipegi/web-pegipegi-ui/tailwind-config')],
+  variants: ['responsive', 'group-hover', 'hover', 'focus', 'active'],
 };

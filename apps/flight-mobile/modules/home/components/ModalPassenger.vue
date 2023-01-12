@@ -116,6 +116,8 @@
                 :class="{ 'opacity-30': passenger.isPrevDisabled }"
                 src="/icon-subtract.svg"
                 alt="Subtract"
+                width="16"
+                height="16"
               />
             </button>
             <p class="w-12 text-center text-lg font-bold">
@@ -130,6 +132,8 @@
                 :class="{ 'opacity-30': passenger.isNextDisabled }"
                 src="/icon-add.svg"
                 alt="Add"
+                width="16"
+                height="16"
               />
             </button>
           </div>

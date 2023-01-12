@@ -62,7 +62,9 @@ export default defineStore('searchForm', () => {
     Object.assign(searchForm, { ...searchForm, ...payload });
   }
 
-  function fetchAvailableClass() {
+  function initiateAvailableClass() {
+    if (availableClass.length > 0) return;
+
     // TODO: fetch from api
     const response = [
       {
@@ -100,6 +102,6 @@ export default defineStore('searchForm', () => {
     searchForm,
     setSearchForm,
     availableClass,
-    fetchAvailableClass,
+    initiateAvailableClass,
   };
 });
