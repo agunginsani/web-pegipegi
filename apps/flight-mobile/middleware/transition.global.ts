@@ -1,7 +1,7 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-  type Transition = typeof to.meta.pageTransition;
+import { RouteMeta } from 'vue-router';
 
-  const enterTransition: Transition = {
+export default defineNuxtRouteMiddleware((to, from) => {
+  const enterTransition: RouteMeta['pageTransition'] = {
     enterActiveClass:
       'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
     leaveActiveClass:
@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     mode: 'in-out',
   };
 
-  const leaveTransition: Transition = {
+  const leaveTransition: RouteMeta['pageTransition'] = {
     enterActiveClass:
       'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
     leaveActiveClass:

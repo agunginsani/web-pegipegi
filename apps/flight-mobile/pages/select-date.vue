@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import { RouteMeta } from 'vue-router';
   import Calendar, {
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
@@ -16,7 +17,7 @@
         return navigateTo('/select-date?type=departure');
       }
 
-      const transition = {
+      const transition: RouteMeta['pageTransition'] = {
         enterActiveClass:
           'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
         leaveActiveClass:
@@ -27,8 +28,8 @@
         mode: 'in-out',
       };
 
-      to.meta.pageTransition = transition as typeof to.meta.pageTransition;
-      from.meta.pageTransition = transition as typeof from.meta.pageTransition;
+      to.meta.pageTransition = transition;
+      from.meta.pageTransition = transition;
     },
   });
 
