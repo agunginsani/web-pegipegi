@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   const root = ref<HTMLElement | null>(null);
-  const curruntSlide = ref(0);
+  const currentSlide = ref(0);
   const lastSlide = ref(0);
 
   withDefaults(defineProps<{ indicated: boolean }>(), {
@@ -18,7 +18,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            curruntSlide.value = Number(
+            currentSlide.value = Number(
               (entry.target as HTMLElement).dataset.index
             );
           }
@@ -64,9 +64,9 @@
     </ul>
     <div
       class="absolute top-1/2 flex w-full -translate-y-1/2 transform justify-between px-4"
-      :class="{ '-mt-4': indicated, 'flex-row-reverse': curruntSlide === 0 }"
+      :class="{ '-mt-4': indicated, 'flex-row-reverse': currentSlide === 0 }"
     >
-      <button @click="prevSlide" v-if="curruntSlide !== 0">
+      <button @click="prevSlide" v-if="currentSlide !== 0">
         <NuxtImg
           class="-scale-x-100 transform"
           src="/icon-chevron-right-grey.svg"
@@ -75,7 +75,7 @@
           height="28"
         />
       </button>
-      <button @click="nextSlide" v-if="curruntSlide !== lastSlide">
+      <button @click="nextSlide" v-if="currentSlide !== lastSlide">
         <NuxtImg
           src="/icon-chevron-right-grey.svg"
           alt="icon-next"
@@ -90,7 +90,7 @@
         :key="`dot-${index}`"
         class="bg-neutral-tuna-300 h-2 w-2 rounded-full"
         :class="{
-          'bg-orange-inter-600': curruntSlide === index,
+          'bg-orange-inter-600': currentSlide === index,
         }"
       ></li>
     </ul>
