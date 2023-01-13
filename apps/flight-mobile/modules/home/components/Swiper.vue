@@ -8,7 +8,7 @@
   });
 
   onMounted(() => {
-    if (root.value && root.value !== null) {
+    if (root.value) {
       const options = {
         root: root.value,
         threshold: 0.8,
