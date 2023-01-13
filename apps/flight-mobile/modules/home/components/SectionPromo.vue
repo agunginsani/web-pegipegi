@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
-
   const promoBanners = ref([
     {
       id: 1,
@@ -25,25 +23,28 @@
   ]);
 
   const root = ref<HTMLElement | null>(null);
-  const targetRef = ref([]);
-  const activeBanner = ref('');
+  const activeBanner = ref();
 
   onMounted(() => {
-    const options = {
-      root: root.value,
-      threshold: 0,
-      rootMargin: '0px -100px 0px -100px',
-    };
+    if (root.value && root.value !== null) {
+      const options = {
+        root: root.value,
+        threshold: 0,
+        rootMargin: '0px -100px 0px -100px',
+      };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeBanner.value = entry.target.dataset.index;
-        }
-      });
-    }, options);
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeBanner.value = (entry.target as HTMLElement).dataset.index;
+          }
+        });
+      }, options);
 
-    targetRef.value.forEach((target: HTMLElement) => observer.observe(target));
+      for (const target of root.value.children) {
+        observer.observe(target);
+      }
+    }
   });
 </script>
 
@@ -61,7 +62,6 @@
         v-for="(banner, index) in promoBanners"
         :key="banner.id"
         class="snap-center snap-always"
-        ref="targetRef"
         :data-index="`banner-${index}`"
       >
         <div
