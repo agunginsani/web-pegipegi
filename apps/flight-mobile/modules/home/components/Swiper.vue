@@ -64,7 +64,7 @@
     </ul>
     <div
       class="absolute top-1/2 flex w-full -translate-y-1/2 transform justify-between px-4"
-      :class="{ '-mt-4': indicated }"
+      :class="{ '-mt-4': indicated, 'flex-row-reverse': curruntSlide === 0 }"
     >
       <button @click="prevSlide" v-if="curruntSlide !== 0">
         <NuxtImg
@@ -75,7 +75,6 @@
           height="28"
         />
       </button>
-      <span v-else />
       <button @click="nextSlide" v-if="curruntSlide !== lastSlide">
         <NuxtImg
           src="/icon-chevron-right-grey.svg"
@@ -84,7 +83,6 @@
           height="28"
         />
       </button>
-      <span v-else />
     </div>
     <ul v-if="indicated" class="mt-4 flex items-center justify-center gap-x-1">
       <li
