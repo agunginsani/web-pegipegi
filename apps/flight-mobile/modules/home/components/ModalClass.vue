@@ -49,7 +49,7 @@
           Pilih Kelas
         </h2>
       </div>
-      <ul class="p-4">
+      <ul class="px-4 pt-4">
         <li
           v-for="item in availableClass"
           class="pb-4 last-of-type:pb-0"

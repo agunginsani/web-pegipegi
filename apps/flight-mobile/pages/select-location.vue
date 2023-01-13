@@ -7,22 +7,49 @@
     SearchForm,
   } from 'home-module/composables/use-search-form';
 
+  type ResultItem = {
+    title: string;
+    description: string;
+    type: string;
+    value: SearchFormValue;
+    icon: string;
+  };
+
   const router = useRouter();
   const route = useRoute();
 
   const { airports, initiateAirports } = useAirports();
   await initiateAirports();
 
-  // search
+  // popular groups & last location search
+  const lastSearch = useLocalStorage<Array<ResultItem>>(
+    'flight-mweb.last-location-search',
+    []
+  );
+  const popularGroups = computed(() =>
+    airports
+      .filter((item) => item.group.toLowerCase() === 'populer')
+      .map((item) => ({
+        title: `${item.area_name}, ${item.country_name}`,
+        description: `${item.airport_code} - ${item.airport_name}`,
+        type: `${item.type[0].toUpperCase()}${item.type
+          .slice(1)
+          .toLowerCase()}`,
+        icon:
+          item.type === 'KOTA'
+            ? '/icon-location-city.svg'
+            : '/icon-location-airport.svg',
+        value: {
+          label: `${item.area_name} (${item.airport_code})`,
+          value: item.airport_code,
+        },
+      }))
+  );
+
+  // search airports
   const keyword = ref('');
-  const results = ref<
-    Array<{
-      title: string;
-      description: string;
-      type: string;
-      value: SearchFormValue;
-    }>
-  >([]);
+  const results = ref<Array<ResultItem>>([]);
+
   watchDebounced(
     keyword,
     () => {
@@ -46,6 +73,10 @@
               type: `${item.type[0].toUpperCase()}${item.type
                 .slice(1)
                 .toLowerCase()}`,
+              icon:
+                item.type === 'KOTA'
+                  ? '/icon-location-city.svg'
+                  : '/icon-location-airport.svg',
               value: {
                 label: `${item.area_name} (${item.airport_code})`,
                 value: item.airport_code,
@@ -65,11 +96,12 @@
     { debounce: 200 }
   );
 
-  // lazy load
+  // lazy load results
   const renderedCount = ref(0);
   const renderedResult = computed(() =>
     results.value.slice(0, renderedCount.value)
   );
+
   const body = ref<Window | null>(null);
   const { arrivedState } = useScroll(body, {
     offset: { bottom: 100 },
@@ -89,64 +121,80 @@
   onMounted(() => (body.value = window));
 
   // event handlers
-  const { setSearchForm } = useSearchForm();
-  function onSelect(value: SearchFormValue) {
+  const { searchForm, setSearchForm } = useSearchForm();
+
+  function onSelect(selectedItem: ResultItem) {
     const payload: Partial<SearchForm> = {};
-    payload[route.query.type as 'origin' | 'destination'] = value;
-    setSearchForm(payload);
+    payload[route.query.type as 'origin' | 'destination'] = selectedItem.value;
+
+    if (
+      payload.origin?.value !== searchForm.destination.value &&
+      payload.destination?.value !== searchForm.origin.value
+    ) {
+      setSearchForm(payload);
+
+      lastSearch.value = [
+        selectedItem,
+        ...lastSearch.value.filter(
+          (item) => item.value.value !== selectedItem.value.value
+        ),
+      ].slice(0, 5);
+    } else {
+      // TODO: show snackbar
+    }
+
     onBack();
   }
+
   function onBack() {
     router.go(-1);
+  }
+
+  function onDeleteLastSearch() {
+    lastSearch.value = [];
   }
 </script>
 
 <template>
   <LocationSearch v-model="keyword" @back="onBack">
-    <!-- TODO: implement last search & popular destination -->
     <template v-if="!keyword">
-      <div class="flex py-2 px-4">
-        <h2 class="font-bold">Pencarian Terakhir</h2>
-        <button class="text-orange-inter-600 ml-auto text-sm font-bold">
-          Hapus Semua
-        </button>
-      </div>
-      <ul>
-        <LocationSearchItem
-          title="Bali / Denpasar, Indonesia"
-          description="DPS - Ngurah Rai International Airport"
-          type="Bandara"
-          :value="{
-            label: 'Bali / Denpasar (DPS)',
-            value: 'DPS',
-          }"
-          @select="onBack"
-        />
-      </ul>
+      <template v-if="lastSearch.length > 0">
+        <div class="flex py-2 px-4">
+          <h2 class="font-bold">Pencarian Terakhir</h2>
+          <button
+            class="text-orange-inter-600 ml-auto text-sm font-bold"
+            @click="onDeleteLastSearch"
+          >
+            Hapus Semua
+          </button>
+        </div>
+        <ul>
+          <LocationSearchItem
+            v-for="item in lastSearch"
+            :title="item.title"
+            :description="item.description"
+            :type="item.type"
+            :icon="item.icon"
+            :key="`last-search-${item.value.value}`"
+            :keyword="keyword"
+            @select="onSelect(item)"
+          />
+        </ul>
+      </template>
 
       <div class="flex py-2 px-4">
         <h2 class="font-bold">Destinasi Populer</h2>
       </div>
       <ul>
         <LocationSearchItem
-          title="Bali / Denpasar, Indonesia"
-          description="DPS - Ngurah Rai International Airport"
-          type="Bandara"
-          :value="{
-            label: 'Bali / Denpasar (DPS)',
-            value: 'DPS',
-          }"
-          @select="onBack"
-        />
-        <LocationSearchItem
-          title="Bali / Denpasar, Indonesia"
-          description="DPS - Ngurah Rai International Airport"
-          type="Bandara"
-          :value="{
-            label: 'Bali / Denpasar (DPS)',
-            value: 'DPS',
-          }"
-          @select="onBack"
+          v-for="item in popularGroups"
+          :title="item.title"
+          :description="item.description"
+          :type="item.type"
+          :icon="item.icon"
+          :key="`popular-${item.value.value}`"
+          :keyword="keyword"
+          @select="onSelect(item)"
         />
       </ul>
     </template>
@@ -158,10 +206,10 @@
           :title="item.title"
           :description="item.description"
           :type="item.type"
-          :value="item.value"
-          :key="item.value.value"
+          :icon="item.icon"
+          :key="`result-${item.value.value}`"
           :keyword="keyword"
-          @select="onSelect"
+          @select="onSelect(item)"
         />
       </ul>
     </template>

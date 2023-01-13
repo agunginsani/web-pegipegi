@@ -10,6 +10,7 @@
     icon: string;
     label: string;
     placeholder?: string;
+    to: string;
   };
 
   type InputEmits = {
@@ -39,7 +40,7 @@
       role="presentation"
     />
 
-    <button class="flex-grow text-left" @click="$emit('click')">
+    <NuxtLink :to="to" class="flex-grow text-left" @click="$emit('click')">
       <p class="text-neutral-tuna-300 mb-1 block text-xs font-bold" :id="id">
         {{ label }}
       </p>
@@ -54,7 +55,7 @@
       <p v-if="value.label" class="text-sm">
         {{ value.label }}
       </p>
-    </button>
+    </NuxtLink>
 
     <div
       v-if="$slots.default"
