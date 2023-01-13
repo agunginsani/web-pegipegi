@@ -18,6 +18,7 @@
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
+        "@types/node",
         "postcss",
         "tailwindcss",
         "vue",
