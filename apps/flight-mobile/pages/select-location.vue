@@ -13,6 +13,7 @@
   const { airports, initiateAirports } = useAirports();
   await initiateAirports();
 
+  // search
   const keyword = ref('');
   const results = ref<
     Array<{
@@ -22,50 +23,81 @@
       value: SearchFormValue;
     }>
   >([]);
-
   watchDebounced(
     keyword,
     () => {
-      // TODO: optimize, make faster
       if (keyword.value) {
-        results.value = airports
-          .filter((item) => {
-            const key = keyword.value.toLowerCase();
-            return (
-              item.airport_name.toLowerCase().includes(key) ||
-              item.airport_code.toLowerCase().includes(key) ||
-              item.country_name.toLowerCase().includes(key) ||
-              item.area_name.toLowerCase().includes(key)
-            );
-          })
-          .map((item) => ({
-            title: `${item.area_name}, ${item.country_name}`,
-            description: `${item.airport_code} - ${item.airport_name}`,
-            type: `${item.type[0].toUpperCase()}${item.type
-              .slice(1)
-              .toLowerCase()}`,
-            value: {
-              label: `${item.area_name} (${item.airport_code})`,
-              value: item.airport_code,
-            },
-          }));
+        const tempResult = [];
+        const key = keyword.value.toLowerCase();
+
+        // for loop is used for performance reason
+        for (let i = 0; i < airports.length; i++) {
+          const item = airports[i];
+          const string =
+            item.airport_name.toLowerCase() +
+            item.airport_code.toLowerCase() +
+            item.country_name.toLowerCase() +
+            item.area_name.toLowerCase();
+
+          if (string.includes(key))
+            tempResult.push({
+              title: `${item.area_name}, ${item.country_name}`,
+              description: `${item.airport_code} - ${item.airport_name}`,
+              type: `${item.type[0].toUpperCase()}${item.type
+                .slice(1)
+                .toLowerCase()}`,
+              value: {
+                label: `${item.area_name} (${item.airport_code})`,
+                value: item.airport_code,
+              },
+            });
+        }
+        results.value = tempResult;
+        renderedCount.value =
+          renderedCount.value +
+          (tempResult.length - renderedCount.value < 50
+            ? tempResult.length
+            : 50);
       } else {
         results.value = [];
       }
     },
-    { debounce: 300 }
+    { debounce: 200 }
   );
 
-  function onBack() {
-    router.go(-1);
-  }
+  // lazy load
+  const renderedCount = ref(0);
+  const renderedResult = computed(() =>
+    results.value.slice(0, renderedCount.value)
+  );
+  const body = ref<Window | null>(null);
+  const { arrivedState } = useScroll(body, {
+    offset: { bottom: 100 },
+  });
+  watch(
+    () => arrivedState.bottom,
+    (value) => {
+      if (value) {
+        renderedCount.value =
+          renderedCount.value +
+          (results.value.length - renderedCount.value < 50
+            ? results.value.length
+            : 50);
+      }
+    }
+  );
+  onMounted(() => (body.value = window));
 
+  // event handlers
   const { setSearchForm } = useSearchForm();
   function onSelect(value: SearchFormValue) {
     const payload: Partial<SearchForm> = {};
     payload[route.query.type as 'origin' | 'destination'] = value;
     setSearchForm(payload);
     onBack();
+  }
+  function onBack() {
+    router.go(-1);
   }
 </script>
 
@@ -122,7 +154,7 @@
     <template v-else>
       <ul>
         <LocationSearchItem
-          v-for="item in results"
+          v-for="item in renderedResult"
           :title="item.title"
           :description="item.description"
           :type="item.type"

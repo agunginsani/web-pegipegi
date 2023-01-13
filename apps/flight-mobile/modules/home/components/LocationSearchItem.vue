@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { SearchFormValue } from 'home-module/composables/use-search-form';
+
   type LocationSearchItemProps = {
     title: string;
     description: string;
@@ -16,7 +17,7 @@
   function highlight(input: string) {
     if (!props.keyword) return input;
 
-    const regex = new RegExp(props.keyword, 'is');
+    const regex = new RegExp(props.keyword, 'ig');
     return input.replace(regex, `<span style="color: #FE5000;">$&</span>`);
   }
 </script>
