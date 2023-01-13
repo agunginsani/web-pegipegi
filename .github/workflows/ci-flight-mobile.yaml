@@ -40,6 +40,7 @@ jobs:
           pnpm -F flight-mobile-test exec playwright install --with-deps
           CI=true pnpm -F flight-mobile-test exec playwright test
   sonarcloud:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
