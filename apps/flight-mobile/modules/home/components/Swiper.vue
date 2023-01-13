@@ -2,7 +2,7 @@
   const root = ref<HTMLElement | null>(null);
   const currentSlide = ref(0);
   const lastSlide = ref(0);
-  const uuid = Date.now();
+  const uuid = Date.now() + Math.random();
 
   withDefaults(defineProps<{ indicated: boolean }>(), {
     indicated: false,
