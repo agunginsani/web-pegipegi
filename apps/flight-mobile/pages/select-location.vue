@@ -4,14 +4,14 @@
   import useAirports from 'home-module/composables/use-airports';
   import useSearchForm, {
     SearchFormValue,
-    SearchForm,
+    SearchFormItemValue,
   } from 'home-module/composables/use-search-form';
 
   type ResultItem = {
     title: string;
     description: string;
     type: string;
-    value: SearchFormValue;
+    value: SearchFormItemValue;
     icon: string;
   };
 
@@ -54,7 +54,7 @@
     keyword,
     () => {
       if (keyword.value) {
-        const tempResult = [];
+        const tempResult: Array<ResultItem> = [];
         const key = keyword.value.toLowerCase();
 
         // for loop is used for performance reason
@@ -127,7 +127,7 @@
   const { searchForm, setSearchForm } = useSearchForm();
 
   function onSelect(selectedItem: ResultItem) {
-    const payload: Partial<SearchForm> = {};
+    const payload: Partial<SearchFormValue> = {};
     payload[route.query.type as 'origin' | 'destination'] = selectedItem.value;
 
     if (
