@@ -46,7 +46,7 @@
       }))
   );
 
-  // search airports
+  // search location
   const keyword = ref('');
   const results = ref<Array<ResultItem>>([]);
 
@@ -62,8 +62,11 @@
           const item = airports[i];
           const string =
             item.airport_name.toLowerCase() +
+            '|' +
             item.airport_code.toLowerCase() +
+            '|' +
             item.country_name.toLowerCase() +
+            '|' +
             item.area_name.toLowerCase();
 
           if (string.includes(key))
