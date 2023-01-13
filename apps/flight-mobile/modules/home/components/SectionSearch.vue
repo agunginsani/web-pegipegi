@@ -62,6 +62,30 @@
       };
     }
     setSearchForm(newSearchForm);
+  } else {
+    setSearchForm({
+      origin: {
+        label: 'Jakarta (JKT)',
+        value: 'JKT',
+      },
+      destination: {
+        label: 'Denpasar / Bali (DPS)',
+        value: 'DPS',
+      },
+      departureDate: {
+        label: '',
+        value: '',
+      },
+      returnDate: undefined,
+      passengers: {
+        label: '1 Dewasa • 0 Anak • 0 Bayi',
+        value: {
+          adult: 1,
+          child: 0,
+          infant: 0,
+        },
+      },
+    });
   }
 
   onMounted(() => {

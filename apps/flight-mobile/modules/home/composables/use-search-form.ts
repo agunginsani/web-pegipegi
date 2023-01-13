@@ -32,12 +32,12 @@ export default defineStore('searchForm', () => {
 
   const searchForm = reactive<SearchFormValue>({
     origin: {
-      label: 'Jakarta (JKT)',
-      value: 'JKT',
+      label: '',
+      value: '',
     },
     destination: {
-      label: 'Denpasar / Bali (DPS)',
-      value: 'DPS',
+      label: '',
+      value: '',
     },
     departureDate: {
       label: '',
@@ -45,9 +45,9 @@ export default defineStore('searchForm', () => {
     },
     returnDate: undefined,
     passengers: {
-      label: '1 Dewasa • 0 Anak • 0 Bayi',
+      label: '',
       value: {
-        adult: 1,
+        adult: 0,
         child: 0,
         infant: 0,
       },

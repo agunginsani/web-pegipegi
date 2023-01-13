@@ -18,6 +18,19 @@
   const router = useRouter();
   const route = useRoute();
 
+  definePageMeta({
+    middleware(to) {
+      const { searchForm } = useSearchForm();
+      if (!searchForm.origin.value) {
+        return navigateTo('/');
+      }
+
+      if (!['origin', 'departure'].includes(String(to.query.type))) {
+        return navigateTo('/select-location?type=origin');
+      }
+    },
+  });
+
   const { airports, initiateAirports } = useAirports();
   await initiateAirports();
 
