@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - apps/flight-mobile/**
+      - tests/flight-mobile/**
       - .github/workflows/ci-flight-mobile.yaml
     types:
       - opened
