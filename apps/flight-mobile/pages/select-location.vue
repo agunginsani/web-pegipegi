@@ -25,7 +25,7 @@
         return navigateTo('/');
       }
 
-      if (!['origin', 'departure'].includes(String(to.query.type))) {
+      if (!['origin', 'destination'].includes(String(to.query.type))) {
         return navigateTo('/select-location?type=origin');
       }
     },

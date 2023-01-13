@@ -90,12 +90,6 @@ export default defineStore('searchForm', () => {
       },
     ];
     Object.assign(availableClass, response);
-    setSearchForm({
-      class: {
-        label: response[0].displayName,
-        value: response[0].code,
-      },
-    });
   }
 
   return {
