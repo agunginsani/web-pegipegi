@@ -65,7 +65,10 @@
     </ul>
     <div
       class="absolute top-1/2 flex w-full -translate-y-1/2 transform justify-between px-4"
-      :class="{ '-mt-4': indicated, 'flex-row-reverse': currentSlide === 0 }"
+      :class="{
+        'top-[calc(50%-16px)]': indicated,
+        'flex-row-reverse': currentSlide === 0,
+      }"
     >
       <button @click="prevSlide" v-if="currentSlide !== 0">
         <NuxtImg
