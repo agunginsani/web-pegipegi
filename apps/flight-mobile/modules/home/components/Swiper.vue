@@ -2,6 +2,7 @@
   const root = ref<HTMLElement | null>(null);
   const currentSlide = ref(0);
   const lastSlide = ref(0);
+  const uuid = Date.now();
 
   withDefaults(defineProps<{ indicated: boolean }>(), {
     indicated: false,
@@ -87,7 +88,7 @@
     <ul v-if="indicated" class="mt-4 flex items-center justify-center gap-x-1">
       <li
         v-for="(_, index) in lastSlide + 1"
-        :key="`dot-${index}`"
+        :key="`dot-${uuid}-${index}`"
         class="bg-neutral-tuna-300 h-2 w-2 rounded-full"
         :class="{
           'bg-orange-inter-600': currentSlide === index,
