@@ -9,12 +9,12 @@
     <h2 id="important-info-title" class="font-bold">Informasi Penting</h2>
     <ul class="mt-2">
       <li
-        class="border-neutral-tuna-50 border-b py-3.5 last-of-type:border-transparent"
+        class="border-neutral-tuna-50 border-b last-of-type:border-transparent"
         v-for="(info, index) in infos"
         :key="index"
       >
         <a
-          class="relative flex items-center pr-4"
+          class="relative flex items-center py-3.5 pr-4"
           :href="`${info.landingPageUrl}`"
           target="_blank"
         >
