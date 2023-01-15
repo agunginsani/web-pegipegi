@@ -73,7 +73,7 @@
   <li
     class="border-neutral-tuna-100 relative min-w-[280px] rounded-xl border bg-white px-4 py-3"
   >
-    <a :href="flightUrl" target="_blank">
+    <a :href="flightUrl">
       <div class="flex justify-between">
         <div
           class="flex space-x-1 overflow-hidden whitespace-nowrap pr-4 text-sm font-bold leading-5"
@@ -89,7 +89,7 @@
         </div>
         <button
           class="absolute right-1 top-1 flex h-9 w-9 items-center justify-center"
-          @click="$emit('delete', index)"
+          @click.stop.prevent="$emit('delete', index)"
         >
           <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
         </button>
