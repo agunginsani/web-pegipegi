@@ -3,7 +3,7 @@
 
   const body = ref<HTMLElement | null>(null);
   const { arrivedState } = useScroll(body, {
-    offset: { top: 80 },
+    offset: { top: 150 },
   });
   onMounted(() => {
     body.value = document.querySelector('#body');
