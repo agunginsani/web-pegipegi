@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { mockCurrentDate } from '../scripts/date';
 
 test.beforeEach(async ({ page }) => {
+  await mockCurrentDate(page);
   await page.goto('/');
 });
 
@@ -18,10 +19,6 @@ test('As a user, I can see `Cari Tiket Pesawat` and navigation back to Pegipegi 
 });
 
 test.describe('As a user, I can search flight schedule filtered by airport, date, seat class, and number of passengers so that I can focus on flight schedule that matches my criteria', () => {
-  test.beforeEach(async ({ page }) => {
-    await mockCurrentDate(page);
-  });
-
   test('Given that I am a user, I can see search form inputs with default values in my first visit', async ({
     page,
   }) => {
