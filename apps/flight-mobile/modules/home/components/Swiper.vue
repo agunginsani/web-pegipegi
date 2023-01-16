@@ -41,7 +41,7 @@
     }
   });
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     observer.value?.disconnect();
   });
 
