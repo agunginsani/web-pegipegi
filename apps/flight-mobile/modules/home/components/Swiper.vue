@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   const root = ref<HTMLElement | null>(null);
+  const observer = ref<IntersectionObserver | null>(null);
   const currentSlide = ref(0);
   const lastSlide = ref(0);
   const id = Math.random();
@@ -16,7 +17,7 @@
         rootMargin: '0px',
       };
 
-      const observer = new IntersectionObserver((entries) => {
+      observer.value = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             currentSlide.value = Number(
@@ -27,7 +28,7 @@
       }, options);
 
       for (const target of root.value.children) {
-        observer.observe(target);
+        observer.value.observe(target);
         target.classList.add(
           'snap-center',
           'snap-always',
@@ -38,6 +39,10 @@
       }
       lastSlide.value = root.value.children.length - 1;
     }
+  });
+
+  onUnmounted(() => {
+    observer.value?.disconnect();
   });
 
   function onPreviousClick() {
