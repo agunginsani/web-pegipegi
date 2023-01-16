@@ -26,7 +26,7 @@
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
-  const activeBanner = ref('');
+  const activeBannerIndex = ref('');
 
   const observer = ref<IntersectionObserver | null>(null);
 
@@ -36,7 +36,7 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = (entry.target as HTMLLIElement).dataset.index;
-            if (index) activeBanner.value = index;
+            if (index) activeBannerIndex.value = index;
           }
         });
       },
@@ -85,7 +85,7 @@
         :key="banner.id"
         :class="[
           'bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full',
-          activeBanner === `${index}`
+          activeBannerIndex === `${index}`
             ? 'bg-orange-inter-600 w-3'
             : 'bg-neutral-tuna-300 w-1.5',
         ]"
