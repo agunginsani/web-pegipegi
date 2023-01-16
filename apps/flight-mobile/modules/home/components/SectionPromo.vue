@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
 
-  const promoBanners = ref([
+  const banners = ref([
     {
       id: 1,
       image:
@@ -24,68 +24,72 @@
     },
   ]);
 
-  const root = ref<HTMLElement | null>(null);
-  const targetRef = ref([]);
+  const listRef = ref<HTMLLIElement | null>(null);
+  const listItemRef = ref<Array<HTMLLIElement>>([]);
   const activeBanner = ref('');
 
+  const observer = ref<IntersectionObserver | null>(null);
+
   onMounted(() => {
-    const options = {
-      root: root.value,
-      threshold: 0,
-      rootMargin: '0px -100px 0px -100px',
-    };
+    observer.value = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = (entry.target as HTMLLIElement).dataset.index;
+            if (index) activeBanner.value = index;
+          }
+        });
+      },
+      { root: listRef.value, threshold: 1 }
+    );
+  });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeBanner.value = entry.target.dataset.index;
-        }
-      });
-    }, options);
+  watch([listItemRef, observer], ([ref, observer]) => {
+    ref.forEach((target: HTMLLIElement) => observer?.observe(target));
+  });
 
-    targetRef.value.forEach((target: HTMLElement) => observer.observe(target));
+  onBeforeUnmount(() => {
+    observer.value?.disconnect();
   });
 </script>
 
 <template>
   <section aria-labelledby="section-promo-title" class="pb-3">
     <div class="mb-4 flex justify-between px-4">
-      <h1 id="promo-banners-user" class="text-base font-bold">Promo</h1>
+      <h2 id="promo-banners-user" class="text-base font-bold">Promo</h2>
       <button class="text-orange-inter-600 font-bold">Lihat Semua</button>
     </div>
-    <ul
-      class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto px-4"
-      ref="root"
-    >
-      <li
-        v-for="(banner, index) in promoBanners"
-        :key="banner.id"
-        class="snap-center snap-always"
-        ref="targetRef"
-        :data-index="`banner-${index}`"
+    <div class="">
+      <ul
+        class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto"
+        ref="listRef"
       >
-        <div
-          class="relative min-w-[312px] flex-shrink-0 overflow-hidden rounded-xl"
+        <li class="min-w-[312px]" />
+        <li
+          v-for="(banner, index) in banners"
+          :key="banner.id"
+          :data-index="`${index}`"
+          class="shrink-0 snap-center"
+          ref="listItemRef"
         >
-          <NuxtImg
-            src="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=312&h=156&q=80"
-            alt="promo-banner"
-            width="312"
-            height="156"
-          />
-        </div>
-      </li>
-    </ul>
+          <div class="overflow-hidden rounded-xl">
+            <NuxtImg :src="banner.image" alt="" width="312" height="156" />
+          </div>
+        </li>
+        <li class="min-w-[312px]" />
+      </ul>
+    </div>
     <ul class="mt-2 flex justify-center gap-x-1 align-middle">
       <li
-        v-for="(banner, index) in promoBanners"
+        v-for="(banner, index) in banners"
         :key="banner.id"
-        class="bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full"
-        :class="{
-          'bg-orange-inter-600 w-3': activeBanner === `banner-${index}`,
-          'bg-neutral-tuna-300 w-1.5': activeBanner !== `banner-${index}`,
-        }"
-      ></li>
+        :class="[
+          'bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full',
+          activeBanner === `${index}`
+            ? 'bg-orange-inter-600 w-3'
+            : 'bg-neutral-tuna-300 w-1.5',
+        ]"
+      />
     </ul>
   </section>
 </template>
