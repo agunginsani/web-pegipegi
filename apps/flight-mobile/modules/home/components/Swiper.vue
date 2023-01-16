@@ -40,14 +40,14 @@
     }
   });
 
-  function prevSlide() {
+  function onPreviousClick() {
     root.value?.scrollBy({
       left: -100,
       behavior: 'smooth',
     });
   }
 
-  function nextSlide() {
+  function onNextClick() {
     root.value?.scrollBy({
       left: 100,
       behavior: 'smooth',
@@ -70,7 +70,7 @@
         'flex-row-reverse': currentSlide === 0,
       }"
     >
-      <button @click="prevSlide" v-if="currentSlide !== 0">
+      <button @click="onPreviousClick" v-if="currentSlide !== 0">
         <NuxtImg
           class="-scale-x-100 transform"
           src="/icon-chevron-right-grey.svg"
@@ -79,7 +79,7 @@
           height="28"
         />
       </button>
-      <button @click="nextSlide" v-if="currentSlide !== lastSlide">
+      <button @click="onNextClick" v-if="currentSlide !== lastSlide">
         <NuxtImg
           src="/icon-chevron-right-grey.svg"
           alt="icon-next"
