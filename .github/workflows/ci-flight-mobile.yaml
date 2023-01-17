@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - apps/flight-mobile/**
+      - tests/flight-mobile/**
       - .github/workflows/ci-flight-mobile.yaml
     types:
       - opened
@@ -39,6 +40,7 @@ jobs:
           pnpm -F flight-mobile-test exec playwright install --with-deps
           CI=true pnpm -F flight-mobile-test exec playwright test
   sonarcloud:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

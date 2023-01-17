@@ -101,6 +101,7 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: 'pnpm -F flight-mobile-app preview-staging',
     port: 3000,
+    reuseExistingServer: !process.env.CI,
   },
 };
 
