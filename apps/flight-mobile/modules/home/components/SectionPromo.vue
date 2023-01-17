@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
   import usePromoBanners from 'home-module/composables/use-fetch-promo-banners';
 
   const { banners, fetch } = usePromoBanners();
@@ -27,7 +26,7 @@
   });
 
   watch([listItemRef, observer], ([ref, observer]) => {
-    ref.forEach((target: HTMLLIElement) => observer?.observe(target));
+    ref.forEach((target) => observer?.observe(target));
   });
 
   onUnmounted(() => {
@@ -41,30 +40,28 @@
       <h2 id="promo-banners-user" class="text-base font-bold">Promo</h2>
       <button class="text-orange-inter-600 font-bold">Lihat Semua</button>
     </div>
-    <div class="">
-      <ul
-        class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto"
-        ref="listRef"
+    <ul
+      class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto"
+      ref="listRef"
+    >
+      <span class="min-w-[250px]"></span>
+      <li
+        v-for="(banner, index) in banners ?? []"
+        :key="banner.id"
+        :data-index="index"
+        class="shrink-0 snap-center"
+        ref="listItemRef"
       >
-        <li class="min-w-[250px]" />
-        <li
-          v-for="(banner, index) in banners ?? []"
-          :key="banner.id"
-          :data-index="`${index}`"
-          class="shrink-0 snap-center"
-          ref="listItemRef"
-        >
-          <NuxtImg
-            :src="banner.image"
-            :alt="banner.description"
-            class="h-[138px] overflow-hidden rounded-xl"
-            width="250"
-            height="138"
-          />
-        </li>
-        <li class="min-w-[250px]" />
-      </ul>
-    </div>
+        <NuxtImg
+          :src="banner.image"
+          :alt="banner.description"
+          class="h-[138px] overflow-hidden rounded-xl"
+          width="250"
+          height="138"
+        />
+      </li>
+      <span class="min-w-[250px]"></span>
+    </ul>
     <ul class="mt-2 flex justify-center gap-x-1 align-middle">
       <li
         v-for="(banner, index) in banners ?? []"
@@ -79,18 +76,3 @@
     </ul>
   </section>
 </template>
-
-<style scoped>
-  /* Hide scrollbar for Chrome, Safari and Opera. */
-  .no-scroll-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hide scrollbar for IE, Edge and Firefox. */
-  .no-scroll-bar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-  }
-</style>
