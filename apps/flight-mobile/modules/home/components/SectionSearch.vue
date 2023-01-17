@@ -11,6 +11,7 @@
 
   initiateAvailableClass();
 
+  // TODO: resolve hydration mismatch possibility
   const history = useCookie<Array<History>>('flight-search');
   if (history.value?.[0]) {
     const lastSearch = history.value[0];
@@ -65,7 +66,7 @@
         value: 'JKT',
       },
       destination: {
-        label: 'Denpasar / Bali (DPS)',
+        label: 'Bali / Denpasar (DPS)',
         value: 'DPS',
       },
       departureDate: {
