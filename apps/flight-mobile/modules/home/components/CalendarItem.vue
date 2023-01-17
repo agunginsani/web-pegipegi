@@ -7,6 +7,7 @@
     dayNum: number;
     monthNum: number;
     fullDate: Date;
+    label: string;
     isActive: boolean;
     isInBetween: boolean;
     isInRange: boolean;
@@ -53,6 +54,7 @@
 
     for (let i = 1; i <= numOfDays; i++) {
       const fullDate = new Date(year, monthNum - 1, i);
+      const label = dateUtil.format(fullDate, 'dd MMMM yyyy');
       const dayNum = Number(dateUtil.format(fullDate, 'i'));
       const isStart = dateUtil.isSameDay(
         fullDate,
@@ -72,6 +74,7 @@
         dayNum,
         monthNum,
         fullDate,
+        label,
         isActive,
         isStart,
         isEnd,
@@ -111,7 +114,7 @@
           class="relative w-full"
           :class="{ 'pointer-events-none': date.isDisabled }"
           @click="emit('select', date.fullDate)"
-          :aria-label="dateUtil.format(date.fullDate, 'dd MMMM yyyy')"
+          :aria-label="date.label"
         >
           <p
             v-if="date.isToday"
