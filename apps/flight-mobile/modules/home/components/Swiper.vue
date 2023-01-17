@@ -3,9 +3,10 @@
   const observer = ref<IntersectionObserver | null>(null);
   const currentSlide = ref(0);
   const lastSlide = ref(0);
+  const index = ref(0);
   const id = Math.random();
 
-  withDefaults(defineProps<{ indicated: boolean }>(), {
+  withDefaults(defineProps<{ indicated?: boolean }>(), {
     indicated: false,
   });
 
@@ -29,13 +30,8 @@
 
       for (const target of root.value.children) {
         observer.value.observe(target);
-        target.classList.add(
-          'snap-center',
-          'snap-always',
-          'w-full',
-          'flex-shrink-0',
-          'overflow-hidden'
-        );
+        (target as HTMLElement).dataset.index = index.value.toString();
+        index.value = index.value + 1;
       }
       lastSlide.value = root.value.children.length - 1;
     }
