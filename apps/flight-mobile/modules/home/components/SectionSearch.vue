@@ -11,116 +11,98 @@
 
   initiateAvailableClass();
 
-  // TODO: resolve hydration mismatch possibility
   const history = useCookie<Array<History>>('flight-search');
-  if (history.value?.[0]) {
-    const lastSearch = history.value[0];
-    const departureDate = dateUtil.parse(
-      lastSearch.departureDate,
-      'dd-MM-yyyy',
-      new Date()
-    );
-    const returnDate = lastSearch.returnDate
-      ? dateUtil.parse(lastSearch.returnDate, 'dd-MM-yyyy', new Date())
-      : undefined;
-
-    const newSearchForm: Partial<SearchFormValue> = {
-      origin: {
-        label: `${lastSearch.from.city} (${lastSearch.from.airport})`,
-        value: lastSearch.from.airport,
-      },
-      destination: {
-        label: `${lastSearch.to.city} (${lastSearch.to.airport})`,
-        value: lastSearch.to.airport,
-      },
-      departureDate: {
-        label: dateUtil.format(departureDate, 'EEEE, dd MMM yyyy'),
-        value: departureDate.toString(),
-      },
-      class: {
-        label:
-          availableClass.find((item) => item.code === lastSearch.seatClass)
-            ?.displayName ?? '-',
-        value: lastSearch.seatClass,
-      },
-      passengers: {
-        label: `${lastSearch.paxAdult} Dewasa • ${lastSearch.paxChild} Anak • ${lastSearch.paxInfant} Bayi`,
-        value: {
-          adult: lastSearch.paxAdult,
-          child: lastSearch.paxChild,
-          infant: lastSearch.paxInfant,
-        },
-      },
-    };
-    if (returnDate) {
-      newSearchForm.returnDate = {
-        label: dateUtil.format(returnDate, 'EEEE, dd MMM yyyy'),
-        value: returnDate.toString(),
-      };
-    }
-    setSearchForm(newSearchForm);
-  } else if (!searchForm.origin.value) {
-    setSearchForm({
-      origin: {
-        label: 'Jakarta (JKT)',
-        value: 'JKT',
-      },
-      destination: {
-        label: 'Bali / Denpasar (DPS)',
-        value: 'DPS',
-      },
-      departureDate: {
-        label: '',
-        value: '',
-      },
-      returnDate: undefined,
-      passengers: {
-        label: '1 Dewasa • 0 Anak • 0 Bayi',
-        value: {
-          adult: 1,
-          child: 0,
-          infant: 0,
-        },
-      },
-      class: {
-        label: availableClass[0].displayName,
-        value: availableClass[0].code,
-      },
-    });
-  }
 
   onMounted(() => {
-    /* date needs to be initiated from client side
+    /* data needs to be initiated from client side
        due to server & client tz difference possibility */
-    if (
-      !searchForm.departureDate.value ||
-      dateUtil.isBefore(
-        new Date(searchForm.departureDate.value),
+
+    if (!searchForm.origin.value && history.value?.[0]) {
+      const lastSearch = history.value[0];
+      const lastDepartureDate = dateUtil.parse(
+        lastSearch.departureDate,
+        'dd-MM-yyyy',
+        new Date()
+      );
+
+      const lastReturnDate = lastSearch.returnDate
+        ? dateUtil.parse(lastSearch.returnDate, 'dd-MM-yyyy', new Date())
+        : undefined;
+
+      const departureDate = dateUtil.isBefore(
+        lastDepartureDate,
         dateUtil.startOfDay(new Date())
       )
-    ) {
+        ? dateUtil.startOfDay(new Date())
+        : lastDepartureDate;
+
+      const returnDate = lastReturnDate
+        ? dateUtil.isBefore(lastReturnDate, departureDate)
+          ? dateUtil.add(departureDate, { days: 1 })
+          : lastReturnDate
+        : undefined;
+
+      const newSearchForm: Partial<SearchFormValue> = {
+        origin: {
+          label: `${lastSearch.from.city} (${lastSearch.from.airport})`,
+          value: lastSearch.from.airport,
+        },
+        destination: {
+          label: `${lastSearch.to.city} (${lastSearch.to.airport})`,
+          value: lastSearch.to.airport,
+        },
+        departureDate: {
+          label: dateUtil.format(departureDate, 'EEEE, dd MMM yyyy'),
+          value: departureDate.toString(),
+        },
+        class: {
+          label:
+            availableClass.find((item) => item.code === lastSearch.seatClass)
+              ?.displayName ?? '-',
+          value: lastSearch.seatClass,
+        },
+        passengers: {
+          label: `${lastSearch.paxAdult} Dewasa • ${lastSearch.paxChild} Anak • ${lastSearch.paxInfant} Bayi`,
+          value: {
+            adult: lastSearch.paxAdult,
+            child: lastSearch.paxChild,
+            infant: lastSearch.paxInfant,
+          },
+        },
+      };
+      if (returnDate) {
+        newSearchForm.returnDate = {
+          label: dateUtil.format(returnDate, 'EEEE, dd MMM yyyy'),
+          value: returnDate.toString(),
+        };
+      }
+      setSearchForm(newSearchForm);
+    } else if (!searchForm.origin.value) {
       setSearchForm({
+        origin: {
+          label: 'Jakarta (JKT)',
+          value: 'JKT',
+        },
+        destination: {
+          label: 'Bali / Denpasar (DPS)',
+          value: 'DPS',
+        },
         departureDate: {
           label: dateUtil.format(new Date(), 'EEEE, dd MMM yyyy'),
           value: dateUtil.startOfDay(new Date()).toString(),
         },
-      });
-    }
-
-    if (
-      !!searchForm.returnDate?.value &&
-      dateUtil.isBefore(
-        new Date(searchForm.returnDate.value),
-        dateUtil.startOfDay(new Date())
-      )
-    ) {
-      const nextDay = dateUtil.add(new Date(searchForm.departureDate.value), {
-        days: 1,
-      });
-      setSearchForm({
-        returnDate: {
-          label: dateUtil.format(nextDay, 'EEEE, dd MMM yyyy'),
-          value: nextDay.toString(),
+        returnDate: undefined,
+        passengers: {
+          label: '1 Dewasa • 0 Anak • 0 Bayi',
+          value: {
+            adult: 1,
+            child: 0,
+            infant: 0,
+          },
+        },
+        class: {
+          label: availableClass[0].displayName,
+          value: availableClass[0].code,
         },
       });
     }
