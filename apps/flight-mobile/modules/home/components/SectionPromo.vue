@@ -2,7 +2,10 @@
   import { ref, onMounted } from 'vue';
   import usePromoBanners from 'home-module/composables/use-fetch-promo-banners';
 
-  const { data: banners } = await usePromoBanners();
+  const { banners, fetch } = usePromoBanners();
+
+  await fetch();
+
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
   const activeBannerIndex = ref('');
@@ -27,7 +30,7 @@
     ref.forEach((target: HTMLLIElement) => observer?.observe(target));
   });
 
-  onBeforeUnmount(() => {
+  onUnmounted(() => {
     observer.value?.disconnect();
   });
 </script>
@@ -78,12 +81,12 @@
 </template>
 
 <style scoped>
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Hide scrollbar for Chrome, Safari and Opera. */
   .no-scroll-bar::-webkit-scrollbar {
     display: none;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox. */
   .no-scroll-bar {
     -ms-overflow-style: none;
     /* IE and Edge */
