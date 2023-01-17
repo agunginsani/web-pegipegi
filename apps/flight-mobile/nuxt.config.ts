@@ -18,6 +18,7 @@ export default defineNuxtConfig({
       accountBaseUrl: '',
     },
   },
+  css: ['~/assets/css/global.css'],
   tailwindcss: {
     cssPath: '@pegipegi/web-pegipegi-ui/style',
   },
