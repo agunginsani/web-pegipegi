@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       authBaseUrl: '',
       bannerApiBaseUrl: '',
       apixBaseUrl: '',
+      accountBaseUrl: '',
     },
   },
   tailwindcss: {

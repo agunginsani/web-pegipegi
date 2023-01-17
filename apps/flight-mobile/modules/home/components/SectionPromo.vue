@@ -1,29 +1,8 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
+  import usePromoBanners from 'home-module/composables/use-fetch-promo-banners';
 
-  const banners = ref([
-    {
-      id: 1,
-      image:
-        'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=312&h=156&q=80',
-    },
-    {
-      id: 2,
-      image:
-        'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=312&h=156&q=80',
-    },
-    {
-      id: 3,
-      image:
-        'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=312&h=156&q=80',
-    },
-    {
-      id: 4,
-      image:
-        'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=312&h=156&q=80',
-    },
-  ]);
-
+  const { data: banners } = await usePromoBanners();
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
   const activeBannerIndex = ref('');
@@ -64,24 +43,28 @@
         class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto"
         ref="listRef"
       >
-        <li class="min-w-[312px]" />
+        <li class="min-w-[250px]" />
         <li
-          v-for="(banner, index) in banners"
+          v-for="(banner, index) in banners ?? []"
           :key="banner.id"
           :data-index="`${index}`"
           class="shrink-0 snap-center"
           ref="listItemRef"
         >
-          <div class="overflow-hidden rounded-xl">
-            <NuxtImg :src="banner.image" alt="" width="312" height="156" />
-          </div>
+          <NuxtImg
+            :src="banner.image"
+            :alt="banner.description"
+            class="h-[138px] overflow-hidden rounded-xl"
+            width="250"
+            height="138"
+          />
         </li>
-        <li class="min-w-[312px]" />
+        <li class="min-w-[250px]" />
       </ul>
     </div>
     <ul class="mt-2 flex justify-center gap-x-1 align-middle">
       <li
-        v-for="(banner, index) in banners"
+        v-for="(banner, index) in banners ?? []"
         :key="banner.id"
         :class="[
           'bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full',
