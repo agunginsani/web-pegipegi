@@ -2,7 +2,7 @@
   import dateUtil from 'common-module/utils/date';
   import { CalendarModelValue } from 'home-module/components/Calendar.vue';
 
-  export type CalendarItemSlotProps = {
+  type CalendarItemSlotProps = {
     date: number;
     dayNum: number;
     monthNum: number;
