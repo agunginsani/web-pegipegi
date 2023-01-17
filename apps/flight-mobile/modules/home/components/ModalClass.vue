@@ -49,14 +49,14 @@
           Pilih Kelas
         </h2>
       </div>
-      <ul class="p-4">
+      <ul class="px-4 pt-4">
         <li
           v-for="item in availableClass"
           class="pb-4 last-of-type:pb-0"
           :key="`class-${item.code}`"
         >
           <label
-            class="flex items-center gap-1"
+            class="flex items-center gap-2"
             :for="`flight-class-${item.code}`"
           >
             <div class="mr-auto">

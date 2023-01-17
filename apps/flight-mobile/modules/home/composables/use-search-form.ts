@@ -12,7 +12,7 @@ export type SearchFormValue = {
   label: string;
 };
 
-type SearchForm = {
+export type SearchForm = {
   origin: SearchFormValue;
   destination: SearchFormValue;
   departureDate: SearchFormValue;
@@ -59,7 +59,7 @@ export default defineStore('searchForm', () => {
   });
 
   function setSearchForm(payload: Partial<SearchForm>) {
-    Object.assign(searchForm, { ...searchForm, ...payload });
+    Object.assign(searchForm, payload);
   }
 
   function initiateAvailableClass() {

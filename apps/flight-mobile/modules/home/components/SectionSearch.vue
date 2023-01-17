@@ -15,6 +15,7 @@
       format="webp"
       fetchpriority="high"
       loading="eager"
+      height="310"
       preload
     />
 
