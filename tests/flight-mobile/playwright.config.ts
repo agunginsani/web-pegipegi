@@ -99,8 +99,8 @@ const config: PlaywrightTestConfig = {
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm -F flight-mobile-app preview-staging',
-    port: 3000,
+    command: 'pnpm -F flight-mobile-app run preview-staging',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
 };

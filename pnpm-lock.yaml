@@ -37,8 +37,10 @@ importers:
       '@nuxtjs/tailwindcss': ^6.0.1
       '@pegipegi/web-pegipegi-ui': latest
       '@pinia/nuxt': ^0.4.3
+      '@types/cookie': ^0.5.1
       '@vueuse/core': ^9.8.2
       '@vueuse/nuxt': ^9.8.2
+      cookie: ^0.5.0
       date-fns: ^2.29.3
       dotenv: ^16.0.3
       newrelic: latest
@@ -49,6 +51,7 @@ importers:
       '@google-cloud/logging-winston': 5.3.0_winston@3.8.2
       '@pegipegi/web-pegipegi-ui': 0.0.10_@vueuse+core@9.10.0
       '@pinia/nuxt': 0.4.6
+      cookie: 0.5.0
       date-fns: 2.29.3
       dotenv: 16.0.3
       newrelic: 9.7.5
@@ -57,6 +60,7 @@ importers:
     devDependencies:
       '@nuxt/image-edge': 1.0.0-27840416.dc1ed65
       '@nuxtjs/tailwindcss': 6.2.0
+      '@types/cookie': 0.5.1
       '@vueuse/core': 9.10.0
       '@vueuse/nuxt': 9.10.0_nuxt@3.0.0
       nuxt: 3.0.0
@@ -1711,6 +1715,13 @@ packages:
       }
     dev: true
 
+  /@types/cookie/0.5.1:
+    resolution:
+      {
+        integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==,
+      }
+    dev: true
+
   /@types/estree/1.0.0:
     resolution:
       {
@@ -3262,6 +3273,14 @@ packages:
         integrity: sha512-RyZrFi6PNpBFbIaQjXDlFIhFVqV42QeKSZX1yQIl6ihImq6vcHNGMtqQ/QzY3RMPuYSkvsRwtnt5M9NeYxKt0g==,
       }
     dev: true
+
+  /cookie/0.5.0:
+    resolution:
+      {
+        integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==,
+      }
+    engines: { node: '>= 0.6' }
+    dev: false
 
   /cookies/0.8.0:
     resolution:
