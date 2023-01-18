@@ -22,49 +22,53 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
   test('Given that I am a user, I can see search form inputs with default values in my first visit', async ({
     page,
   }) => {
-    await expect(
-      page.getByRole('button', { name: 'Asal Jakarta (JKT)' })
-    ).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Asal' })).toContainText(
+      'Jakarta (JKT)'
+    );
 
-    await expect(
-      page.getByRole('button', { name: 'Tujuan Denpasar / Bali (DPS)' })
-    ).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Tujuan' })).toContainText(
+      'Bali / Denpasar (DPS)'
+    );
 
-    await expect(
-      page.getByRole('button', { name: 'Pergi Jumat, 13 Jan 2023' })
-    ).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Pergi' })).toContainText(
+      'Jumat, 13 Jan 2023'
+    );
 
     await expect(
       page.getByRole('checkbox', { name: 'Pulang Pergi?' })
     ).not.toBeChecked();
 
-    await expect(
-      page.getByRole('button', { name: /^Pulang/ })
-    ).not.toBeVisible();
+    await expect(page.getByRole('link', { name: 'Pulang' })).not.toBeVisible();
+
+    await expect(page.getByRole('link', { name: 'Penumpang' })).toContainText(
+      '1 Dewasa • 0 Anak • 0 Bayi'
+    );
+
+    await expect(page.getByRole('link', { name: 'Kelas' })).toContainText(
+      'Ekonomi'
+    );
 
     await expect(
-      page.getByRole('button', { name: 'Penumpang 1 Dewasa • 0 Anak • 0 Bayi' })
+      page.getByRole('link', { name: 'Cari Tiket Pesawat' })
     ).toBeVisible();
-
-    await expect(
-      page.getByRole('button', { name: 'Kelas Ekonomi' })
-    ).toBeVisible();
-
-    // await expect(
-    //   page.getByRole('link', { name: 'Cari Tiket Pesawat' })
-    // ).toBeVisible();
   });
 
   test('Given that I am a user, I can change Pergi or Pulang input value', async ({
     page,
   }) => {
-    await page
-      .getByRole('button', { name: 'Pergi Jumat, 13 Jan 2023' })
-      .click();
+    await expect(page.getByRole('link', { name: 'Asal' })).toContainText(
+      'Jakarta (JKT)'
+    );
+
+    await expect(page.getByRole('link', { name: 'Tujuan' })).toContainText(
+      'Bali / Denpasar (DPS)'
+    );
+
+    await page.getByRole('link', { name: 'Pergi' }).click();
 
     await expect(
       page.getByRole('heading', {
-        name: 'Jakarta To Denpasar / Bali',
+        name: 'Jakarta To Bali / Denpasar',
         level: 1,
       })
     ).toBeVisible();
