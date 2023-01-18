@@ -47,21 +47,21 @@ const config: PlaywrightTestConfig = {
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices['Galaxy S8'],
       },
     },
 
     {
       name: 'firefox',
       use: {
-        ...devices['Desktop Firefox'],
+        ...devices['Galaxy S8'],
       },
     },
 
     {
       name: 'webkit',
       use: {
-        ...devices['Desktop Safari'],
+        ...devices['iPhone 8'],
       },
     },
 
