@@ -33,7 +33,7 @@
   watch(
     () => searchForm.class.value,
     () => {
-      router.go(-1);
+      if (route.query.showClass) router.go(-1);
     }
   );
 </script>

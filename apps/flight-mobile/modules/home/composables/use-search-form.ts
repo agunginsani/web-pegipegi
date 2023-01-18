@@ -7,18 +7,18 @@ export type PassangerValue = {
   label: string;
 };
 
-export type SearchFormValue = {
+export type SearchFormItemValue = {
   value: string;
   label: string;
 };
 
-export type SearchForm = {
-  origin: SearchFormValue;
-  destination: SearchFormValue;
-  departureDate: SearchFormValue;
-  returnDate?: SearchFormValue;
+export type SearchFormValue = {
+  origin: SearchFormItemValue;
+  destination: SearchFormItemValue;
+  departureDate: SearchFormItemValue;
+  returnDate?: SearchFormItemValue;
   passengers: PassangerValue;
-  class: SearchFormValue;
+  class: SearchFormItemValue;
 };
 
 type FlightClassItem = {
@@ -30,14 +30,14 @@ type FlightClassItem = {
 export default defineStore('searchForm', () => {
   const availableClass = reactive<Array<FlightClassItem>>([]);
 
-  const searchForm = reactive<SearchForm>({
+  const searchForm = reactive<SearchFormValue>({
     origin: {
-      label: 'Jakarta (JKT)',
-      value: 'JKT',
+      label: '',
+      value: '',
     },
     destination: {
-      label: 'Denpasar / Bali (DPS)',
-      value: 'DPS',
+      label: '',
+      value: '',
     },
     departureDate: {
       label: '',
@@ -45,9 +45,9 @@ export default defineStore('searchForm', () => {
     },
     returnDate: undefined,
     passengers: {
-      label: '1 Dewasa • 0 Anak • 0 Bayi',
+      label: '',
       value: {
-        adult: 1,
+        adult: 0,
         child: 0,
         infant: 0,
       },
@@ -58,7 +58,7 @@ export default defineStore('searchForm', () => {
     },
   });
 
-  function setSearchForm(payload: Partial<SearchForm>) {
+  function setSearchForm(payload: Partial<SearchFormValue>) {
     Object.assign(searchForm, payload);
   }
 
@@ -90,12 +90,6 @@ export default defineStore('searchForm', () => {
       },
     ];
     Object.assign(availableClass, response);
-    setSearchForm({
-      class: {
-        label: response[0].displayName,
-        value: response[0].code,
-      },
-    });
   }
 
   return {

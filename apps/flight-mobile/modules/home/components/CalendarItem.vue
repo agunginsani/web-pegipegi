@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-  import date from 'common-module/utils/date';
+  import dateUtil from 'common-module/utils/date';
   import { CalendarModelValue } from 'home-module/components/Calendar.vue';
 
-  export type CalendarItemSlotProps = {
+  type CalendarItemSlotProps = {
     date: number;
     dayNum: number;
     monthNum: number;
     fullDate: Date;
+    label: string;
     isActive: boolean;
     isInBetween: boolean;
     isInRange: boolean;
@@ -35,46 +36,52 @@
     return input ? new Date(input) : 0;
   }
 
-  const header = computed(() => date.format(new Date(props.date), 'MMMM yyyy'));
+  const header = computed(() =>
+    dateUtil.format(new Date(props.date), 'MMMM yyyy')
+  );
 
   const dates = computed(() => {
     const pointer = new Date(props.date);
 
-    const today = date.startOfDay(new Date());
-    const year = Number(date.format(pointer, 'yyyy'));
-    const monthNum = Number(date.format(pointer, 'M'));
-    const numOfDays = Number(date.format(date.endOfMonth(pointer), 'd'));
+    const today = dateUtil.startOfDay(new Date());
+    const year = Number(dateUtil.format(pointer, 'yyyy'));
+    const monthNum = Number(dateUtil.format(pointer, 'M'));
+    const numOfDays = Number(
+      dateUtil.format(dateUtil.endOfMonth(pointer), 'd')
+    );
 
     const returnValue: Array<CalendarItemSlotProps> = [];
 
     for (let i = 1; i <= numOfDays; i++) {
       const fullDate = new Date(year, monthNum - 1, i);
-      const dayNum = Number(date.format(fullDate, 'i'));
-      const isStart = date.isSameDay(
+      const label = dateUtil.format(fullDate, 'dd MMMM yyyy');
+      const dayNum = Number(dateUtil.format(fullDate, 'i'));
+      const isStart = dateUtil.isSameDay(
         fullDate,
         props.modelValue[0] ? new Date(props.modelValue[0]) : 0
       );
-      const isEnd = date.isSameDay(
+      const isEnd = dateUtil.isSameDay(
         fullDate,
         props.modelValue[1] ? new Date(props.modelValue[1]) : 0
       );
       const isActive = isStart || isEnd;
       const isInBetween =
-        date.isBefore(fullDate, parseDate(props.modelValue[1])) &&
-        date.isAfter(fullDate, parseDate(props.modelValue[0]));
+        dateUtil.isBefore(fullDate, parseDate(props.modelValue[1])) &&
+        dateUtil.isAfter(fullDate, parseDate(props.modelValue[0]));
 
       returnValue.push({
         date: i,
         dayNum,
         monthNum,
         fullDate,
+        label,
         isActive,
         isStart,
         isEnd,
         isInBetween,
         isInRange: isInBetween || isActive,
-        isPast: date.isBefore(fullDate, today),
-        isToday: date.isSameDay(fullDate, today),
+        isPast: dateUtil.isBefore(fullDate, today),
+        isToday: dateUtil.isSameDay(fullDate, today),
         isDisabled: props.disabledDates?.(fullDate) || false,
         // TODO: use props for holiday
         isHoliday: dayNum >= 6,
@@ -107,6 +114,7 @@
           class="relative w-full"
           :class="{ 'pointer-events-none': date.isDisabled }"
           @click="emit('select', date.fullDate)"
+          :aria-label="date.label"
         >
           <p
             v-if="date.isToday"

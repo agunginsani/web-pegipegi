@@ -4,11 +4,9 @@
   import ModalPassenger from 'home-module/components/ModalPassenger.vue';
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import date from 'common-module/utils/date';
+  import dateUtil from 'common-module/utils/date';
 
-  const { searchForm, setSearchForm, initiateAvailableClass } = useSearchForm();
-
-  initiateAvailableClass();
+  const { searchForm, setSearchForm } = useSearchForm();
 
   const returnModel = computed({
     get() {
@@ -17,10 +15,10 @@
     set(value) {
       if (value.length > 0) {
         const today = new Date(String(searchForm.departureDate.value));
-        const tommorow = date.add(today, { days: 1 });
+        const tommorow = dateUtil.add(today, { days: 1 });
         setSearchForm({
           returnDate: {
-            label: date.format(tommorow, 'EEEE, dd MMM yyyy'),
+            label: dateUtil.format(tommorow, 'EEEE, dd MMM yyyy'),
             value: tommorow.toString(),
           },
         });
@@ -30,23 +28,33 @@
     },
   });
 
-  onMounted(() => {
-    if (!searchForm.departureDate.value) {
-      /* date needs to be initiated from client side
-         due to server & client tz difference possibility */
-      setSearchForm({
-        // TODO: set searchform based on last search
-        departureDate: {
-          label: date.format(new Date(), 'EEEE, dd MMM yyyy'),
-          value: date.startOfDay(new Date()).toString(),
-        },
-      });
-    }
-  });
+  const searchUrl = computed(() => {
+    const from = searchForm.origin.value;
+    const to = searchForm.destination.value;
+    const departureDate = searchForm.departureDate.value
+      ? dateUtil.format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
+      : undefined;
+    const returnDate = searchForm.returnDate?.value
+      ? dateUtil.format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
+      : undefined;
+    const adult = searchForm.passengers.value.adult;
+    const child = searchForm.passengers.value.child;
+    const infant = searchForm.passengers.value.infant;
+    const seatClass = searchForm.class.value;
 
-  function onSearch() {
-    console.log('search', JSON.stringify(searchForm));
-  }
+    let queryParams = `from=${from}&to=${to}&adult=${adult}&child=${child}&infant=${infant}&seatClass=${seatClass}&isNoTransit=0`;
+
+    if (departureDate) {
+      queryParams = `${queryParams}&departureDate=${departureDate}`;
+    }
+
+    if (returnDate) {
+      queryParams = `${queryParams}&returnDate=${returnDate}`;
+    }
+
+    const baseUrl = useRuntimeConfig().public.homeUrl;
+    return `${baseUrl}/flight/search-result/departure?${queryParams}`;
+  });
 
   function onSwap() {
     const origin = JSON.parse(JSON.stringify(searchForm.destination));
@@ -136,9 +144,11 @@
       :to="`${$route.path}?showClass=1`"
     />
 
-    <Button block class="mt-2" @click="onSearch">Cari Tiket Pesawat</Button>
-  </div>
+    <NuxtLink :to="searchUrl">
+      <Button block class="mt-2">Cari Tiket Pesawat</Button>
+    </NuxtLink>
 
-  <ModalPassenger />
-  <ModalClass />
+    <ModalPassenger />
+    <ModalClass />
+  </div>
 </template>

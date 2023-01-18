@@ -1,12 +1,12 @@
 <script lang="ts" setup>
   import {
-    SearchFormValue,
+    SearchFormItemValue,
     PassangerValue,
   } from 'home-module/composables/use-search-form';
 
   type InputProps = {
     id: string;
-    value: SearchFormValue | PassangerValue;
+    value: SearchFormItemValue | PassangerValue;
     icon: string;
     label: string;
     placeholder?: string;

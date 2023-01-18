@@ -1,8 +1,6 @@
 <script lang="ts" setup>
   import { Button } from '@pegipegi/web-pegipegi-ui';
-  import CalendarItem, {
-    CalendarItemSlotProps,
-  } from 'home-module/components/CalendarItem.vue';
+  import CalendarItem from 'home-module/components/CalendarItem.vue';
   import dateUtil from 'common-module/utils/date';
 
   export type CalendarModelValue = [Date | undefined, Date | undefined];
@@ -156,7 +154,7 @@
           :disabledDates="disabledDates"
           @select="onSelect"
         >
-          <template #default="date: CalendarItemSlotProps">
+          <template #default="date">
             <slot name="addon" v-bind="date"></slot>
           </template>
         </CalendarItem>
