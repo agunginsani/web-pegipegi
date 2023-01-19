@@ -23,50 +23,59 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
     page,
   }) => {
     await expect(
-      page.getByRole('button', { name: 'Asal Jakarta (JKT)' })
+      page.getByRole('link', { name: 'Asal Jakarta (JKT)' })
     ).toBeVisible();
 
     await expect(
-      page.getByRole('button', { name: 'Tujuan Denpasar / Bali (DPS)' })
+      page.getByRole('link', { name: 'Tujuan Bali / Denpasar (DPS)' })
     ).toBeVisible();
 
     await expect(
-      page.getByRole('button', { name: 'Pergi Jumat, 13 Jan 2023' })
+      page.getByRole('link', { name: 'Pergi Jumat, 13 Jan 2023' })
+    ).toBeVisible();
+
+    await expect(page.getByLabel('Pulang Pergi?')).not.toBeChecked();
+
+    await expect(page.getByRole('link', { name: 'Pulang' })).not.toBeVisible();
+
+    await expect(
+      page.getByRole('link', { name: 'Penumpang 1 Dewasa • 0 Anak • 0 Bayi' })
     ).toBeVisible();
 
     await expect(
-      page.getByRole('checkbox', { name: 'Pulang Pergi?' })
-    ).not.toBeChecked();
-
-    await expect(
-      page.getByRole('button', { name: /^Pulang/ })
-    ).not.toBeVisible();
-
-    await expect(
-      page.getByRole('button', { name: 'Penumpang 1 Dewasa • 0 Anak • 0 Bayi' })
+      page.getByRole('link', { name: 'Kelas Ekonomi' })
     ).toBeVisible();
 
     await expect(
-      page.getByRole('button', { name: 'Kelas Ekonomi' })
+      page.getByRole('link', { name: 'Cari Tiket Pesawat' })
     ).toBeVisible();
-
-    // await expect(
-    //   page.getByRole('link', { name: 'Cari Tiket Pesawat' })
-    // ).toBeVisible();
   });
 
   test('Given that I am a user, I can change Pergi or Pulang input value', async ({
     page,
   }) => {
-    await page
-      .getByRole('button', { name: 'Pergi Jumat, 13 Jan 2023' })
-      .click();
+    await page.getByRole('link', { name: 'Pergi Jumat, 13 Jan 2023' }).click();
+
+    await page.getByRole('button', { name: '14 Januari 2023' }).click();
+
+    await page.getByRole('button', { name: 'Simpan' }).click();
 
     await expect(
-      page.getByRole('heading', {
-        name: 'Jakarta To Denpasar / Bali',
-        level: 1,
-      })
+      page.getByRole('link', { name: 'Pergi Sabtu, 14 Jan 2023' })
+    ).toBeVisible();
+
+    await page.getByLabel('Pulang Pergi?').check({ force: true });
+
+    await page
+      .getByRole('link', { name: 'Pulang Minggu, 15 Jan 2023' })
+      .click();
+
+    await page.getByRole('button', { name: '16 Januari 2023' }).click();
+
+    await page.getByRole('button', { name: 'Simpan' }).click();
+
+    await expect(
+      page.getByRole('link', { name: 'Pulang Senin, 16 Jan 2023' })
     ).toBeVisible();
   });
 });
