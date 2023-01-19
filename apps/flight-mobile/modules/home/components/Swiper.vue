@@ -70,12 +70,11 @@
       v-if="currentSlide !== 0"
       class="absolute left-4 -translate-y-1/2 transform"
       :class="indicated ? 'top-[calc(50%-12px)]' : 'top-1/2'"
-      aria-label="Previous"
     >
       <NuxtImg
         class="-scale-x-100 transform"
         src="/icon-chevron-right-grey.svg"
-        alt="icon-previous"
+        alt="Previous"
         width="28"
         height="28"
       />
@@ -85,11 +84,10 @@
       v-if="currentSlide !== lastSlide"
       class="absolute right-4 -translate-y-1/2 transform"
       :class="indicated ? 'top-[calc(50%-12px)]' : 'top-1/2'"
-      aria-label="Next"
     >
       <NuxtImg
         src="/icon-chevron-right-grey.svg"
-        alt="icon-next"
+        alt="Next"
         width="28"
         height="28"
       />
