@@ -1,9 +1,5 @@
 <script lang="ts" setup>
   const isOpen = ref<boolean>(false);
-  const toggleContentClass = computed<Object>(() => ({
-    'max-h-[2500px]': isOpen.value,
-    'max-h-[120px]': !isOpen.value,
-  }));
 
   const contentValues = [
     {
@@ -45,7 +41,10 @@
   >
     <div
       class="content-wrapper overflow-hidden text-center transition-all duration-500"
-      :class="toggleContentClass"
+      :class="{
+        'max-h-[2500px]': isOpen,
+        'max-h-[120px]': !isOpen,
+      }"
     >
       <div v-for="(content, index) in contentValues" :key="index">
         <div v-html="content.title" />

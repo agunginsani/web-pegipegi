@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import Swiper from './Swiper.vue';
+  import SwiperItem from './SwiperItem.vue';
 
   const homeUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
   const popularRoutes = [
@@ -134,11 +135,11 @@
 
 <template>
   <section class="mt-6" aria-labelledby="popular-routes-title">
-    <h1 id="popular-routes-title" class="text-center text-base font-bold">
+    <h2 id="popular-routes-title" class="text-center text-base font-bold">
       Rute Populer
-    </h1>
+    </h2>
     <Swiper>
-      <li
+      <SwiperItem
         class="mt-3 flex min-w-full flex-col gap-1"
         v-for="(routes, index) in popularRoutes"
         :key="index"
@@ -152,7 +153,7 @@
         >
           {{ route.text }}
         </NuxtLink>
-      </li>
+      </SwiperItem>
     </Swiper>
   </section>
 </template>

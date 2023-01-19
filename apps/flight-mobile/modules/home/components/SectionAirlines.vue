@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import Swiper from './Swiper.vue';
+  import SwiperItem from './SwiperItem.vue';
 
   const homeUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
   const airlineGroups = [
@@ -281,16 +282,16 @@
 
 <template>
   <section class="text-neutral-tuna-800 my-6" aria-labelledby="airlines-title">
-    <h1 id="airlines-title" class="text-center text-base font-bold">
+    <h2 id="airlines-title" class="text-center text-base font-bold">
       Partner Maskapai Pegipegi
-    </h1>
-    <Swiper :indicated="true">
-      <li
-        class="mt-[2px] flex min-w-full justify-center px-3"
+    </h2>
+    <Swiper indicated>
+      <SwiperItem
+        class="mt-[2px] flex justify-center px-3"
         v-for="(airlines, index) in airlineGroups"
         :key="index"
       >
-        <div class="h-auto max-w-[230px]">
+        <div class="max-w-[230px] pb-1">
           <NuxtLink
             v-for="(airline, index) in airlines"
             :key="index"
@@ -298,16 +299,15 @@
             target="_blank"
           >
             <NuxtImg
-              :src="airline.url"
+              :src="`airlines/${airline.url}`"
               width="36px"
               height="36px"
               :alt="airline.label"
-              style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.200994)"
-              class="shadow-floating mr-2.5 mt-2.5 inline rounded-full"
+              class="shadow-lifted mr-2.5 mt-2.5 inline rounded-full p-2"
             />
           </NuxtLink>
         </div>
-      </li>
+      </SwiperItem>
     </Swiper>
   </section>
 </template>
