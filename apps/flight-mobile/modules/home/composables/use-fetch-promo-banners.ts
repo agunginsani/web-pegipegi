@@ -20,7 +20,11 @@ const PromoBanners = z.object({
 type PromoBanners = z.infer<typeof PromoBanners>;
 
 export default async function usePromoBanners() {
+  const { $logger } = useNuxtApp();
   return useFetch('/api/promo', {
+    onResponseError(ctx) {
+      $logger.error(ctx);
+    },
     transform(data) {
       return PromoBanners.parse(data);
     },

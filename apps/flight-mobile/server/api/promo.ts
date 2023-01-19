@@ -1,37 +1,14 @@
 import { z } from 'zod';
 import crypto from 'crypto';
 import cookie from 'cookie';
-import winston from 'winston';
-
-// This function is copy-pasted from `~/plugin/logger.server.ts`
-// because you cannot use `useNuxtApp` on here.
-async function createLogger() {
-  const transports: winston.LoggerOptions['transports'] = [
-    new winston.transports.Console(),
-  ];
-
-  if (process.env.STREAM_LOG_TO_GCP) {
-    const { LoggingWinston } = await import('@google-cloud/logging-winston');
-    transports.push(new LoggingWinston());
-  }
-
-  return winston.createLogger({
-    level: 'info',
-    transports,
-  });
-}
 
 // This API uses secret from private environment variable that
 // only lives on the server. Hence, this API exist to avoid
 // that secret from bieng leaked on the client.
 export default defineEventHandler(async ({ node }) => {
   const config = useRuntimeConfig();
-  const logger = await createLogger();
   return $fetch('/v1/banner-list', {
     baseURL: config.public.bannerApiBaseUrl,
-    onResponseError(ctx) {
-      logger.error(ctx);
-    },
     async onRequest({ options, request }) {
       const headers = node.req.headers;
       const cookies = cookie.parse(headers.cookie ?? '');
