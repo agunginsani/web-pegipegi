@@ -50,13 +50,15 @@
         class="shrink-0 snap-center"
         ref="listItemRef"
       >
-        <NuxtImg
-          :src="banner.image"
-          :alt="banner.description"
-          class="h-[138px] overflow-hidden rounded-xl"
-          width="250"
-          height="138"
-        />
+        <NuxtLink :to="banner.url" external>
+          <NuxtImg
+            :src="banner.image"
+            :alt="banner.description"
+            class="h-[138px] overflow-hidden rounded-xl"
+            width="250"
+            height="138"
+          />
+        </NuxtLink>
       </li>
       <li class="min-w-[250px]"></li>
     </ul>
