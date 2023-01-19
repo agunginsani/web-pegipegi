@@ -7,7 +7,12 @@
 
 <template>
   <div class="fixed inset-x-0 bottom-0 z-50 flex flex-col gap-2 p-4">
-    <TransitionGroup name="list">
+    <TransitionGroup
+      enter-active-class="duration-300 transition-all pointer-events-none"
+      leave-active-class="duration-300 transition-all pointer-events-none"
+      enter-from-class="opacity-0 translate-y-5"
+      leave-to-class="opacity-0 translate-y-5"
+    >
       <Alert
         v-for="(item, index) in snackbars"
         :color="item.color"
@@ -28,16 +33,3 @@
     </TransitionGroup>
   </div>
 </template>
-
-<style>
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.5s ease;
-    pointer-events: none;
-  }
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-</style>
