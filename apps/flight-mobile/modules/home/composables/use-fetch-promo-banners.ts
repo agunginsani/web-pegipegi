@@ -1,6 +1,4 @@
 import { z } from 'zod';
-import crypto from 'crypto';
-import cookie from 'cookie';
 
 const PromoBanners = z.object({
   datetime: z.string(),
@@ -22,60 +20,9 @@ const PromoBanners = z.object({
 type PromoBanners = z.infer<typeof PromoBanners>;
 
 export default async function usePromoBanners() {
-  const cached = useState<PromoBanners | null>('promo-banners', () => null);
-  const config = useRuntimeConfig();
-  const { $logger } = useNuxtApp();
-
-  // This `useFetch` uses secret from environment variable that
-  // only lives on the server. Hence, this data needs to be cached
-  // for client navigation.
-  if (cached.value !== null) return { data: cached };
-
-  const asyncData = await useFetch('/v1/banner-list', {
-    baseURL: config.public.bannerApiBaseUrl,
-    onResponseError(ctx) {
-      $logger.error(ctx);
-    },
-    async onRequest({ options, request }) {
-      const headers = useRequestHeaders(['cookie']);
-      const cookies = cookie.parse(headers.cookie ?? '');
-      const token = cookies['phpsess'] as string | undefined;
-
-      const params = new URLSearchParams();
-      params.append('device_id', cookies['device-id']);
-      params.append('device_origin', 'mweb');
-      params.append('tag', '1');
-      if (token) {
-        const Profile = z.object({
-          data: z.object({ email: z.string().email(), id: z.string() }),
-        });
-        const response = await $fetch('/v1/users/profile', {
-          headers: { authorization: `Bearer ${token}` },
-          baseURL: config.public.accountBaseUrl,
-        });
-        const { id, email } = Profile.parse(response).data;
-        params.append('email', email);
-        params.append('member_id', id);
-      }
-
-      const timestamp = Date.now() / 1000;
-      const hmac = crypto.createHmac('sha512', config.bannerApiKey);
-      const url = `${request}?${params.toString()}`;
-      const raw = `GET\nnull\n${timestamp}\n${url}`;
-      let hashed = hmac.update(raw).digest('base64');
-      hashed = Buffer.from(`web:${hashed}`).toString('utf8');
-      hashed = Buffer.from(hashed).toString('base64');
-      options.headers = {};
-      options.headers['x-auth-key'] = hashed;
-      options.headers['x-auth-time'] = `${timestamp}`;
-      options.query = Object.fromEntries(params.entries());
-    },
+  return useFetch('/api/promo', {
     transform(data) {
       return PromoBanners.parse(data);
     },
   });
-
-  cached.value = asyncData.data.value;
-
-  return { data: asyncData.data };
 }
