@@ -295,6 +295,7 @@
             v-for="(airline, index) in airlines"
             :key="index"
             :to="`${homeUrl}/flight/${airline.path}`"
+            target="_blank"
           >
             <NuxtImg
               :src="airline.url"
