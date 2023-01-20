@@ -51,31 +51,92 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
     ).toBeVisible();
   });
 
+  test('Given that I am a user, I can change Awal or Tujuan input value', async ({
+    page,
+  }) => {
+    await page.getByRole('link', { name: 'Asal Jakarta (JKT)' }).click();
+
+    await expect(
+      page.getByRole('textbox', { name: 'Cari kota atau bandara' })
+    ).toBeVisible();
+
+    await page
+      .getByRole('textbox', { name: 'Cari kota atau bandara' })
+      .fill('juanda');
+
+    await page
+      .getByRole('button')
+      .filter({ hasText: /juanda/i })
+      .click();
+
+    await expect(
+      page.getByRole('link', { name: 'Asal Surabaya (SUB)' })
+    ).toBeVisible();
+
+    await page
+      .getByRole('link', { name: 'Tujuan Bali / Denpasar (DPS)' })
+      .click();
+
+    await expect(
+      page.getByRole('textbox', { name: 'Cari kota atau bandara' })
+    ).toBeVisible();
+
+    await page
+      .getByRole('textbox', { name: 'Cari kota atau bandara' })
+      .fill('kualanamu');
+
+    await page
+      .getByRole('button')
+      .filter({ hasText: /kualanamu/i })
+      .click();
+
+    await expect(
+      page.getByRole('link', { name: 'Tujuan Medan (KNO)' })
+    ).toBeVisible();
+
+    await page.getByRole('button', { name: 'Swap' }).click();
+
+    await expect(
+      page.getByRole('link', { name: 'Asal Medan (KNO)' })
+    ).toBeVisible();
+
+    await expect(
+      page.getByRole('link', { name: 'Tujuan Surabaya (SUB)' })
+    ).toBeVisible();
+  });
+
   test('Given that I am a user, I can change Pergi or Pulang input value', async ({
     page,
   }) => {
     await page.getByRole('link', { name: 'Pergi Jumat, 13 Jan 2023' }).click();
-
-    await page.getByRole('button', { name: '14 Januari 2023' }).click();
-
+    await page.getByRole('button', { name: '08 Februari 2023' }).click();
     await page.getByRole('button', { name: 'Simpan' }).click();
 
     await expect(
-      page.getByRole('link', { name: 'Pergi Sabtu, 14 Jan 2023' })
+      page.getByRole('link', { name: 'Pergi Rabu, 08 Feb 2023' })
     ).toBeVisible();
 
-    await page.getByLabel('Pulang Pergi?').check({ force: true });
+    await page.getByText('Pulang Pergi?').click();
 
-    await page
-      .getByRole('link', { name: 'Pulang Minggu, 15 Jan 2023' })
-      .click();
-
-    await page.getByRole('button', { name: '16 Januari 2023' }).click();
-
+    await page.getByRole('link', { name: 'Pulang Kamis, 09 Feb 2023' }).click();
+    await page.getByRole('button', { name: '11 Februari 2023' }).click();
     await page.getByRole('button', { name: 'Simpan' }).click();
 
     await expect(
-      page.getByRole('link', { name: 'Pulang Senin, 16 Jan 2023' })
+      page.getByRole('link', { name: 'Pulang Sabtu, 11 Feb 2023' })
+    ).toBeVisible();
+  });
+
+  test('Given that I am a user, I can change Kelas input value', async ({
+    page,
+  }) => {
+    await page.getByRole('link', { name: 'Kelas Ekonomi' }).click();
+    await expect(page.getByLabel(/^Ekonomi/)).toBeChecked();
+
+    await page.getByText(/^Premium Ekonomi/).click();
+
+    await expect(
+      page.getByRole('link', { name: 'Kelas Premium Ekonomi' })
     ).toBeVisible();
   });
 });
