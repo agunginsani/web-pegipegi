@@ -57,38 +57,41 @@
 </script>
 
 <template>
-  <div class="relative w-full">
+  <div class="relative">
     <ul
       class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-4 overflow-x-auto px-4"
       ref="root"
     >
       <slot />
     </ul>
-    <div
-      class="absolute top-1/2 flex w-full -translate-y-1/2 transform justify-between px-4"
-      :class="{
-        'top-[calc(50%-16px)]': indicated,
-        'flex-row-reverse': currentSlide === 0,
-      }"
+
+    <button
+      @click="onPreviousClick"
+      v-if="currentSlide !== 0"
+      class="absolute left-4 -translate-y-1/2 transform"
+      :class="indicated ? 'top-[calc(50%-12px)]' : 'top-1/2'"
     >
-      <button @click="onPreviousClick" v-if="currentSlide !== 0">
-        <NuxtImg
-          class="-scale-x-100 transform"
-          src="/icon-chevron-right-grey.svg"
-          alt="icon-prev"
-          width="28"
-          height="28"
-        />
-      </button>
-      <button @click="onNextClick" v-if="currentSlide !== lastSlide">
-        <NuxtImg
-          src="/icon-chevron-right-grey.svg"
-          alt="icon-next"
-          width="28"
-          height="28"
-        />
-      </button>
-    </div>
+      <NuxtImg
+        class="-scale-x-100 transform"
+        src="/icon-chevron-right-grey.svg"
+        alt="Previous"
+        width="28"
+        height="28"
+      />
+    </button>
+    <button
+      @click="onNextClick"
+      v-if="currentSlide !== lastSlide"
+      class="absolute right-4 -translate-y-1/2 transform"
+      :class="indicated ? 'top-[calc(50%-12px)]' : 'top-1/2'"
+    >
+      <NuxtImg
+        src="/icon-chevron-right-grey.svg"
+        alt="Next"
+        width="28"
+        height="28"
+      />
+    </button>
     <ul v-if="indicated" class="mt-4 flex items-center justify-center gap-x-1">
       <li
         v-for="(_, index) in lastSlide + 1"
@@ -101,18 +104,3 @@
     </ul>
   </div>
 </template>
-
-<style scoped>
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scroll-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scroll-bar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-  }
-</style>
