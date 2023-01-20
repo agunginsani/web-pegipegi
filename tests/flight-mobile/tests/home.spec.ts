@@ -119,13 +119,24 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
     await page.getByText('Pulang Pergi?').click();
 
     await page.getByRole('link', { name: 'Pulang Kamis, 09 Feb 2023' }).click();
-
     await page.getByRole('button', { name: '11 Februari 2023' }).click();
-
     await page.getByRole('button', { name: 'Simpan' }).click();
 
     await expect(
       page.getByRole('link', { name: 'Pulang Sabtu, 11 Feb 2023' })
+    ).toBeVisible();
+  });
+
+  test('Given that I am a user, I can change Kelas input value', async ({
+    page,
+  }) => {
+    await page.getByRole('link', { name: 'Kelas Ekonomi' }).click();
+    await expect(page.getByLabel(/^Ekonomi/)).toBeChecked();
+
+    await page.getByText(/^Premium Ekonomi/).click();
+
+    await expect(
+      page.getByRole('link', { name: 'Kelas Premium Ekonomi' })
     ).toBeVisible();
   });
 });
