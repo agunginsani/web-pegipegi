@@ -27,13 +27,13 @@ const useAuthStore = defineStore('snackbar', () => {
       text: payload.text ?? '',
       dismissible: !!payload.dismissible,
       timer: setTimeout(() => {
-        dismissSnackbar({ id });
+        deleteSnackbar({ id });
       }, payload.timeout ?? 3000),
     };
     snackbars.push(newSnackbar);
   }
 
-  function dismissSnackbar(payload: { id?: number; index?: number }) {
+  function deleteSnackbar(payload: { id?: number; index?: number }) {
     const index = payload.id
       ? snackbars.findIndex((item) => item.id === payload.id)
       : payload.index;
@@ -50,7 +50,7 @@ const useAuthStore = defineStore('snackbar', () => {
   return {
     snackbars,
     addSnackbar,
-    dismissSnackbar,
+    deleteSnackbar,
     dismissAllSnackbar,
   };
 });

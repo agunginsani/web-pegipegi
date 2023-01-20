@@ -5,20 +5,21 @@
   const route = useRoute();
   const router = useRouter();
 
-  const isActive = computed(() => !!route.query.showPassenger);
-  function onBottomSheetToggle(value: boolean) {
-    if (value) {
-      router.push(`${route.path}?showPassenger=true`);
-    } else if (!!route.query.showPassenger) {
-      router.go(-1);
-    }
-  }
-
   const { searchForm, setSearchForm } = useSearchForm();
 
-  const passengersValue = reactive(
-    JSON.parse(JSON.stringify(searchForm.passengers.value))
+  function getCurrentPassengers() {
+    return JSON.parse(JSON.stringify(searchForm.passengers.value));
+  }
+
+  const passengersValue = reactive(getCurrentPassengers());
+
+  watch(
+    () => searchForm.passengers.value,
+    () => {
+      Object.assign(passengersValue, getCurrentPassengers());
+    }
   );
+
   const passengers = computed(() => ({
     adult: {
       title: 'Dewasa',
@@ -68,6 +69,16 @@
       },
     });
     router.go(-1);
+  }
+
+  const isActive = computed(() => !!route.query.showPassenger);
+  function onBottomSheetToggle(value: boolean) {
+    if (value) {
+      router.push(`${route.path}?showPassenger=true`);
+    } else if (!!route.query.showPassenger) {
+      Object.assign(passengersValue, getCurrentPassengers());
+      router.go(-1);
+    }
   }
 </script>
 

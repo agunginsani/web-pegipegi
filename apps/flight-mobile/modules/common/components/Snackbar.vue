@@ -2,7 +2,7 @@
   import { Alert } from '@pegipegi/web-pegipegi-ui';
   import useSnackbar from 'common-module/composables/use-snackbar';
 
-  const { snackbars, dismissSnackbar } = useSnackbar();
+  const { snackbars, deleteSnackbar } = useSnackbar();
 </script>
 
 <template>
@@ -25,7 +25,7 @@
           <p class="text-sm">{{ item.text }}</p>
         </template>
         <template #action v-if="item.dismissible">
-          <button class="text-sm font-bold" @click="dismissSnackbar({ index })">
+          <button class="text-sm font-bold" @click="deleteSnackbar({ index })">
             Tutup
           </button>
         </template>
