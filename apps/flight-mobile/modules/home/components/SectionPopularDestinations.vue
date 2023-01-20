@@ -2,7 +2,10 @@
   import Swiper from './Swiper.vue';
   import SwiperItem from './SwiperItem.vue';
 
-  const homeUrl = useRuntimeConfig().public.homeUrl || 'https://pegipegi.com';
+  const { homeUrl } = useRuntimeConfig().public;
+  if (homeUrl === undefined)
+    throw new Error('`process.env.HOME_URL` is not defined');
+
   const popularDestinations = [
     [
       {
