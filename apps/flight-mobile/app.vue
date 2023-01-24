@@ -28,6 +28,9 @@
 </script>
 
 <template>
-  <NuxtPage />
-  <Snackbar />
+  <div id="app">
+    <NuxtPage />
+    <Snackbar />
+    <div id="modals" />
+  </div>
 </template>

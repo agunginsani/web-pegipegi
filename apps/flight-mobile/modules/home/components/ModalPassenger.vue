@@ -83,6 +83,7 @@
 </script>
 
 <template>
+  <!-- TODO: use teleport -->
   <BottomSheet :modelValue="isActive" @update:modelValue="onBottomSheetToggle">
     <section aria-labelledby="passenger-count-title">
       <div class="border-neutral-tuna-50 flex gap-3 border-b px-4 py-2">
