@@ -8,6 +8,7 @@
   type LocationSeachEmits = {
     (name: 'update:modelValue', payload: string): void;
     (name: 'input', payload: Event): void;
+    (name: 'keydown', payload: Event): void;
     (name: 'back'): void;
   };
 
@@ -43,6 +44,7 @@
           placeholder="Cari kota atau bandara"
           aria-label="Cari kota atau bandara"
           :value="modelValue"
+          @keydown="$emit('keydown', $event)"
           @input="onInput"
         />
       </div>
