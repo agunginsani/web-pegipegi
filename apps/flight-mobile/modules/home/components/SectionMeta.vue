@@ -35,10 +35,7 @@
 </script>
 
 <template>
-  <section
-    aria-label="SEO Content"
-    class="border-neutral-tuna-100 mx-4 border-b-[1px] py-6"
-  >
+  <section class="border-neutral-tuna-100 mx-4 border-b-[1px] py-6">
     <div
       class="content-wrapper overflow-hidden text-center transition-all duration-500"
       :class="{

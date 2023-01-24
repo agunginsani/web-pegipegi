@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <section class="my-6" aria-label="SEO Content">
+  <section class="my-6">
     <section-usp />
     <section-popular-destinations />
     <section-popular-routes />
