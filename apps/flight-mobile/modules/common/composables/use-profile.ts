@@ -5,7 +5,7 @@ export default defineStore('profile', () => {
   const userEmail = ref('');
   const deviceId = ref('');
 
-  async function fetchProfile() {
+  async function initiateProfile() {
     const phpsess = useCookie<string | null>('phpsess');
 
     if (!userId.value || !userEmail.value) {
@@ -27,6 +27,6 @@ export default defineStore('profile', () => {
     userId,
     userEmail,
     deviceId,
-    fetchProfile,
+    initiateProfile,
   };
 });

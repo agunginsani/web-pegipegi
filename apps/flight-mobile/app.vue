@@ -26,8 +26,8 @@
 
   useServerPrefetch();
 
-  const { fetchProfile } = useProfile();
-  await fetchProfile();
+  const { initiateProfile } = useProfile();
+  await initiateProfile();
 </script>
 
 <template>
