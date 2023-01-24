@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import { z } from 'zod';
   import useAuthStore from 'common-module/composables/use-auth-store';
+  import useProfile from 'common-module/composables/use-profile';
 
   const AuthSchema = z.object({
     data: z.string(),
@@ -24,6 +25,9 @@
   }
 
   useServerPrefetch();
+
+  const { fetchProfile } = useProfile();
+  await fetchProfile();
 </script>
 
 <template>
