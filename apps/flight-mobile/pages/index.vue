@@ -12,7 +12,7 @@
   const { track } = useFirebase();
   onMounted(() => {
     track('open_screen', {
-      attr: 'value',
+      screen_name: 'FlightHome',
     });
   });
 </script>
