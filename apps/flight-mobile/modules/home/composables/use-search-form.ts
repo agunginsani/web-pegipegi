@@ -1,3 +1,5 @@
+import useFetchSeatClasses from 'home-module/composables/use-fetch-seat-classes';
+
 export type PassangerValue = {
   value: {
     adult: number;
@@ -21,14 +23,14 @@ export type SearchFormValue = {
   class: SearchFormItemValue;
 };
 
-type FlightClassItem = {
+type SeatClassItem = {
   code: string;
   displayName: string;
   description: string;
 };
 
 export default defineStore('searchForm', () => {
-  const availableClass = reactive<Array<FlightClassItem>>([]);
+  const seatClass = reactive<Array<SeatClassItem>>([]);
 
   const searchForm = reactive<SearchFormValue>({
     origin: {
@@ -62,40 +64,17 @@ export default defineStore('searchForm', () => {
     Object.assign(searchForm, payload);
   }
 
-  function initiateAvailableClass() {
-    if (availableClass.length > 0) return;
+  async function initiateSeatClass() {
+    if (seatClass.length > 0) return;
 
-    // TODO: fetch from api
-    const response = [
-      {
-        code: 'ECONOMY',
-        displayName: 'Ekonomi',
-        description: 'Pilihan paling hemat untuk sampai ke destinasi',
-      },
-      {
-        code: 'PREMIUMECONOMY',
-        displayName: 'Premium Ekonomi',
-        description:
-          'Mau terbang tetap hemat dengan ruang kaki ekstra? Pilih yang ini!',
-      },
-      {
-        code: 'BUSINESS',
-        displayName: 'Bisnis',
-        description: 'Lupakan terbang hemat! Kelas ini bikin kamu serasa bos',
-      },
-      {
-        code: 'FIRST',
-        displayName: 'First Class',
-        description: 'Kelas konglomerat dengan kemewahan maksimal',
-      },
-    ];
-    Object.assign(availableClass, response);
+    const { data: seats } = await useFetchSeatClasses();
+    Object.assign(seatClass, seats.value);
   }
 
   return {
     searchForm,
     setSearchForm,
-    availableClass,
-    initiateAvailableClass,
+    seatClass,
+    initiateSeatClass,
   };
 });
