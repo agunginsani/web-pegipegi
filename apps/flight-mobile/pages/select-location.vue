@@ -2,6 +2,7 @@
   import LocationSearch from 'home-module/components/LocationSearch.vue';
   import LocationSearchItem from 'home-module/components/LocationSearchItem.vue';
   import useAirports from 'home-module/composables/use-airports';
+  import useSnackbar from 'common-module/composables/use-snackbar';
   import useSearchForm, {
     SearchFormValue,
     SearchFormItemValue,
@@ -156,6 +157,7 @@
 
   // event handlers
   const { searchForm, setSearchForm } = useSearchForm();
+  const { addSnackbar } = useSnackbar();
 
   function onSelect(selectedItem: ResultItem) {
     const payload: Partial<SearchFormValue> = {};
@@ -174,7 +176,10 @@
         ),
       ].slice(0, 5);
     } else {
-      // TODO: show snackbar
+      addSnackbar({
+        text: 'Kota asal dan kota tujuan tidak boleh sama',
+        color: 'negative',
+      });
     }
 
     if (keyword.value.length > 0) {

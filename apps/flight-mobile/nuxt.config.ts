@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     ['@pinia/nuxt', { autoImports: ['defineStore'] }],
     '@nuxt/image-edge',
+    'nuxt-vuefire',
   ],
   runtimeConfig: {
     bannerApiKey: '',
@@ -24,6 +25,19 @@ export default defineNuxtConfig({
   },
   typescript: {
     shim: false,
+  },
+  vuefire: {
+    // TODO: use secrets
+    config: {
+      apiKey: 'AIzaSyCMhdlrAItyfsIgWuSyD-E68YmCcaVRHok',
+      authDomain: 'project-test-1104.firebaseapp.com',
+      databaseURL: 'https://project-test-1104.firebaseio.com',
+      projectId: 'project-test-1104',
+      storageBucket: 'project-test-1104.appspot.com',
+      messagingSenderId: '418308231912',
+      appId: '1:418308231912:web:6c5c7ca342ad395269af5d',
+      measurementId: 'G-DG196NLSF',
+    },
   },
   alias: {
     'common-module': resolve(__dirname, './modules/common'),

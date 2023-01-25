@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import { z } from 'zod';
   import useAuthStore from 'common-module/composables/use-auth-store';
+  import Snackbar from 'common-module/components/Snackbar.vue';
+  import useProfile from 'common-module/composables/use-profile';
 
   const AuthSchema = z.object({
     data: z.string(),
@@ -24,8 +26,13 @@
   }
 
   useServerPrefetch();
+
+  const { initiateProfile } = useProfile();
+  await initiateProfile();
 </script>
 
 <template>
   <NuxtPage />
+  <Snackbar />
+  <div id="modals" class="relative z-50" />
 </template>

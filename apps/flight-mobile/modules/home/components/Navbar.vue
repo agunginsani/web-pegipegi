@@ -6,7 +6,7 @@
     offset: { top: 150 },
   });
   onMounted(() => {
-    body.value = document.querySelector('#body');
+    body.value = document.querySelector('#homepage');
   });
 </script>
 
@@ -30,6 +30,7 @@
         height="20"
         src="/icon-back.svg"
         alt="Back"
+        role="presentation"
       />
     </a>
     <h1 class="text-neutral-tuna-800 font-bold">Cari Tiket Pesawat</h1>
