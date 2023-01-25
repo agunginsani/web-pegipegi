@@ -3,16 +3,22 @@
   import useSnackbar from 'common-module/composables/use-snackbar';
 
   const { snackbars, removeSnackbar } = useSnackbar();
+  const transitionClasses = {
+    enterActiveClass: 'duration-300 transition-all pointer-events-none',
+    leaveActiveClass: 'duration-300 transition-all pointer-events-none',
+    enterFromClass: 'opacity-0 translate-y-5',
+    leaveToClass: 'opacity-0 translate-y-5',
+  };
 </script>
 
 <template>
   <Teleport to="#modals">
-    <div class="fixed inset-x-0 bottom-0 flex flex-col gap-2 p-4">
+    <Transition v-bind="transitionClasses">
       <TransitionGroup
-        enter-active-class="duration-300 transition-all pointer-events-none"
-        leave-active-class="duration-300 transition-all pointer-events-none"
-        enter-from-class="opacity-0 translate-y-5"
-        leave-to-class="opacity-0 translate-y-5"
+        v-bind="transitionClasses"
+        v-if="snackbars.length > 0"
+        class="fixed inset-x-0 bottom-0 flex flex-col gap-2 p-4"
+        tag="div"
       >
         <Alert
           v-for="(item, index) in snackbars"
@@ -35,6 +41,6 @@
           </template>
         </Alert>
       </TransitionGroup>
-    </div>
+    </Transition>
   </Teleport>
 </template>
