@@ -18,7 +18,7 @@
 </script>
 
 <template>
-  <div id="body" class="flex h-screen flex-col overflow-y-auto bg-white">
+  <div id="homepage" class="flex h-screen flex-col overflow-y-auto bg-white">
     <Navbar />
     <SectionSearch />
     <SectionLastSearch />

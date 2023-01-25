@@ -39,6 +39,7 @@
 </script>
 
 <template>
+  <!-- TODO: use teleport -->
   <BottomSheet
     :modelValue="!!$route.query.showClass"
     @update:modelValue="onBottomSheetToggle"
