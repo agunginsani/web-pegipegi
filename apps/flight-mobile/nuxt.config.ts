@@ -8,8 +8,12 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     ['@pinia/nuxt', { autoImports: ['defineStore'] }],
     '@nuxt/image-edge',
-    'nuxt-vuefire',
     '@nuxtjs/device',
+    /* 
+      DISCLAIMER: nuxt-vuefire is still in preview phase.
+      please update once the stable version is released
+    */
+    'nuxt-vuefire',
   ],
   runtimeConfig: {
     bannerApiKey: '',
