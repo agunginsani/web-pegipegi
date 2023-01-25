@@ -4,6 +4,7 @@
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
+  import useFetchPrice from 'home-module/composables/use-fetch-price';
   import dateUtil from 'common-module/utils/date';
 
   definePageMeta({
@@ -33,21 +34,11 @@
     },
   });
 
-  function parseTitle(input: string) {
-    return input.replace(/\(.+\)/, '');
-  }
-
-  function disabledDates(input: Date) {
-    return (
-      dateUtil.isBefore(input, dateUtil.startOfDay(new Date())) ||
-      dateUtil.isAfter(
-        input,
-        dateUtil.add(dateUtil.startOfDay(new Date()), { years: 1 })
-      )
-    );
-  }
-
   const { searchForm, setSearchForm } = useSearchForm();
+  const route = useRoute();
+  const startDate = new Date();
+  const endDate = dateUtil.add(startDate, { months: 12 });
+
   const modelValue = computed<CalendarModelValue>({
     get() {
       return [
@@ -76,8 +67,71 @@
     },
   });
 
-  const startDate = new Date();
-  const endDate = dateUtil.add(startDate, { months: 12 });
+  const bestPrice = reactive<{
+    [key: string]: {
+      [key: string]: {
+        cheapest: boolean;
+        fare: string | number;
+      };
+    };
+  }>({});
+
+  async function fetchBestPrice(selectedDate: Date) {
+    const month = dateUtil.format(selectedDate, 'MM');
+    const year = dateUtil.format(selectedDate, 'yyyy');
+    const monthKey = `${month}-${year}`;
+
+    if (!!bestPrice[monthKey]) return;
+
+    const query = {
+      from:
+        route.query.type === 'departure'
+          ? searchForm.origin.value
+          : searchForm.destination.value,
+      to:
+        route.query.type === 'departure'
+          ? searchForm.destination.value
+          : searchForm.origin.value,
+      month,
+      year,
+      flightClass: searchForm.class.value,
+    };
+
+    const { data } = await useFetchPrice(query);
+    if (!!data.value && data.value?.length > 0) {
+      data.value.forEach((item) => {
+        if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
+        if (item.shortFare) {
+          bestPrice[monthKey][item.dateObj.day] = {
+            fare: item.shortFare,
+            cheapest: item.cheapest,
+          };
+        }
+      });
+    }
+  }
+
+  function getBestPrice(selectedDate: Date) {
+    const month = dateUtil.format(selectedDate, 'MM-yyyy');
+    const date = dateUtil.format(selectedDate, 'dd');
+    return bestPrice[month]?.[date];
+  }
+
+  function parseTitle(input: string) {
+    return input.replace(/\(.+\)/, '');
+  }
+
+  function disabledDates(input: Date) {
+    return (
+      dateUtil.isBefore(input, dateUtil.startOfDay(new Date())) ||
+      dateUtil.isAfter(
+        input,
+        dateUtil.add(dateUtil.startOfDay(new Date()), { years: 1 })
+      )
+    );
+  }
+
+  await fetchBestPrice(startDate);
 </script>
 
 <template>
@@ -87,6 +141,7 @@
     :isReturn="$route.query.type === 'return'"
     :disabledDates="disabledDates"
     v-model="modelValue"
+    @select="fetchBestPrice"
     @back="$router.go(-1)"
   >
     <template #header="{ value }">
@@ -114,10 +169,12 @@
       </div>
     </template>
 
-    <!-- TODO: integrate cheapest price -->
-    <template #addon="{ isDisabled }">
-      <p class="text-neutral-tuna-300 text-[10px]">
-        {{ isDisabled ? '-' : '315' }}
+    <template #addon="{ isDisabled, fullDate }">
+      <p
+        class="text-neutral-tuna-300 h-4 text-[10px]"
+        :class="{ 'text-green-emerald-600': getBestPrice(fullDate)?.cheapest }"
+      >
+        {{ isDisabled ? '-' : getBestPrice(fullDate)?.fare }}
       </p>
     </template>
   </Calendar>
