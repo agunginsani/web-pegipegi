@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import { version } from './package.json';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -8,6 +9,7 @@ export default defineNuxtConfig({
     ['@pinia/nuxt', { autoImports: ['defineStore'] }],
     '@nuxt/image-edge',
     'nuxt-vuefire',
+    '@nuxtjs/device',
   ],
   runtimeConfig: {
     bannerApiKey: '',
@@ -17,6 +19,7 @@ export default defineNuxtConfig({
       bannerApiBaseUrl: '',
       apixBaseUrl: '',
       accountBaseUrl: '',
+      appVersion: version,
     },
   },
   css: ['~/assets/css/global.css'],

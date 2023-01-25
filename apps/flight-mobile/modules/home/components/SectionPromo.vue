@@ -67,7 +67,7 @@
         v-for="(banner, index) in banners?.data"
         :key="banner.id"
         :class="[
-          'bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full',
+          'bg-neutral-tuna-300 h-1.5 rounded-full transition-all duration-100',
           activeBannerIndex === `${index}`
             ? 'bg-orange-inter-600 w-3'
             : 'bg-neutral-tuna-300 w-1.5',

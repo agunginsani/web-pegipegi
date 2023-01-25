@@ -34,10 +34,13 @@ importers:
     specifiers:
       '@google-cloud/logging-winston': ^5.2.3
       '@nuxt/image-edge': 1.0.0-27840416.dc1ed65
+      '@nuxtjs/device': ^3.0.0
       '@nuxtjs/tailwindcss': ^6.0.1
       '@pegipegi/web-pegipegi-ui': latest
       '@pinia/nuxt': ^0.4.3
       '@types/cookie': ^0.5.1
+      '@types/ua-parser-js': ^0.7.36
+      '@types/uuid': ^9.0.0
       '@vueuse/core': ^9.8.2
       '@vueuse/nuxt': ^9.8.2
       cookie: ^0.5.0
@@ -47,11 +50,14 @@ importers:
       newrelic: latest
       nuxt: 3.0.0
       nuxt-vuefire: ^0.1.5
+      ua-parser-js: ^1.0.33
+      uuid: ^9.0.0
       vuefire: ^3.0.1
       winston: ^3.8.2
       zod: ^3.19.1
     dependencies:
       '@google-cloud/logging-winston': 5.3.0_winston@3.8.2
+      '@nuxtjs/device': 3.0.0
       '@pegipegi/web-pegipegi-ui': 0.0.10_@vueuse+core@9.10.0
       '@pinia/nuxt': 0.4.6
       cookie: 0.5.0
@@ -60,6 +66,8 @@ importers:
       firebase: 9.16.0
       newrelic: 9.8.0
       nuxt-vuefire: 0.1.5_pwzc4lw7dj7yt7jqjbpbakyi4u
+      ua-parser-js: 1.0.33
+      uuid: 9.0.0
       vuefire: 3.0.1_firebase@9.16.0
       winston: 3.8.2
       zod: 3.20.2
@@ -67,6 +75,8 @@ importers:
       '@nuxt/image-edge': 1.0.0-27840416.dc1ed65
       '@nuxtjs/tailwindcss': 6.2.0
       '@types/cookie': 0.5.1
+      '@types/ua-parser-js': 0.7.36
+      '@types/uuid': 9.0.0
       '@vueuse/core': 9.10.0
       '@vueuse/nuxt': 9.10.0_nuxt@3.0.0
       nuxt: 3.0.0
@@ -1952,6 +1962,19 @@ packages:
       - vti
     dev: true
 
+  /@nuxtjs/device/3.0.0:
+    resolution:
+      {
+        integrity: sha512-81ZXEyJ/6rZEGTUIfgUjsHWBWB1InHayN83LVW63/TclVyrrb/Si47BczkGcIgmiETcKTM9iaqMLcDfu9M7BNg==,
+      }
+    dependencies:
+      '@nuxt/kit': 3.0.0
+      defu: 6.1.1
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: false
+
   /@nuxtjs/tailwindcss/6.2.0:
     resolution:
       {
@@ -2393,6 +2416,20 @@ packages:
     resolution:
       {
         integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==,
+      }
+    dev: true
+
+  /@types/ua-parser-js/0.7.36:
+    resolution:
+      {
+        integrity: sha512-N1rW+njavs70y2cApeIw1vLMYXRwfBy+7trgavGuuTfOd7j1Yh7QTRc/yqsPl6ncokt72ZXuxEU0PiCp9bSwNQ==,
+      }
+    dev: true
+
+  /@types/uuid/9.0.0:
+    resolution:
+      {
+        integrity: sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==,
       }
     dev: true
 
@@ -10753,6 +10790,13 @@ packages:
     engines: { node: '>=4.2.0' }
     hasBin: true
     dev: true
+
+  /ua-parser-js/1.0.33:
+    resolution:
+      {
+        integrity: sha512-RqshF7TPTE0XLYAqmjlu5cLLuGdKrNu9O1KLA/qp39QtbZwuzwv1dT46DZSopoUMsYgXpB3Cv8a03FI8b74oFQ==,
+      }
+    dev: false
 
   /uc.micro/1.0.6:
     resolution:
