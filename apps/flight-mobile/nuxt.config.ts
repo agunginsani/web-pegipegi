@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { version } from './package.json';
+import { version as appVersion } from './package.json';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
       bannerApiBaseUrl: '',
       apixBaseUrl: '',
       accountBaseUrl: '',
-      appVersion: version,
+      appVersion,
     },
   },
   css: ['~/assets/css/global.css'],
@@ -34,16 +34,16 @@ export default defineNuxtConfig({
     shim: false,
   },
   vuefire: {
-    // TODO: use secrets
+    // TODO: find a way to use runtime config
     config: {
-      apiKey: 'AIzaSyCMhdlrAItyfsIgWuSyD-E68YmCcaVRHok',
-      authDomain: 'project-test-1104.firebaseapp.com',
-      databaseURL: 'https://project-test-1104.firebaseio.com',
-      projectId: 'project-test-1104',
-      storageBucket: 'project-test-1104.appspot.com',
-      messagingSenderId: '418308231912',
-      appId: '1:418308231912:web:6c5c7ca342ad395269af5d',
-      measurementId: 'G-DG196NLSF',
+      apiKey: process.env.NUXT_FIRE_API_KEY,
+      authDomain: process.env.NUXT_FIRE_AUTH_DOMAIN,
+      databaseURL: process.env.NUXT_FIRE_DATABASE_URL,
+      projectId: process.env.NUXT_FIRE_PROJECT_ID,
+      storageBucket: process.env.NUXT_FIRE_STORAGE_BUCKET,
+      messagingSenderId: process.env.NUXT_FIRE_MESSAGING_SENDER_ID,
+      appId: process.env.NUXT_FIRE_APP_ID,
+      measurementId: process.env.NUXT_FIRE_MEASUREMENT_ID,
     },
   },
   alias: {
