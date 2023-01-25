@@ -1,9 +1,7 @@
 <script lang="ts" setup>
   import usePromoBanners from 'home-module/composables/use-fetch-promo-banners';
 
-  const { banners, fetch } = usePromoBanners();
-
-  await fetch();
+  const { data: banners } = await usePromoBanners();
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
@@ -44,27 +42,29 @@
       class="no-scroll-bar flex w-full snap-x snap-mandatory space-x-2 overflow-x-auto"
       ref="listRef"
     >
-      <span class="min-w-[250px]"></span>
+      <li class="min-w-[250px]"></li>
       <li
-        v-for="(banner, index) in banners ?? []"
+        v-for="(banner, index) in banners?.data"
         :key="banner.id"
         :data-index="index"
         class="shrink-0 snap-center"
         ref="listItemRef"
       >
-        <NuxtImg
-          :src="banner.image"
-          :alt="banner.description"
-          class="h-[138px] overflow-hidden rounded-xl"
-          width="250"
-          height="138"
-        />
+        <NuxtLink :to="banner.url" external>
+          <NuxtImg
+            :src="banner.image"
+            :alt="banner.description"
+            class="h-[138px] overflow-hidden rounded-xl"
+            width="250"
+            height="138"
+          />
+        </NuxtLink>
       </li>
-      <span class="min-w-[250px]"></span>
+      <li class="min-w-[250px]"></li>
     </ul>
     <ul class="mt-2 flex justify-center gap-x-1 align-middle">
       <li
-        v-for="(banner, index) in banners ?? []"
+        v-for="(banner, index) in banners?.data"
         :key="banner.id"
         :class="[
           'bg-neutral-tuna-300 h-1.5 w-1.5 rounded-full',
