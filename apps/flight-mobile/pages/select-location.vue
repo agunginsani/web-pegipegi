@@ -7,6 +7,7 @@
     SearchFormValue,
     SearchFormItemValue,
   } from 'home-module/composables/use-search-form';
+  import useFirebase from 'common-module/composables/use-firebase';
 
   type ResultItem = {
     title: string;
@@ -158,6 +159,7 @@
   // event handlers
   const { searchForm, setSearchForm } = useSearchForm();
   const { addSnackbar } = useSnackbar();
+  const { track } = useFirebase();
 
   function onSelect(selectedItem: ResultItem) {
     const payload: Partial<SearchFormValue> = {};
@@ -221,8 +223,8 @@
       item_num: itemNum > 0 ? itemNum : undefined,
       error_type: errorType.length > 0 ? errorType : undefined,
     };
-    console.log(trackingData);
-    // TODO: fireAnalytics;
+
+    track('trigger_log', trackingData);
 
     screenData.value = {
       itemNum: 0,
