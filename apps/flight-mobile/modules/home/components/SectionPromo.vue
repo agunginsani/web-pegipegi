@@ -57,6 +57,7 @@
             class="h-[138px] overflow-hidden rounded-xl"
             width="250"
             height="138"
+            loading="lazy"
           />
         </NuxtLink>
       </li>
