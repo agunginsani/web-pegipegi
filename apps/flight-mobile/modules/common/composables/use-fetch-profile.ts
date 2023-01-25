@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import useProfile from 'common-module/composables/use-profile';
 
 const Profile = z.object({
   data: z.object({
@@ -19,7 +18,6 @@ type ProfileParam = {
 
 export default function useFetchProfile(param: ProfileParam) {
   const config = useRuntimeConfig();
-  // const { deviceId, deviceModel, deviceBrowser } = useProfile()
 
   return useFetch('/v1/users/profile', {
     headers: {
