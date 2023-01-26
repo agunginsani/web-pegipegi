@@ -9,18 +9,24 @@ const Profile = z.object({
 
 type Profile = z.infer<typeof Profile>;
 
-export default function useFetchProfile(ssoToken: string) {
+type ProfileParam = {
+  ssoToken: string;
+  deviceId: string;
+  deviceModel: string;
+  deviceBrowser: string;
+};
+
+export default function useFetchProfile(param: ProfileParam) {
   const config = useRuntimeConfig();
 
   return useFetch('/v1/users/profile', {
     headers: {
-      authorization: `Bearer ${ssoToken}`,
-      // TODO: fill device related params
-      'Device-Id': 'dummy-devide-id',
+      authorization: `Bearer ${param.ssoToken}`,
+      'App-Version': `${config.public.appVersion}-flight-mweb`,
       'Device-Origin': 'mweb',
-      'App-Version': `1.9.2-flight-mweb`,
-      'Device-Model': 'Android',
-      Browser: 'Chrome',
+      'Device-Id': param.deviceId,
+      'Device-Model': param.deviceModel,
+      Browser: param.deviceBrowser,
     },
     baseURL: config.public.accountBaseUrl,
     transform(data) {

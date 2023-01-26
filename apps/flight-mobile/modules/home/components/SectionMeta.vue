@@ -29,6 +29,7 @@
         width="20px"
         height="20px"
         :class="{ 'rotate-180': isOpen }"
+        :alt="isOpen ? 'Sembunyikan' : 'Selengkapnya'"
       />
     </button>
   </section>

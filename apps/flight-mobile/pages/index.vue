@@ -4,6 +4,7 @@
   import SectionPromo from 'home-module/components/SectionPromo.vue';
   import SectionInfo from 'home-module/components/SectionInfo.vue';
   import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
+  import SectionSeo from 'home-module/components/SectionSeo.vue';
   import Navbar from 'home-module/components/Navbar.vue';
   import Footer from 'home-module/components/Footer.vue';
 
@@ -25,6 +26,7 @@
     <SectionPromo />
     <SectionInfo />
     <SectionCheapFlight />
+    <SectionSeo />
     <Footer />
   </div>
 </template>

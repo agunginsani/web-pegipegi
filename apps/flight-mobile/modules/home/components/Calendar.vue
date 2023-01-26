@@ -2,11 +2,13 @@
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
   import dateUtil from 'common-module/utils/date';
+  import useFirebase from 'common-module/composables/use-firebase';
 
   export type CalendarModelValue = [Date | undefined, Date | undefined];
 
   const router = useRouter();
   const route = useRoute();
+  const { getConfig } = useFirebase();
 
   const props = defineProps<{
     startDate: Date;
@@ -37,6 +39,7 @@
     localValue[1] = undefined;
   }
 
+  const holiday = await getConfig('holiday_calendar');
   const renderedMonths = computed(() => {
     const monthDifference = Number(
       dateUtil.differenceInMonths(props.endDate, props.startDate)
@@ -44,7 +47,10 @@
     let pointer = dateUtil.startOfMonth(new Date(props.startDate));
 
     return Array.from({ length: monthDifference + 1 }, (_, i) => {
-      return dateUtil.add(pointer, { months: i });
+      return {
+        holiday: holiday[dateUtil.format(pointer, 'yyyy')][i + 1],
+        monthPointer: dateUtil.add(pointer, { months: i }),
+      };
     });
   });
 
@@ -145,16 +151,17 @@
     <main>
       <ul>
         <CalendarItem
-          v-for="(monthPointer, index) in renderedMonths"
+          v-for="(item, index) in renderedMonths"
           :key="`month-${index}`"
           :ref="(el) => { 
-            if(localValue[0] && dateUtil.isSameMonth(monthPointer, localValue[0])) {
+            if(localValue[0] && dateUtil.isSameMonth(item.monthPointer, localValue[0])) {
               activeMonthRef = el as CalendarItemComponentRef
             }
           }"
-          :date="monthPointer"
+          :date="item.monthPointer"
           :modelValue="localValue"
           :disabledDates="disabledDates"
+          :holiday="item.holiday"
           @select="onSelect"
         >
           <template #default="date">

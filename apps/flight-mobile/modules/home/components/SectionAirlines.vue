@@ -32,6 +32,7 @@
               height="36px"
               :alt="airline.label"
               class="shadow-lifted mr-2.5 mt-2.5 inline rounded-full p-2"
+              loading="lazy"
             />
           </NuxtLink>
         </div>
