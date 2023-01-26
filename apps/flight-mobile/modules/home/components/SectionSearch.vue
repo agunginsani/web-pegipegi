@@ -113,14 +113,14 @@
       class="absolute inset-x-0 -top-16 h-[500px] w-full bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white"
     />
 
+    <!-- TODO: use srcset -->
     <NuxtImg
-      src="/figure-search-hero.svg"
+      src="/figure-search-hero-2x.webp"
       class="absolute left-1/2 top-[-36px] w-[calc(100%-20px)] max-w-[400px] -translate-x-1/2"
       alt="Naik Pesawat"
-      format="webp"
       fetchpriority="high"
       loading="eager"
-      height="310"
+      height="400"
       preload
     />
 

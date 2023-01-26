@@ -20,9 +20,8 @@
     <a :href="`${homeUrl}/flight/${flight.link}`">
       <NuxtImg
         :src="flight.image"
-        width="120"
-        height="120"
-        format="webp"
+        width="200"
+        height="200"
         fit="cover"
         :alt="flight.city"
         class="rounded"

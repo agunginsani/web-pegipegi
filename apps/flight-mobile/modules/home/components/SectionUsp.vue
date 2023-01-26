@@ -17,10 +17,10 @@
       >
         <NuxtImg
           :src="content.imageUrl"
-          width="140px"
-          height="140px"
+          width="200"
+          height="200"
           :alt="content.title"
-          class="my-3"
+          class="my-3 h-[140px] w-[140px]"
           loading="lazy"
         />
         <h2 class="mb-2 text-sm font-bold">

@@ -92,7 +92,7 @@
           class="absolute right-1 top-1 flex h-9 w-9 items-center justify-center"
           @click.stop.prevent="$emit('delete', index)"
         >
-          <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
+          <NuxtImg src="/icon-close.svg" alt="Remove" width="12" height="12" />
         </button>
       </div>
       <span class="text-neutral-tuna-300 text-sm leading-5">
