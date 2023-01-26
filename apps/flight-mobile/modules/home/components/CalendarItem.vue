@@ -25,6 +25,7 @@
 
   type CalendarItemProps = {
     date: Date;
+    holiday?: { [key: number]: String };
     modelValue: CalendarModelValue;
     disabledDates?: (date: Date) => boolean;
   };
@@ -83,8 +84,7 @@
         isPast: dateUtil.isBefore(fullDate, today),
         isToday: dateUtil.isSameDay(fullDate, today),
         isDisabled: props.disabledDates?.(fullDate) || false,
-        // TODO: use props for holiday
-        isHoliday: dayNum >= 6,
+        isHoliday: !!props.holiday?.[i],
       });
     }
 
@@ -141,9 +141,9 @@
           <p
             class="relative mb-1 h-9 text-sm leading-9"
             :class="{
+              'opacity-30': date.isDisabled,
               '!text-white': date.isActive,
-              '!text-orange-inter-600': date.isInBetween,
-              '!text-neutral-tuna-300': date.isDisabled,
+              'text-orange-inter-600': date.isInBetween && !date.isHoliday,
               'text-red-flower-700': date.isHoliday,
             }"
           >
@@ -155,5 +155,14 @@
         </button>
       </div>
     </div>
+    <ul class="px-3 pb-3">
+      <li
+        v-for="(eventName, date) in holiday"
+        class="mb-1 flex text-xs last:mb-0"
+      >
+        <p class="text-red-flower-700 w-7">{{ date }}</p>
+        <p>{{ eventName }}</p>
+      </li>
+    </ul>
   </li>
 </template>
