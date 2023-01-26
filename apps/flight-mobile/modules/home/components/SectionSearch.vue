@@ -6,10 +6,10 @@
   } from 'home-module/composables/use-search-form';
   import dateUtil from 'common-module/utils/date';
 
-  const { searchForm, setSearchForm, availableClass, initiateAvailableClass } =
+  const { searchForm, setSearchForm, seatClass, initiateSeatClass } =
     useSearchForm();
 
-  initiateAvailableClass();
+  initiateSeatClass();
 
   const history = useCookie<Array<History>>('flight-search');
 
@@ -57,7 +57,7 @@
         },
         class: {
           label:
-            availableClass.find((item) => item.code === lastSearch.seatClass)
+            seatClass.find((item) => item.code === lastSearch.seatClass)
               ?.displayName ?? '-',
           value: lastSearch.seatClass,
         },
@@ -101,8 +101,8 @@
           },
         },
         class: {
-          label: availableClass[0].displayName,
-          value: availableClass[0].code,
+          label: seatClass[0].displayName,
+          value: seatClass[0].code,
         },
       });
     }

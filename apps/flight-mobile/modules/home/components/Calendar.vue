@@ -18,6 +18,7 @@
 
   const emit = defineEmits<{
     (name: 'back'): void;
+    (name: 'select', payload: Date): void;
     (name: 'update:modelValue', payload: CalendarModelValue): void;
   }>();
 
@@ -57,6 +58,7 @@
   ]);
 
   function onSelect(event: Date) {
+    emit('select', event);
     if (!props.isReturn && !localValue[1]) {
       // set departure
       localValue[0] = event;
@@ -139,6 +141,7 @@
         </li>
       </ul>
     </header>
+
     <main>
       <ul>
         <CalendarItem

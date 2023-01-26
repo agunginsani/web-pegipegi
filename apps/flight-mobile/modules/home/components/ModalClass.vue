@@ -13,7 +13,7 @@
     }
   }
 
-  const { availableClass, searchForm, setSearchForm } = useSearchForm();
+  const { seatClass, searchForm, setSearchForm } = useSearchForm();
 
   const classModel = computed({
     get() {
@@ -23,8 +23,7 @@
       setSearchForm({
         class: {
           label:
-            availableClass.find((item) => item.code === value)?.displayName ??
-            '',
+            seatClass.find((item) => item.code === value)?.displayName ?? '',
           value,
         },
       });
@@ -39,6 +38,7 @@
 </script>
 
 <template>
+  <!-- TODO: use teleport -->
   <BottomSheet
     :modelValue="!!$route.query.showClass"
     @update:modelValue="onBottomSheetToggle"
@@ -51,7 +51,7 @@
       </div>
       <ul class="px-4 pt-4">
         <li
-          v-for="item in availableClass"
+          v-for="item in seatClass"
           class="pb-4 last-of-type:pb-0"
           :key="`class-${item.code}`"
         >
