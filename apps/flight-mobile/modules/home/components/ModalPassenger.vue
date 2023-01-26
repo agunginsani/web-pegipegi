@@ -78,52 +78,58 @@
 </script>
 
 <template>
-  <!-- TODO: use teleport -->
-  <BottomSheet :modelValue="isActive" @update:modelValue="onBottomSheetToggle">
-    <section aria-labelledby="passenger-count-title">
-      <div class="border-neutral-tuna-50 flex gap-3 border-b px-4 py-2">
-        <div>
-          <h2 id="passenger-count-title" class="text-lg font-bold">
-            Jumlah Penumpang
-          </h2>
-          <p class="text-neutral-tuna-300 text-sm">
-            Jumlah bayi tidak boleh lebih dari dewasa
-          </p>
-        </div>
+  <ClientOnly>
+    <Teleport to="#portal-1">
+      <BottomSheet
+        :modelValue="isActive"
+        @update:modelValue="onBottomSheetToggle"
+      >
+        <section aria-labelledby="passenger-count-title">
+          <div class="border-neutral-tuna-50 flex gap-3 border-b px-4 py-2">
+            <div>
+              <h2 id="passenger-count-title" class="text-lg font-bold">
+                Jumlah Penumpang
+              </h2>
+              <p class="text-neutral-tuna-300 text-sm">
+                Jumlah bayi tidak boleh lebih dari dewasa
+              </p>
+            </div>
 
-        <button
-          class="text-orange-inter-600 ml-auto font-bold"
-          @click="onReset"
-        >
-          Reset
-        </button>
-      </div>
-
-      <ul class="p-4">
-        <li
-          v-for="(item, key) in passengersDetail"
-          :key="`passenger-${key}`"
-          class="mb-3 flex last-of-type:mb-0"
-        >
-          <div class="mr-auto">
-            <p>
-              {{ item.title }}
-            </p>
-            <p class="text-neutral-tuna-300 text-sm">
-              {{ item.description }}
-            </p>
+            <button
+              class="text-orange-inter-600 ml-auto font-bold"
+              @click="onReset"
+            >
+              Reset
+            </button>
           </div>
-          <Counter
-            v-model="passengersValue[key]"
-            :min="item.min"
-            :max="item.max"
-          />
-        </li>
-      </ul>
 
-      <div class="px-4">
-        <Button block @click="onSave">Simpan</Button>
-      </div>
-    </section>
-  </BottomSheet>
+          <ul class="p-4">
+            <li
+              v-for="(item, key) in passengersDetail"
+              :key="`passenger-${key}`"
+              class="mb-3 flex last-of-type:mb-0"
+            >
+              <div class="mr-auto">
+                <p>
+                  {{ item.title }}
+                </p>
+                <p class="text-neutral-tuna-300 text-sm">
+                  {{ item.description }}
+                </p>
+              </div>
+              <Counter
+                v-model="passengersValue[key]"
+                :min="item.min"
+                :max="item.max"
+              />
+            </li>
+          </ul>
+
+          <div class="px-4">
+            <Button block @click="onSave">Simpan</Button>
+          </div>
+        </section>
+      </BottomSheet>
+    </Teleport>
+  </ClientOnly>
 </template>

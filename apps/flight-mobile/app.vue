@@ -33,6 +33,10 @@
 
 <template>
   <NuxtPage />
-  <Snackbar />
-  <div id="modals" class="relative z-50" />
+  <div id="portal-1" class="relative z-30" />
+  <div id="portal-2" class="relative z-40" />
+  <div id="portal-3" class="relative z-50" />
+  <div id="portal-4" class="z-60 relative">
+    <Snackbar />
+  </div>
 </template>
