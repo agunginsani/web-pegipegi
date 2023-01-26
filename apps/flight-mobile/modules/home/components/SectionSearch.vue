@@ -4,7 +4,6 @@
   import useSearchForm, {
     SearchFormValue,
   } from 'home-module/composables/use-search-form';
-  // import dateUtil from 'common-module/utils/date';
   import { parse, add, format, isBefore, startOfDay } from 'date-fns';
 
   const { searchForm, setSearchForm, seatClass, initiateSeatClass } =

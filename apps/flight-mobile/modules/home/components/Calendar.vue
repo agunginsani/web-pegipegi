@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
-  // import dateUtil from 'common-module/utils/date';
   import {
     differenceInMonths,
     startOfMonth,

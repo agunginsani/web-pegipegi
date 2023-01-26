@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  // import date from 'common-module/utils/date';
   import { parse, format } from 'date-fns';
 
   export type History = {

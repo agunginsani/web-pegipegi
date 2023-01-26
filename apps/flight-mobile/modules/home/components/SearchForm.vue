@@ -4,7 +4,6 @@
   import ModalPassenger from 'home-module/components/ModalPassenger.vue';
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  // import dateUtil from 'common-module/utils/date';
   import { add, format } from 'date-fns';
 
   const { searchForm, setSearchForm } = useSearchForm();

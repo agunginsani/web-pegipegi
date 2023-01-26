@@ -5,7 +5,6 @@
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import useFetchPrice from 'home-module/composables/use-fetch-price';
-  // import dateUtil from 'common-module/utils/date';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
 
   definePageMeta({
