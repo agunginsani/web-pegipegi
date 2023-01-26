@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import useAuthStore from 'common-module/composables/use-auth-store';
+import useAuth from 'common-module/composables/use-auth';
 
 const Airports = z.array(
   z.object({
@@ -18,7 +18,7 @@ const Airports = z.array(
 export type Airports = z.infer<typeof Airports>;
 
 export default function useAirports() {
-  const { token } = useAuthStore();
+  const { token } = useAuth();
   const config = useRuntimeConfig();
   return useFetch('/v1/airport/v1/list', {
     baseURL: config.public.authBaseUrl,

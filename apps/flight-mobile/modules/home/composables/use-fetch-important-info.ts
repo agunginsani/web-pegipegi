@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import useAuthStore from 'common-module/composables/use-auth-store';
+import useAuth from 'common-module/composables/use-auth';
 
 const ImportantInfo = z.object({
   message: z.string(),
@@ -20,7 +20,7 @@ const ImportantInfo = z.object({
 type ImportantInfo = z.infer<typeof ImportantInfo>;
 
 export default function useFetchImportantInfo() {
-  const { token } = useAuthStore();
+  const { token } = useAuth();
   const config = useRuntimeConfig();
   return useFetch('/v1/flight-search/v2/banners', {
     baseURL: config.public.authBaseUrl,
