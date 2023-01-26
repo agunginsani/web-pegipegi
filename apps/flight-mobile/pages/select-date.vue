@@ -6,6 +6,7 @@
   import useSearchForm from 'home-module/composables/use-search-form';
   import useFetchPrice from 'home-module/composables/use-fetch-price';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
+  import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
   definePageMeta({
     middleware(to, from) {
@@ -36,8 +37,10 @@
 
   const { searchForm, setSearchForm } = useSearchForm();
   const route = useRoute();
+  const router = useRouter();
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
+  const { setBestPrice } = useCalendarTracker();
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -125,6 +128,41 @@
     );
   }
 
+  function onSave() {
+    const departureMonth = format(
+      new Date(searchForm.departureDate.value),
+      'MM-yyyy'
+    );
+    const departureDate = format(
+      new Date(searchForm.departureDate.value),
+      'dd'
+    );
+
+    if (searchForm.returnDate?.value) {
+      const returnMonth = format(
+        new Date(searchForm.returnDate?.value),
+        'MM-yyyy'
+      );
+      const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
+
+      setBestPrice({
+        departurePrice: Number(
+          bestPrice[departureMonth]?.[departureDate]?.fare
+        ),
+        returnPrice: Number(bestPrice[returnMonth]?.[returnDate]?.fare),
+      });
+    } else {
+      setBestPrice({
+        departurePrice: Number(
+          bestPrice[departureMonth]?.[departureDate]?.fare
+        ),
+        returnPrice: undefined,
+      });
+    }
+
+    router.go(-1);
+  }
+
   await fetchBestPrice(startDate);
 </script>
 
@@ -136,7 +174,7 @@
     :disabledDates="disabledDates"
     v-model="modelValue"
     @select="fetchBestPrice"
-    @back="$router.go(-1)"
+    @back="onSave"
   >
     <template #header="{ value }">
       <div class="flex flex-col justify-center">

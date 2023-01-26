@@ -5,8 +5,10 @@
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import { add, format } from 'date-fns';
+  import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
   const { searchForm, setSearchForm } = useSearchForm();
+  const { bestPrice, setBestPrice } = useCalendarTracker();
 
   const returnModel = computed({
     get() {
@@ -59,7 +61,15 @@
   function onSwap() {
     const origin = JSON.parse(JSON.stringify(searchForm.destination));
     const destination = JSON.parse(JSON.stringify(searchForm.origin));
+    setBestPrice({
+      departurePrice: undefined,
+      returnPrice: undefined,
+    });
     setSearchForm({ origin, destination });
+  }
+
+  function saveBestPrice() {
+    localStorage.setItem('flight-mweb.best-price', JSON.stringify(bestPrice));
   }
 </script>
 
@@ -72,6 +82,12 @@
       placeholder="Pilih Keberangkatan"
       icon="/icon-search-origin.svg"
       to="/select-location?type=origin"
+      @click="
+        setBestPrice({
+          departurePrice: undefined,
+          returnPrice: undefined,
+        })
+      "
     >
       <button
         class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
@@ -94,6 +110,12 @@
       placeholder="Pilih Tujuan"
       icon="/icon-search-destination.svg"
       to="/select-location?type=destination"
+      @click="
+        setBestPrice({
+          departurePrice: undefined,
+          returnPrice: undefined,
+        })
+      "
     />
 
     <SearchFormItem
@@ -133,6 +155,12 @@
       placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
       :to="`${$route.path}?showPassenger=1`"
+      @click="
+        setBestPrice({
+          departurePrice: undefined,
+          returnPrice: undefined,
+        })
+      "
     />
 
     <SearchFormItem
@@ -142,9 +170,15 @@
       placeholder="Pilih Kelas"
       icon="/icon-search-class.svg"
       :to="`${$route.path}?showClass=1`"
+      @click="
+        setBestPrice({
+          departurePrice: undefined,
+          returnPrice: undefined,
+        })
+      "
     />
 
-    <NuxtLink :to="searchUrl">
+    <NuxtLink :to="searchUrl" @click="saveBestPrice">
       <Button block class="mt-2">Cari Tiket Pesawat</Button>
     </NuxtLink>
 

@@ -14,8 +14,8 @@
 <template>
   <Transition v-bind="transitionClasses">
     <TransitionGroup
-      v-bind="transitionClasses"
       v-if="snackbars.length > 0"
+      v-bind="transitionClasses"
       class="fixed inset-x-0 bottom-0 flex flex-col gap-2 p-4"
       tag="div"
     >
