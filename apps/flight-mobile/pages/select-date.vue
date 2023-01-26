@@ -135,8 +135,6 @@
   }
 
   function onSave() {
-    let returnMonth = undefined;
-    let returnDate = undefined;
     const departureMonth = dateUtil.format(
       new Date(searchForm.departureDate.value),
       'MM-yyyy'
@@ -147,11 +145,11 @@
     );
 
     if (searchForm.returnDate?.value) {
-      returnMonth = dateUtil.format(
+      const returnMonth = dateUtil.format(
         new Date(searchForm.returnDate?.value),
         'MM-yyyy'
       );
-      returnDate = dateUtil.format(
+      const returnDate = dateUtil.format(
         new Date(searchForm.returnDate?.value),
         'dd'
       );
@@ -165,6 +163,7 @@
       setBestPrice({
         departurePrice: bestPrice[departureMonth]?.[departureDate]
           ?.fare as number,
+        returnPrice: undefined,
       });
     }
 
