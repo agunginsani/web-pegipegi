@@ -4,7 +4,8 @@
   import ModalPassenger from 'home-module/components/ModalPassenger.vue';
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import dateUtil from 'common-module/utils/date';
+  // import dateUtil from 'common-module/utils/date';
+  import { add, format } from 'date-fns';
 
   const { searchForm, setSearchForm } = useSearchForm();
 
@@ -15,10 +16,10 @@
     set(value) {
       if (value.length > 0) {
         const today = new Date(String(searchForm.departureDate.value));
-        const tommorow = dateUtil.add(today, { days: 1 });
+        const tommorow = add(today, { days: 1 });
         setSearchForm({
           returnDate: {
-            label: dateUtil.format(tommorow, 'EEEE, dd MMM yyyy'),
+            label: format(tommorow, 'EEEE, dd MMM yyyy'),
             value: tommorow.toString(),
           },
         });
@@ -32,10 +33,10 @@
     const from = searchForm.origin.value;
     const to = searchForm.destination.value;
     const departureDate = searchForm.departureDate.value
-      ? dateUtil.format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
+      ? format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
       : undefined;
     const returnDate = searchForm.returnDate?.value
-      ? dateUtil.format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
+      ? format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
       : undefined;
     const adult = searchForm.passengers.value.adult;
     const child = searchForm.passengers.value.child;

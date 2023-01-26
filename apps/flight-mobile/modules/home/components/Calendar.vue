@@ -1,7 +1,16 @@
 <script lang="ts" setup>
   import { Button } from '@pegipegi/web-pegipegi-ui';
   import CalendarItem from 'home-module/components/CalendarItem.vue';
-  import dateUtil from 'common-module/utils/date';
+  // import dateUtil from 'common-module/utils/date';
+  import {
+    differenceInMonths,
+    startOfMonth,
+    add,
+    format,
+    isBefore,
+    isAfter,
+    isSameMonth,
+  } from 'date-fns';
   import useFirebase from 'common-module/composables/use-firebase';
 
   export type CalendarModelValue = [Date | undefined, Date | undefined];
@@ -42,25 +51,21 @@
   const holiday = await getConfig('holiday_calendar');
   const renderedMonths = computed(() => {
     const monthDifference = Number(
-      dateUtil.differenceInMonths(props.endDate, props.startDate)
+      differenceInMonths(props.endDate, props.startDate)
     );
-    let pointer = dateUtil.startOfMonth(new Date(props.startDate));
+    let pointer = startOfMonth(new Date(props.startDate));
 
     return Array.from({ length: monthDifference + 1 }, (_, i) => {
       return {
-        holiday: holiday[dateUtil.format(pointer, 'yyyy')][i + 1],
-        monthPointer: dateUtil.add(pointer, { months: i }),
+        holiday: holiday[format(pointer, 'yyyy')][i + 1],
+        monthPointer: add(pointer, { months: i }),
       };
     });
   });
 
   const dateText = computed(() => [
-    localValue[0]
-      ? dateUtil.format(localValue[0], 'd MMM yyyy')
-      : 'Pilih Tanggal',
-    localValue[1]
-      ? dateUtil.format(localValue[1], 'd MMM yyyy')
-      : 'Pilih Tanggal',
+    localValue[0] ? format(localValue[0], 'd MMM yyyy') : 'Pilih Tanggal',
+    localValue[1] ? format(localValue[1], 'd MMM yyyy') : 'Pilih Tanggal',
   ]);
 
   function onSelect(event: Date) {
@@ -71,7 +76,7 @@
     } else if (
       props.isReturn &&
       !!localValue[0] &&
-      dateUtil.isBefore(event, localValue[0])
+      isBefore(event, localValue[0])
     ) {
       // set departure, clear return
       localValue[0] = event;
@@ -79,7 +84,7 @@
     } else if (
       !props.isReturn &&
       !!localValue[1] &&
-      dateUtil.isAfter(event, localValue[1])
+      isAfter(event, localValue[1])
     ) {
       // set departure, clear return, go to return
       localValue[0] = event;
@@ -88,7 +93,7 @@
     } else if (
       !props.isReturn &&
       !!localValue[1] &&
-      dateUtil.isBefore(event, localValue[1])
+      isBefore(event, localValue[1])
     ) {
       // set departure, go to return
       localValue[0] = event;
@@ -154,7 +159,7 @@
           v-for="(item, index) in renderedMonths"
           :key="`month-${index}`"
           :ref="(el) => { 
-            if(localValue[0] && dateUtil.isSameMonth(item.monthPointer, localValue[0])) {
+            if(localValue[0] && isSameMonth(item.monthPointer, localValue[0])) {
               activeMonthRef = el as CalendarItemComponentRef
             }
           }"
