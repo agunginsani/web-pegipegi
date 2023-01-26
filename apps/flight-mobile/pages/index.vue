@@ -7,9 +7,8 @@
   import SectionSeo from 'home-module/components/SectionSeo.vue';
   import Navbar from 'home-module/components/Navbar.vue';
   import Footer from 'home-module/components/Footer.vue';
-
-  // Firebase Analytics usage example
   import useFirebase from 'common-module/composables/use-firebase';
+
   const { track } = useFirebase();
   onMounted(() => {
     track('open_screen', {
