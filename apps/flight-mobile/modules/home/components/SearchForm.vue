@@ -178,11 +178,9 @@
       "
     />
 
-    <!-- <NuxtLink :to="searchUrl"> -->
-    <Button block class="mt-2" @click="saveBestPrice"
-      >Cari Tiket Pesawat</Button
-    >
-    <!-- </NuxtLink> -->
+    <NuxtLink :to="searchUrl" @click="saveBestPrice">
+      <Button block class="mt-2">Cari Tiket Pesawat</Button>
+    </NuxtLink>
 
     <ModalPassenger />
     <ModalClass />

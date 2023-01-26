@@ -1,6 +1,6 @@
 type BestPriceParams = {
   departurePrice: number | undefined;
-  returnPrice?: number | undefined;
+  returnPrice: number | undefined;
 };
 
 export default defineStore('bestPrice', () => {
