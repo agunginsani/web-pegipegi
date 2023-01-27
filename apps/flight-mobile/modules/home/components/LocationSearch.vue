@@ -21,9 +21,11 @@
   }
 
   const body = ref<Window | null>(null);
+  const inputRef = ref<HTMLInputElement | null>(null);
   const { arrivedState } = useScroll(body);
   onMounted(() => {
     body.value = window;
+    inputRef.value?.focus();
   });
 </script>
 
@@ -38,7 +40,7 @@
       >
         <NuxtImg class="m-2" src="/icon-search.svg" alt="Search" />
         <input
-          ref="input"
+          ref="inputRef"
           class="placeholder:text-neutral-tuna-300 selection:bg-orange-inter-500 h-10 flex-grow outline-none selection:text-white"
           type="text"
           placeholder="Cari kota atau bandara"

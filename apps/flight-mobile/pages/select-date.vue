@@ -35,6 +35,10 @@
     },
   });
 
+  useHead({
+    meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
+  });
+
   const { searchForm, setSearchForm } = useSearchForm();
   const route = useRoute();
   const router = useRouter();

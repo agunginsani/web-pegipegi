@@ -22,9 +22,6 @@
     errorType: string;
   };
 
-  const router = useRouter();
-  const route = useRoute();
-
   definePageMeta({
     middleware(to) {
       const { searchForm } = useSearchForm();
@@ -38,6 +35,12 @@
     },
   });
 
+  useHead({
+    meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
+  });
+
+  const router = useRouter();
+  const route = useRoute();
   const { airports, initiateAirports } = useAirports();
   await initiateAirports();
 
@@ -74,6 +77,7 @@
     errorType: '',
   });
   const keywordCode = ref('');
+  const isLoading = ref(false);
 
   watchDebounced(
     keyword,
@@ -120,12 +124,13 @@
 
         if (keywordCode.value !== 'Backspace') {
           screenData.value.errorType = keyword.value;
-          screenData.value.itemNum = renderedResult.value.length;
+          screenData.value.itemNum = tempResult.length;
         }
       } else {
         results.value = [];
         triggerLogTracking('Delete All Keyword', true);
       }
+      isLoading.value = false;
     },
     { debounce: 200 }
   );
@@ -234,7 +239,12 @@
 </script>
 
 <template>
-  <LocationSearch v-model="keyword" @back="onBack(true)" @keydown="onKeyDown">
+  <LocationSearch
+    v-model="keyword"
+    @back="onBack(true)"
+    @keydown="onKeyDown"
+    @update:model-value="isLoading = true"
+  >
     <template v-if="!keyword">
       <template v-if="lastSearch.length > 0">
         <div class="flex py-2 px-4">
@@ -278,7 +288,30 @@
     </template>
 
     <template v-else>
-      <ul>
+      <ul v-if="isLoading">
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+      </ul>
+
+      <div
+        v-else-if="results.length === 0"
+        class="flex flex-col items-center py-10 px-5 text-center"
+      >
+        <NuxtImg
+          src="/figure-error.svg"
+          class="mb-2"
+          width="250"
+          height="250"
+        />
+        <h2 class="mb-1 text-xl font-bold">Waduh... Gak Ada Hasilnya Nih</h2>
+        <p>
+          Sepertinya kata kunci yang kamu cari belum pas. Coba cari yang lain,
+          ya!
+        </p>
+      </div>
+
+      <ul v-else>
         <LocationSearchItem
           v-for="item in renderedResult"
           :title="item.title"
