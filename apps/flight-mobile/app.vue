@@ -31,7 +31,6 @@
   const { initiateProfile } = useProfile();
   await initiateProfile();
 
-  // TODO: handle offline snackbar on request
   const online = useOnline();
   const { addSnackbar } = useSnackbar();
   watch(
@@ -49,10 +48,8 @@
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtLoadingIndicator color="#fe5000" />
-    <NuxtPage />
-    <Snackbar />
-    <div id="modals" class="relative z-50" />
-  </NuxtLayout>
+  <NuxtLoadingIndicator color="#fe5000" />
+  <NuxtPage />
+  <Snackbar />
+  <div id="modals" class="relative z-50" />
 </template>
