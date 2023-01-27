@@ -3,7 +3,7 @@ import { mockCurrentDate } from '../scripts/date';
 
 test.beforeEach(async ({ page }) => {
   await mockCurrentDate(page);
-  await page.goto('/');
+  await page.goto('/flight');
 });
 
 test('As a user, I can see `Cari Tiket Pesawat` and navigation back to Pegipegi homepage on the header.', async ({
