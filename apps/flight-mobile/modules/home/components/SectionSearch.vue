@@ -4,7 +4,7 @@
   import useSearchForm, {
     SearchFormValue,
   } from 'home-module/composables/use-search-form';
-  import dateUtil from 'common-module/utils/date';
+  import { parse, add, format, isBefore, startOfDay } from 'date-fns';
 
   const { searchForm, setSearchForm, seatClass, initiateSeatClass } =
     useSearchForm();
@@ -19,26 +19,23 @@
 
     if (!searchForm.origin.value && history.value?.[0]) {
       const lastSearch = history.value[0];
-      const lastDepartureDate = dateUtil.parse(
+      const lastDepartureDate = parse(
         lastSearch.departureDate,
         'dd-MM-yyyy',
         new Date()
       );
 
       const lastReturnDate = lastSearch.returnDate
-        ? dateUtil.parse(lastSearch.returnDate, 'dd-MM-yyyy', new Date())
+        ? parse(lastSearch.returnDate, 'dd-MM-yyyy', new Date())
         : undefined;
 
-      const departureDate = dateUtil.isBefore(
-        lastDepartureDate,
-        dateUtil.startOfDay(new Date())
-      )
-        ? dateUtil.startOfDay(new Date())
+      const departureDate = isBefore(lastDepartureDate, startOfDay(new Date()))
+        ? startOfDay(new Date())
         : lastDepartureDate;
 
       const returnDate = lastReturnDate
-        ? dateUtil.isBefore(lastReturnDate, departureDate)
-          ? dateUtil.add(departureDate, { days: 1 })
+        ? isBefore(lastReturnDate, departureDate)
+          ? add(departureDate, { days: 1 })
           : lastReturnDate
         : undefined;
 
@@ -52,7 +49,7 @@
           value: lastSearch.to.airport,
         },
         departureDate: {
-          label: dateUtil.format(departureDate, 'EEEE, dd MMM yyyy'),
+          label: format(departureDate, 'EEEE, dd MMM yyyy'),
           value: departureDate.toString(),
         },
         class: {
@@ -72,7 +69,7 @@
       };
       if (returnDate) {
         newSearchForm.returnDate = {
-          label: dateUtil.format(returnDate, 'EEEE, dd MMM yyyy'),
+          label: format(returnDate, 'EEEE, dd MMM yyyy'),
           value: returnDate.toString(),
         };
       }
@@ -88,8 +85,8 @@
           value: 'DPS',
         },
         departureDate: {
-          label: dateUtil.format(new Date(), 'EEEE, dd MMM yyyy'),
-          value: dateUtil.startOfDay(new Date()).toString(),
+          label: format(new Date(), 'EEEE, dd MMM yyyy'),
+          value: startOfDay(new Date()).toString(),
         },
         returnDate: undefined,
         passengers: {
@@ -115,14 +112,14 @@
       class="absolute inset-x-0 -top-16 h-[500px] w-full bg-gradient-to-b from-[#ffdc8e] via-[#ffc09f] to-white"
     />
 
+    <!-- TODO: use srcset -->
     <NuxtImg
-      src="/figure-search-hero.svg"
+      src="/figure-search-hero-2x.webp"
       class="absolute left-1/2 top-[-36px] w-[calc(100%-20px)] max-w-[400px] -translate-x-1/2"
       alt="Naik Pesawat"
-      format="webp"
       fetchpriority="high"
       loading="eager"
-      height="310"
+      height="400"
       preload
     />
 
