@@ -30,31 +30,28 @@
   });
 
   const searchUrl = computed(() => {
-    const from = searchForm.origin.value;
-    const to = searchForm.destination.value;
+    const queryParams = new URLSearchParams({
+      from: searchForm.origin.value,
+      to: searchForm.destination.value,
+      adult: String(searchForm.passengers.value.adult),
+      child: String(searchForm.passengers.value.child),
+      infant: String(searchForm.passengers.value.infant),
+      seatClass: searchForm.class.value,
+      isNoTransit: '0',
+    });
+
     const departureDate = searchForm.departureDate.value
       ? dateUtil.format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
       : undefined;
     const returnDate = searchForm.returnDate?.value
       ? dateUtil.format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
       : undefined;
-    const adult = searchForm.passengers.value.adult;
-    const child = searchForm.passengers.value.child;
-    const infant = searchForm.passengers.value.infant;
-    const seatClass = searchForm.class.value;
 
-    let queryParams = `from=${from}&to=${to}&adult=${adult}&child=${child}&infant=${infant}&seatClass=${seatClass}&isNoTransit=0`;
-
-    if (departureDate) {
-      queryParams = `${queryParams}&departureDate=${departureDate}`;
-    }
-
-    if (returnDate) {
-      queryParams = `${queryParams}&returnDate=${returnDate}`;
-    }
+    if (departureDate) queryParams.set('departureDate', departureDate);
+    if (returnDate) queryParams.set('returnDate', returnDate);
 
     const baseUrl = useRuntimeConfig().public.homeUrl;
-    return `${baseUrl}/flight/search-result/departure?${queryParams}`;
+    return `${baseUrl}/flight/search-result/departure?${queryParams.toString()}`;
   });
 
   const { bestPrice, clearBestPrice } = useCalendarTracker();
