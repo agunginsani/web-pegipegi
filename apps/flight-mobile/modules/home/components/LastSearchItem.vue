@@ -35,7 +35,8 @@
       }
       const hasAirport = value?.hasOwnProperty('airport');
       const newValue = hasAirport ? Object.values(value)[0] : value;
-      params.push(`${key}=${newValue}`);
+      const newKey = /^pax/.test(key) ? key.slice(3).toLowerCase() : key;
+      params.push(`${newKey}=${newValue}`);
     }
 
     return baseUrl + params.join('&');
