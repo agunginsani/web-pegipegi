@@ -5,7 +5,7 @@
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import useFetchPrice from 'home-module/composables/use-fetch-price';
-  import dateUtil from 'common-module/utils/date';
+  import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
   import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
   definePageMeta({
@@ -44,7 +44,7 @@
   const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
-  const endDate = dateUtil.add(startDate, { months: 12 });
+  const endDate = add(startDate, { months: 12 });
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -58,15 +58,12 @@
     set(value) {
       setSearchForm({
         departureDate: {
-          label: dateUtil.format(
-            new Date(String(value[0])),
-            'EEEE, dd MMM yyyy'
-          ),
+          label: format(new Date(String(value[0])), 'EEEE, dd MMM yyyy'),
           value: String(value[0]),
         },
         returnDate: value[1]
           ? {
-              label: dateUtil.format(value[1], 'EEEE, dd MMM yyyy'),
+              label: format(value[1], 'EEEE, dd MMM yyyy'),
               value: String(value[1]),
             }
           : undefined,
@@ -85,8 +82,8 @@
   }>({});
 
   async function fetchBestPrice(selectedDate: Date) {
-    const month = dateUtil.format(selectedDate, 'MM');
-    const year = dateUtil.format(selectedDate, 'yyyy');
+    const month = format(selectedDate, 'MM');
+    const year = format(selectedDate, 'yyyy');
     const monthKey = `${month}-${year}`;
 
     if (!!bestPrice[monthKey]) return;
@@ -121,8 +118,8 @@
   }
 
   function getBestPrice(selectedDate: Date) {
-    const month = dateUtil.format(selectedDate, 'MM-yyyy');
-    const date = dateUtil.format(selectedDate, 'dd');
+    const month = format(selectedDate, 'MM-yyyy');
+    const date = format(selectedDate, 'dd');
     return bestPrice[month]?.[date];
   }
 
@@ -132,33 +129,27 @@
 
   function disabledDates(input: Date) {
     return (
-      dateUtil.isBefore(input, dateUtil.startOfDay(new Date())) ||
-      dateUtil.isAfter(
-        input,
-        dateUtil.add(dateUtil.startOfDay(new Date()), { years: 1 })
-      )
+      isBefore(input, startOfDay(new Date())) ||
+      isAfter(input, add(startOfDay(new Date()), { years: 1 }))
     );
   }
 
   function onSave() {
-    const departureMonth = dateUtil.format(
+    const departureMonth = format(
       new Date(searchForm.departureDate.value),
       'MM-yyyy'
     );
-    const departureDate = dateUtil.format(
+    const departureDate = format(
       new Date(searchForm.departureDate.value),
       'dd'
     );
 
     if (searchForm.returnDate?.value) {
-      const returnMonth = dateUtil.format(
+      const returnMonth = format(
         new Date(searchForm.returnDate?.value),
         'MM-yyyy'
       );
-      const returnDate = dateUtil.format(
-        new Date(searchForm.returnDate?.value),
-        'dd'
-      );
+      const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
 
       setBestPrice({
         departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,

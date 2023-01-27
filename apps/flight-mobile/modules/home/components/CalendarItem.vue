@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-  import dateUtil from 'common-module/utils/date';
+  import {
+    endOfMonth,
+    format,
+    isBefore,
+    isAfter,
+    isSameDay,
+    startOfDay,
+  } from 'date-fns';
   import { CalendarModelValue } from 'home-module/components/Calendar.vue';
 
   type CalendarItemSlotProps = {
@@ -37,38 +44,34 @@
     return input ? new Date(input) : 0;
   }
 
-  const header = computed(() =>
-    dateUtil.format(new Date(props.date), 'MMMM yyyy')
-  );
+  const header = computed(() => format(new Date(props.date), 'MMMM yyyy'));
 
   const dates = computed(() => {
     const pointer = new Date(props.date);
 
-    const today = dateUtil.startOfDay(new Date());
-    const year = Number(dateUtil.format(pointer, 'yyyy'));
-    const monthNum = Number(dateUtil.format(pointer, 'M'));
-    const numOfDays = Number(
-      dateUtil.format(dateUtil.endOfMonth(pointer), 'd')
-    );
+    const today = startOfDay(new Date());
+    const year = Number(format(pointer, 'yyyy'));
+    const monthNum = Number(format(pointer, 'M'));
+    const numOfDays = Number(format(endOfMonth(pointer), 'd'));
 
     const returnValue: Array<CalendarItemSlotProps> = [];
 
     for (let i = 1; i <= numOfDays; i++) {
       const fullDate = new Date(year, monthNum - 1, i);
-      const label = dateUtil.format(fullDate, 'dd MMMM yyyy');
-      const dayNum = Number(dateUtil.format(fullDate, 'i'));
-      const isStart = dateUtil.isSameDay(
+      const label = format(fullDate, 'dd MMMM yyyy');
+      const dayNum = Number(format(fullDate, 'i'));
+      const isStart = isSameDay(
         fullDate,
         props.modelValue[0] ? new Date(props.modelValue[0]) : 0
       );
-      const isEnd = dateUtil.isSameDay(
+      const isEnd = isSameDay(
         fullDate,
         props.modelValue[1] ? new Date(props.modelValue[1]) : 0
       );
       const isActive = isStart || isEnd;
       const isInBetween =
-        dateUtil.isBefore(fullDate, parseDate(props.modelValue[1])) &&
-        dateUtil.isAfter(fullDate, parseDate(props.modelValue[0]));
+        isBefore(fullDate, parseDate(props.modelValue[1])) &&
+        isAfter(fullDate, parseDate(props.modelValue[0]));
 
       returnValue.push({
         date: i,
@@ -81,8 +84,8 @@
         isEnd,
         isInBetween,
         isInRange: isInBetween || isActive,
-        isPast: dateUtil.isBefore(fullDate, today),
-        isToday: dateUtil.isSameDay(fullDate, today),
+        isPast: isBefore(fullDate, today),
+        isToday: isSameDay(fullDate, today),
         isDisabled: props.disabledDates?.(fullDate) || false,
         isHoliday: !!props.holiday?.[i],
       });

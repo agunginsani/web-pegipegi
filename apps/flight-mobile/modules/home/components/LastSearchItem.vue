@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import date from 'common-module/utils/date';
+  import { parse, format } from 'date-fns';
 
   export type History = {
     from: { airport: string; city: string };
@@ -46,13 +46,13 @@
   });
 
   const flightDate = computed(() => {
-    const departureDate = date.format(
-      date.parse(props.history.departureDate, 'd-MM-yyyy', new Date()),
+    const departureDate = format(
+      parse(props.history.departureDate, 'd-MM-yyyy', new Date()),
       'd MMM yyyy'
     );
     const returnDate = props.history.returnDate
-      ? date.format(
-          date.parse(props.history.returnDate, 'd-MM-yyyy', new Date()),
+      ? format(
+          parse(props.history.returnDate, 'd-MM-yyyy', new Date()),
           'd MMM yyyy'
         )
       : '';
@@ -91,7 +91,7 @@
           class="absolute right-1 top-1 flex h-9 w-9 items-center justify-center"
           @click.stop.prevent="$emit('delete', index)"
         >
-          <NuxtImg src="/icon-close.svg" alt="close" width="12" height="12" />
+          <NuxtImg src="/icon-close.svg" alt="Remove" width="12" height="12" />
         </button>
       </div>
       <span class="text-neutral-tuna-300 text-sm leading-5">
