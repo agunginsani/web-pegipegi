@@ -40,11 +40,11 @@
   });
 
   const { searchForm, setSearchForm } = useSearchForm();
+  const { setBestPrice } = useCalendarTracker();
   const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
   const endDate = dateUtil.add(startDate, { months: 12 });
-  const { setBestPrice } = useCalendarTracker();
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -78,7 +78,8 @@
     [key: string]: {
       [key: string]: {
         cheapest: boolean;
-        fare: string | number;
+        fare: number;
+        shortFare: number;
       };
     };
   }>({});
@@ -108,9 +109,10 @@
     if (!!data.value && data.value?.length > 0) {
       data.value.forEach((item) => {
         if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
-        if (item.shortFare) {
+        if (!!item.shortFare && !!item.fare) {
           bestPrice[monthKey][item.dateObj.day] = {
-            fare: item.shortFare,
+            shortFare: item.shortFare,
+            fare: item.fare,
             cheapest: item.cheapest,
           };
         }
@@ -159,14 +161,12 @@
       );
 
       setBestPrice({
-        departurePrice: bestPrice[departureMonth]?.[departureDate]
-          ?.fare as number,
-        returnPrice: bestPrice[returnMonth]?.[returnDate]?.fare as number,
+        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
+        returnPrice: bestPrice[returnMonth]?.[returnDate]?.fare,
       });
     } else {
       setBestPrice({
-        departurePrice: bestPrice[departureMonth]?.[departureDate]
-          ?.fare as number,
+        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
         returnPrice: undefined,
       });
     }
@@ -217,7 +217,7 @@
         class="text-neutral-tuna-300 h-4 text-[10px]"
         :class="{ 'text-green-emerald-600': getBestPrice(fullDate)?.cheapest }"
       >
-        {{ isDisabled ? '-' : getBestPrice(fullDate)?.fare }}
+        {{ isDisabled ? '-' : getBestPrice(fullDate)?.shortFare }}
       </p>
     </template>
   </Calendar>
