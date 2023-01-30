@@ -1,5 +1,8 @@
 FROM node:16
 
+ENV PORT 8080
+ENV HOST 0.0.0.0
+
 RUN npm install -g pnpm@^7
 
 WORKDIR /src
