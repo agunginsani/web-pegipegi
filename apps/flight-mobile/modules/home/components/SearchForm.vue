@@ -8,7 +8,6 @@
   import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
   const { searchForm, setSearchForm } = useSearchForm();
-  const { bestPrice, setBestPrice } = useCalendarTracker();
 
   const returnModel = computed({
     get() {
@@ -31,45 +30,43 @@
   });
 
   const searchUrl = computed(() => {
-    const from = searchForm.origin.value;
-    const to = searchForm.destination.value;
+    const queryParams = new URLSearchParams({
+      from: searchForm.origin.value,
+      to: searchForm.destination.value,
+      adult: String(searchForm.passengers.value.adult),
+      child: String(searchForm.passengers.value.child),
+      infant: String(searchForm.passengers.value.infant),
+      seatClass: searchForm.class.value,
+      isNoTransit: '0',
+    });
+
     const departureDate = searchForm.departureDate.value
       ? format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
       : undefined;
     const returnDate = searchForm.returnDate?.value
       ? format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
       : undefined;
-    const adult = searchForm.passengers.value.adult;
-    const child = searchForm.passengers.value.child;
-    const infant = searchForm.passengers.value.infant;
-    const seatClass = searchForm.class.value;
 
-    let queryParams = `from=${from}&to=${to}&adult=${adult}&child=${child}&infant=${infant}&seatClass=${seatClass}&isNoTransit=0`;
-
-    if (departureDate) {
-      queryParams = `${queryParams}&departureDate=${departureDate}`;
-    }
-
-    if (returnDate) {
-      queryParams = `${queryParams}&returnDate=${returnDate}`;
-    }
+    if (departureDate) queryParams.set('departureDate', departureDate);
+    if (returnDate) queryParams.set('returnDate', returnDate);
 
     const baseUrl = useRuntimeConfig().public.homeUrl;
-    return `${baseUrl}/flight/search-result/departure?${queryParams}`;
+    return `${baseUrl}/flight/search-result/departure?${queryParams.toString()}`;
   });
 
-  function onSwap() {
-    const origin = JSON.parse(JSON.stringify(searchForm.destination));
-    const destination = JSON.parse(JSON.stringify(searchForm.origin));
-    setBestPrice({
-      departurePrice: undefined,
-      returnPrice: undefined,
-    });
-    setSearchForm({ origin, destination });
-  }
+  const { bestPrice, clearBestPrice } = useCalendarTracker();
+  const bestPriceStorage = useLocalStorage('flight-mweb.best-price', {});
+  bestPriceStorage.value = {};
 
   function saveBestPrice() {
-    localStorage.setItem('flight-mweb.best-price', JSON.stringify(bestPrice));
+    bestPriceStorage.value = bestPrice;
+  }
+
+  function onSwap() {
+    clearBestPrice();
+    const origin = JSON.parse(JSON.stringify(searchForm.destination));
+    const destination = JSON.parse(JSON.stringify(searchForm.origin));
+    setSearchForm({ origin, destination });
   }
 </script>
 
@@ -82,12 +79,7 @@
       placeholder="Pilih Keberangkatan"
       icon="/icon-search-origin.svg"
       to="/select-location?type=origin"
-      @click="
-        setBestPrice({
-          departurePrice: undefined,
-          returnPrice: undefined,
-        })
-      "
+      @click="clearBestPrice()"
     >
       <button
         class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
@@ -110,12 +102,7 @@
       placeholder="Pilih Tujuan"
       icon="/icon-search-destination.svg"
       to="/select-location?type=destination"
-      @click="
-        setBestPrice({
-          departurePrice: undefined,
-          returnPrice: undefined,
-        })
-      "
+      @click="clearBestPrice()"
     />
 
     <SearchFormItem
@@ -155,12 +142,7 @@
       placeholder="Masukkan Penumpang"
       icon="/icon-search-passenger.svg"
       :to="`${$route.path}?showPassenger=1`"
-      @click="
-        setBestPrice({
-          departurePrice: undefined,
-          returnPrice: undefined,
-        })
-      "
+      @click="clearBestPrice()"
     />
 
     <SearchFormItem
@@ -170,12 +152,7 @@
       placeholder="Pilih Kelas"
       icon="/icon-search-class.svg"
       :to="`${$route.path}?showClass=1`"
-      @click="
-        setBestPrice({
-          departurePrice: undefined,
-          returnPrice: undefined,
-        })
-      "
+      @click="clearBestPrice()"
     />
 
     <NuxtLink :to="searchUrl" @click="saveBestPrice">

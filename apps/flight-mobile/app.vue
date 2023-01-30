@@ -3,6 +3,7 @@
   import useAuthStore from 'common-module/composables/use-auth-store';
   import Snackbar from 'common-module/components/Snackbar.vue';
   import useProfile from 'common-module/composables/use-profile';
+  import useSnackbar from 'common-module/composables/use-snackbar';
 
   const AuthSchema = z.object({
     data: z.string(),
@@ -29,9 +30,25 @@
 
   const { initiateProfile } = useProfile();
   await initiateProfile();
+
+  const online = useOnline();
+  const { addSnackbar } = useSnackbar();
+  watch(
+    () => online.value,
+    (value) => {
+      if (!value) {
+        addSnackbar({
+          color: 'negative',
+          text: 'Hmm.. Yakin internetmu masih nyambung?',
+          timeout: 0,
+        });
+      }
+    }
+  );
 </script>
 
 <template>
+  <NuxtLoadingIndicator color="#fe5000" />
   <NuxtPage />
   <div id="portal-1" class="relative z-30" />
   <div id="portal-2" class="relative z-40" />

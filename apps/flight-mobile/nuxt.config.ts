@@ -27,6 +27,14 @@ export default defineNuxtConfig({
       appVersion,
     },
   },
+  image: {
+    ipx: {
+      maxAge: 1200,
+      // TODO: fix type
+      baseURL:
+        process.env.NODE_ENV === 'development' ? '/_ipx/' : '/flight/_ipx/',
+    },
+  },
   css: ['~/assets/css/global.css'],
   tailwindcss: {
     cssPath: '@pegipegi/web-pegipegi-ui/style',
@@ -52,9 +60,11 @@ export default defineNuxtConfig({
     'home-module': resolve(__dirname, './modules/home'),
   },
   nitro: {
+    baseURL: '/flight/',
     compressPublicAssets: true,
   },
   app: {
+    baseURL: '/flight/',
     head: {
       htmlAttrs: {
         lang: 'id',

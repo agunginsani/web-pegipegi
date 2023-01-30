@@ -13,8 +13,13 @@ export default defineStore('bestPrice', () => {
     Object.assign(bestPrice, params);
   }
 
+  function clearBestPrice() {
+    (bestPrice.departurePrice = undefined), (bestPrice.returnPrice = undefined);
+  }
+
   return {
     setBestPrice,
+    clearBestPrice,
     bestPrice,
   };
 });

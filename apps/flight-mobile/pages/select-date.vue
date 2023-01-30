@@ -35,12 +35,16 @@
     },
   });
 
+  useHead({
+    meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
+  });
+
   const { searchForm, setSearchForm } = useSearchForm();
+  const { setBestPrice } = useCalendarTracker();
   const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
-  const { setBestPrice } = useCalendarTracker();
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -71,7 +75,8 @@
     [key: string]: {
       [key: string]: {
         cheapest: boolean;
-        fare: string | number;
+        fare: number;
+        shortFare: number;
       };
     };
   }>({});
@@ -101,9 +106,10 @@
     if (!!data.value && data.value?.length > 0) {
       data.value.forEach((item) => {
         if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
-        if (item.shortFare) {
+        if (!!item.shortFare && !!item.fare) {
           bestPrice[monthKey][item.dateObj.day] = {
-            fare: item.shortFare,
+            shortFare: item.shortFare,
+            fare: item.fare,
             cheapest: item.cheapest,
           };
         }
@@ -146,16 +152,12 @@
       const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
 
       setBestPrice({
-        departurePrice: Number(
-          bestPrice[departureMonth]?.[departureDate]?.fare
-        ),
-        returnPrice: Number(bestPrice[returnMonth]?.[returnDate]?.fare),
+        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
+        returnPrice: bestPrice[returnMonth]?.[returnDate]?.fare,
       });
     } else {
       setBestPrice({
-        departurePrice: Number(
-          bestPrice[departureMonth]?.[departureDate]?.fare
-        ),
+        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
         returnPrice: undefined,
       });
     }
@@ -206,7 +208,7 @@
         class="text-neutral-tuna-300 h-4 text-[10px]"
         :class="{ 'text-green-emerald-600': getBestPrice(fullDate)?.cheapest }"
       >
-        {{ isDisabled ? '-' : getBestPrice(fullDate)?.fare }}
+        {{ isDisabled ? '-' : getBestPrice(fullDate)?.shortFare }}
       </p>
     </template>
   </Calendar>

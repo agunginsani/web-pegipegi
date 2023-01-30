@@ -3,7 +3,7 @@ type SnackbarItem = {
   color: 'accent' | 'warning' | 'positive' | 'negative';
   icon?: string;
   text: string;
-  timer: ReturnType<typeof setTimeout>;
+  timer?: ReturnType<typeof setTimeout>;
   dismissible: boolean;
 };
 
@@ -26,9 +26,12 @@ const useAuthStore = defineStore('snackbar', () => {
       icon: payload.icon,
       text: payload.text ?? '',
       dismissible: !!payload.dismissible,
-      timer: setTimeout(() => {
-        removeSnackbar({ id });
-      }, payload.timeout ?? 3000),
+      timer:
+        payload.timeout === 0
+          ? undefined
+          : setTimeout(() => {
+              removeSnackbar({ id });
+            }, payload.timeout ?? 3000),
     };
     snackbars.push(newSnackbar);
   }
@@ -38,12 +41,14 @@ const useAuthStore = defineStore('snackbar', () => {
       ? snackbars.findIndex((item) => item.id === payload.id)
       : payload.index;
     if (index === undefined) return;
-    clearTimeout(snackbars[index].timer);
+    if (snackbars[index].timer) clearTimeout(snackbars[index].timer);
     snackbars.splice(index, 1);
   }
 
   function dismissAllSnackbar() {
-    snackbars.forEach((item) => clearTimeout(item.timer));
+    snackbars.forEach((item) => {
+      if (item.timer) clearTimeout(item.timer);
+    });
     snackbars.splice(0, snackbars.length);
   }
 

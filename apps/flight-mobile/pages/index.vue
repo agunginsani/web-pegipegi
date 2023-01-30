@@ -9,12 +9,19 @@
   import Footer from 'home-module/components/Footer.vue';
   import useFirebase from 'common-module/composables/use-firebase';
 
+  useHead({
+    meta: [{ hid: 'robots', name: 'robots', content: 'index, follow' }],
+  });
+
   const { track } = useFirebase();
   onMounted(() => {
     track('open_screen', {
       screen_name: 'FlightHome',
     });
   });
+
+  const searchUrl = useLocalStorage('flight-mweb.search-url', null);
+  searchUrl.value = null;
 </script>
 
 <template>
