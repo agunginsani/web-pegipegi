@@ -1,7 +1,5 @@
 FROM node:16
 
-ENV PORT=8080
-
 RUN npm install -g pnpm@^7
 
 WORKDIR /src
@@ -11,9 +9,9 @@ RUN pnpm fetch
 
 COPY . ./
 
-RUN pnpm -F flight-mobile... install --offline
-RUN pnpm -F flight-mobile... build-staging
+RUN pnpm -F flight-mobile-app... install --offline
+RUN pnpm -F flight-mobile-app... build-staging
 
 WORKDIR /src/apps/flight-mobile
 
-CMD ["sh", "-c", "PORT=${PORT} STREAM_LOG_TO_GCP=true node -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.staging dotenv_config_debug=true"]
+CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.staging dotenv_config_debug=true"]
