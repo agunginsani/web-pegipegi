@@ -28,17 +28,17 @@
 
   const flightUrl = computed(() => {
     const baseUrl = `${homeUrl}/flight/search-result/departure?`;
-    const params = [];
+    const params = new URLSearchParams();
     for (const [key, value] of Object.entries(props.history)) {
       if (value === null) {
         continue;
       }
       const hasAirport = value?.hasOwnProperty('airport');
       const newValue = hasAirport ? Object.values(value)[0] : value;
-      params.push(`${key}=${newValue}`);
+      const newKey = /^pax/.test(key) ? key.slice(3).toLowerCase() : key;
+      params.append(newKey, newValue);
     }
-
-    return baseUrl + params.join('&');
+    return baseUrl + params;
   });
 
   const flightType = computed(() => {
