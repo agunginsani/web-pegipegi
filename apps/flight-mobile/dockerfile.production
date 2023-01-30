@@ -1,7 +1,6 @@
 FROM node:16
 
-ENV PORT 8080
-ENV HOST 0.0.0.0
+ENV PORT=8080
 
 RUN npm install -g pnpm@^7
 
@@ -20,4 +19,4 @@ RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.
 
 WORKDIR /src/apps/flight-mobile
 
-CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r newrelic -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
+CMD ["sh", "-c", "PORT=${PORT} STREAM_LOG_TO_GCP=true node -r newrelic -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
