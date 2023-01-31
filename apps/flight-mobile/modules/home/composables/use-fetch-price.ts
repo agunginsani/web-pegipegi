@@ -1,4 +1,4 @@
-import useAuthStore from 'common-module/composables/use-auth-store';
+import useAuth from 'common-module/composables/use-auth';
 import { z } from 'zod';
 
 const BestPrice = z.object({
@@ -28,7 +28,7 @@ type BestPriceQuery = {
 };
 
 export default async function useFetchPrice(query: BestPriceQuery) {
-  const { token } = useAuthStore();
+  const { token } = useAuth();
   const { $logger } = useNuxtApp();
   const config = useRuntimeConfig();
   return useFetch('/v1/flight-search/v2/best-price', {

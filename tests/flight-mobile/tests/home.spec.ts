@@ -127,13 +127,61 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
     ).toBeVisible();
   });
 
+  test('Given that I am a user, I can change Penumpang input value', async ({
+    page,
+  }) => {
+    const dialog = page.getByRole('dialog');
+
+    await page
+      .getByRole('link', { name: 'Penumpang 1 Dewasa • 0 Anak • 0 Bayi' })
+      .click();
+
+    await expect(
+      dialog
+        .getByRole('listitem')
+        .filter({ hasText: 'Dewasa' })
+        .getByRole('textbox')
+    ).toHaveValue('1');
+    await expect(
+      dialog
+        .getByRole('listitem')
+        .filter({ hasText: 'Anak-anak' })
+        .getByRole('textbox')
+    ).toHaveValue('0');
+    await expect(
+      dialog
+        .getByRole('listitem')
+        .filter({ hasText: 'Bayi' })
+        .getByRole('textbox')
+    ).toHaveValue('0');
+
+    await dialog
+      .getByRole('listitem')
+      .filter({ hasText: 'Dewasa' })
+      .getByRole('button', { name: 'Increment' })
+      .click();
+    await dialog.getByRole('button', { name: 'Simpan' }).click();
+
+    await expect(dialog).not.toBeVisible();
+
+    await expect(
+      page.getByRole('link', {
+        name: 'Penumpang 2 Dewasa • 0 Anak • 0 Bayi',
+      })
+    ).toBeVisible();
+  });
+
   test('Given that I am a user, I can change Kelas input value', async ({
     page,
   }) => {
-    await page.getByRole('link', { name: 'Kelas Ekonomi' }).click();
-    await expect(page.getByLabel(/^Ekonomi/)).toBeChecked();
+    const dialog = page.getByRole('dialog');
 
-    await page.getByText(/^Premium Ekonomi/).click();
+    await page.getByRole('link', { name: 'Kelas Ekonomi' }).click();
+    await expect(dialog.getByLabel(/^Ekonomi/)).toBeChecked();
+
+    await dialog.getByText(/^Premium Ekonomi/).click();
+
+    await expect(dialog).not.toBeVisible();
 
     await expect(
       page.getByRole('link', { name: 'Kelas Premium Ekonomi' })
