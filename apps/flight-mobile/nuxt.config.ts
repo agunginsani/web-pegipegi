@@ -65,6 +65,7 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: '/flight/',
+    buildAssetsDir: '/_assets/',
     head: {
       htmlAttrs: {
         lang: 'id',

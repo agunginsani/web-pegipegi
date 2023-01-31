@@ -46,7 +46,7 @@
       title: 'Bayi',
       description: '<2 tahun',
       min: 0,
-      max: passengersValue.adult,
+      max: passengersValue.adult < 4 ? passengersValue.adult : 4,
     },
   }));
 
