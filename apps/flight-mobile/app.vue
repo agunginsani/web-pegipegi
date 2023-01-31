@@ -32,7 +32,7 @@
   await initiateProfile();
 
   const online = useOnline();
-  const { addSnackbar } = useSnackbar();
+  const { addSnackbar, removeSnackbar } = useSnackbar();
   watch(
     () => online.value,
     (value) => {
@@ -42,6 +42,8 @@
           text: 'Hmm.. Yakin internetmu masih nyambung?',
           timeout: 0,
         });
+      } else {
+        removeSnackbar({ index: 0 });
       }
     }
   );
