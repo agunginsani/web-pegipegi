@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { parse, format } from 'date-fns';
+  import useSearchForm from 'home-module/composables/use-search-form';
 
   export type History = {
     from: { airport: string; city: string };
@@ -67,6 +68,13 @@
       props.history.paxAdult + props.history.paxChild + props.history.paxInfant;
     return `${total} Penumpang`;
   });
+
+  const { seatClass } = useSearchForm();
+  const seatClassText = computed(
+    () =>
+      seatClass.find((item) => item.code === props.history.seatClass)
+        ?.displayName
+  );
 </script>
 
 <template>
@@ -96,7 +104,7 @@
       </div>
       <span class="text-neutral-tuna-300 text-sm leading-5">
         <p class="truncate">{{ flightDate }}</p>
-        <p class="truncate">{{ totalPassenger }} | {{ history.seatClass }}</p>
+        <p class="truncate">{{ totalPassenger }} | {{ seatClassText }}</p>
       </span>
     </a>
   </li>

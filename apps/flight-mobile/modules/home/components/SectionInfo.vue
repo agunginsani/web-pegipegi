@@ -17,7 +17,6 @@
         <a
           class="relative flex items-center py-3.5 pr-4"
           :href="`${info.landingPageUrl}`"
-          target="_blank"
         >
           <NuxtImg
             class="mr-2"

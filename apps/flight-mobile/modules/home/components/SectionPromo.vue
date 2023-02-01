@@ -49,8 +49,6 @@
           'text-orange-inter-600': !error,
         }"
         :href="`${homeUrl}/promo-list`"
-        target="_blank"
-        rel="noopener"
       >
         Lihat Semua
       </a>
