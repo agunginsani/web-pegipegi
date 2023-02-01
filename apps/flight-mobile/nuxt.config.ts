@@ -177,7 +177,6 @@ export default defineNuxtConfig({
     'common-module': resolve(__dirname, './modules/common'),
     'home-module': resolve(__dirname, './modules/home'),
   },
-  router: {},
   nitro: {
     baseURL: '/flight/',
     compressPublicAssets: true,
