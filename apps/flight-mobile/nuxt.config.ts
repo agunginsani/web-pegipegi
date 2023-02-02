@@ -140,7 +140,7 @@ export default defineNuxtConfig({
       authBaseUrl: '',
       bannerApiBaseUrl: '',
       apixBaseUrl: '',
-      apixSearchUrl: '',
+      apixSearchBaseUrl: '',
       accountBaseUrl: '',
       appVersion,
     },
