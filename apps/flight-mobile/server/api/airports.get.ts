@@ -25,7 +25,7 @@ export default defineEventHandler((event) => {
   })
     .then((data) => Airports.parse(data))
     .then((airports) => {
-      if (search === undefined) {
+      if (!search) {
         return airports.filter(
           (airport) => airport.group.toLowerCase() === 'populer'
         );
