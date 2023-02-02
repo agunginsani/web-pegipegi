@@ -5,9 +5,9 @@
   import ModalClass from 'home-module/components/ModalClass.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
   import { add, format } from 'date-fns';
-  import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
-  const { searchForm, setSearchForm } = useSearchForm();
+  const { searchForm, setSearchForm, bestPrice, clearBestPrice } =
+    useSearchForm();
 
   const returnModel = computed({
     get() {
@@ -54,7 +54,6 @@
     return `${baseUrl}/flight/search-result/departure?${queryParams.toString()}`;
   });
 
-  const { bestPrice, clearBestPrice } = useCalendarTracker();
   const bestPriceStorage = useLocalStorage('flight-mweb.best-price', {});
   bestPriceStorage.value = {};
 

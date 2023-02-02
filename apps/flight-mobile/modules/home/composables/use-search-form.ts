@@ -29,9 +29,12 @@ type SeatClassItem = {
   description: string;
 };
 
-export default defineStore('searchForm', () => {
-  const seatClass = reactive<Array<SeatClassItem>>([]);
+type BestPrice = {
+  departurePrice?: number;
+  returnPrice?: number;
+};
 
+export default defineStore('searchForm', () => {
   const searchForm = reactive<SearchFormValue>({
     origin: {
       label: '',
@@ -64,6 +67,8 @@ export default defineStore('searchForm', () => {
     Object.assign(searchForm, payload);
   }
 
+  const seatClass = reactive<Array<SeatClassItem>>([]);
+
   async function initiateSeatClass() {
     if (seatClass.length > 0) return;
 
@@ -71,10 +76,26 @@ export default defineStore('searchForm', () => {
     Object.assign(seatClass, seats.value);
   }
 
+  const bestPrice = reactive<BestPrice>({
+    departurePrice: undefined,
+    returnPrice: undefined,
+  });
+
+  function setBestPrice(params: BestPrice) {
+    Object.assign(bestPrice, params);
+  }
+
+  function clearBestPrice() {
+    (bestPrice.departurePrice = undefined), (bestPrice.returnPrice = undefined);
+  }
+
   return {
     searchForm,
     setSearchForm,
     seatClass,
     initiateSeatClass,
+    setBestPrice,
+    clearBestPrice,
+    bestPrice,
   };
 });
