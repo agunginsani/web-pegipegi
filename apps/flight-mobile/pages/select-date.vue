@@ -100,7 +100,10 @@
       flightClass: searchForm.class.value,
     };
 
-    const { data } = await useFetchPrice(query);
+    const { data } = await useFetch('/api/best-price', {
+      query,
+      transform: (data) => data.data,
+    });
     if (!!data.value) {
       if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
       data.value.forEach((item) => {
