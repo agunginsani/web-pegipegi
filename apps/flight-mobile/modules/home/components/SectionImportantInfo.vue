@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-  import useFetchImportantInfo from '../composables/use-fetch-important-info';
-  const { data, pending, error } = await useFetchImportantInfo();
-  const infos = computed(() => data.value?.data || []);
+  const { data } = await useFetch('/api/important-info');
 </script>
 
 <template>
@@ -9,9 +7,9 @@
     <h2 id="important-info-title" class="font-bold">Informasi Penting</h2>
     <ul class="mt-2">
       <li
-        v-if="!pending && !error"
+        v-if="data"
         class="border-neutral-tuna-50 border-b last-of-type:border-transparent"
-        v-for="(info, index) in infos"
+        v-for="(info, index) in data.data"
         :key="index"
       >
         <a
@@ -41,6 +39,7 @@
       <template v-else>
         <li
           v-for="i in 3"
+          :key="i"
           class="border-neutral-tuna-50 flex items-center border-b py-3 pr-4 last-of-type:border-transparent"
         >
           <div class="bg-neutral-tuna-50 mr-5 h-8 w-8 rounded-full"></div>
