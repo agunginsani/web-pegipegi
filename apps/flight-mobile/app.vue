@@ -18,7 +18,6 @@
         addSnackbar({
           color: 'negative',
           text: 'Hmm.. Yakin internetmu masih nyambung?',
-          timeout: 0,
         });
       } else {
         removeSnackbar({ index: 0 });
