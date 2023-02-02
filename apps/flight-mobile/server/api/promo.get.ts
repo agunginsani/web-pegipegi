@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import crypto from 'crypto';
 import cookie from 'cookie';
-import logger from '../utils/logger';
 
 const Promo = z.object({
   datetime: z.string(),

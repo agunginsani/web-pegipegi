@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import logger from '../utils/logger';
 
 const Airports = z.array(
   z.object({
