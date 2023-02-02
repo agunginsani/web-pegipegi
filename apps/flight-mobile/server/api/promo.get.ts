@@ -1,10 +1,27 @@
 import { z } from 'zod';
 import crypto from 'crypto';
 import cookie from 'cookie';
+import logger from '../utils/logger';
 
-// This API uses secret from private environment variable that
-// only lives on the server. Hence, this API exist to avoid
-// that secret from bieng leaked on the client.
+const Promo = z.object({
+  datetime: z.string(),
+  id: z.string(),
+  data: z.array(
+    z.object({
+      description: z.string(),
+      id: z.number(),
+      image: z.string(),
+      name: z.string(),
+      shareable: z.boolean(),
+      url: z.string(),
+    })
+  ),
+  program: z.string(),
+  version: z.string(),
+});
+
+export type Promo = z.infer<typeof Promo>;
+
 export default defineEventHandler(async ({ node }) => {
   const config = useRuntimeConfig();
   return $fetch('/v1/banner-list', {
@@ -46,5 +63,10 @@ export default defineEventHandler(async ({ node }) => {
       options.headers['x-auth-time'] = `${timestamp}`;
       options.query = Object.fromEntries(params.entries());
     },
-  });
+  })
+    .then((data) => Promo.parse(data))
+    .catch((error) => {
+      logger.error(error);
+      throw error;
+    });
 });
