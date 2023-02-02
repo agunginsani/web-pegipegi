@@ -61,7 +61,7 @@
     bestPriceStorage.value = bestPrice;
   }
 
-  const isRotated = ref(true);
+  const isRotated = ref(false);
   function onSwap() {
     isRotated.value = !isRotated.value;
     clearBestPrice();
