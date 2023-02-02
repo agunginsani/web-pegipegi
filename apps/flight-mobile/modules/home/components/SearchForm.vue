@@ -61,7 +61,9 @@
     bestPriceStorage.value = bestPrice;
   }
 
+  const isRotated = ref(true);
   function onSwap() {
+    isRotated.value = !isRotated.value;
     clearBestPrice();
     const origin = JSON.parse(JSON.stringify(searchForm.destination));
     const destination = JSON.parse(JSON.stringify(searchForm.origin));
@@ -81,13 +83,16 @@
       @click="clearBestPrice()"
     >
       <button
-        class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2"
+        class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2 transition-transform duration-500"
+        :class="{
+          'rotate-0': !isRotated,
+          'rotate-180': isRotated,
+        }"
         @click="onSwap"
-        aria-label="Swap Origin and Destination"
       >
         <NuxtImg
           src="/icon-search-swap.svg"
-          alt="Swap"
+          alt="Swap Origin and Destination"
           width="24"
           height="24"
         />
