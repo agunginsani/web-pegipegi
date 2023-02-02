@@ -24,7 +24,6 @@
           v-for="(route, index) in routes"
           :key="index"
           :to="`${homeUrl}/flight/${route.link}`"
-          target="_blank"
         >
           {{ route.text }}
         </NuxtLink>

@@ -51,11 +51,7 @@
           :key="`footer-item-${index}`"
           class="mb-2"
         >
-          <a
-            class="flex justify-between"
-            :href="`${menu.link}`"
-            target="_blank"
-          >
+          <a class="flex justify-between" :href="`${menu.link}`">
             <p class="text-sm text-white">{{ menu.title }}</p>
             <NuxtImg
               src="/icon-chevron-right.svg"
@@ -71,31 +67,34 @@
         <p class="text-sm font-bold text-white">Temukan Kami</p>
         <ul class="mt-2 flex justify-center gap-x-[18px]">
           <li>
-            <a href="https://www.facebook.com/Pegipegi/" target="_blank"
-              ><NuxtImg
+            <a href="https://www.facebook.com/Pegipegi/">
+              <NuxtImg
                 src="/icon-facebook.svg"
                 alt="icon"
                 width="24px"
                 height="24px"
-            /></a>
+              />
+            </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/pegipegi/" target="_blank"
-              ><NuxtImg
+            <a href="https://www.instagram.com/pegipegi/">
+              <NuxtImg
                 src="/icon-instagram.svg"
                 alt="icon"
                 width="24px"
                 height="24px"
-            /></a>
+              />
+            </a>
           </li>
           <li>
-            <a href="https://twitter.com/pegipegi" target="_blank"
-              ><NuxtImg
+            <a href="https://twitter.com/pegipegi">
+              <NuxtImg
                 src="/icon-twitter.svg"
                 alt="icon"
                 width="24px"
                 height="24px"
-            /></a>
+              />
+            </a>
           </li>
         </ul>
       </div>
