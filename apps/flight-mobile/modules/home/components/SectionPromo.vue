@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-  import usePromoBanners from 'home-module/composables/use-fetch-promo-banners';
-
-  const { data: banners, pending, error } = await usePromoBanners();
+  const { data: banners, pending, error } = await useFetch('/api/promo');
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
