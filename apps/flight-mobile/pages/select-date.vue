@@ -6,7 +6,6 @@
   import useSearchForm from 'home-module/composables/use-search-form';
   import useFetchPrice from 'home-module/composables/use-fetch-price';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
-  import useCalendarTracker from 'common-module/composables/use-calendar-tracker';
 
   definePageMeta({
     middleware(to, from) {
@@ -39,8 +38,7 @@
     meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
   });
 
-  const { searchForm, setSearchForm } = useSearchForm();
-  const { setBestPrice } = useCalendarTracker();
+  const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
   const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
@@ -103,9 +101,9 @@
     };
 
     const { data } = await useFetchPrice(query);
-    if (!!data.value && data.value?.length > 0) {
+    if (!!data.value) {
+      if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
       data.value.forEach((item) => {
-        if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
         if (!!item.shortFare && !!item.fare) {
           bestPrice[monthKey][item.dateObj.day] = {
             shortFare: item.shortFare,

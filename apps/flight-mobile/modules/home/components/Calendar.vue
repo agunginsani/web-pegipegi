@@ -54,11 +54,13 @@
     );
     let pointer = startOfMonth(new Date(props.startDate));
 
-    return Array.from({ length: monthDifference + 1 }, (_, i) => {
-      return {
-        holiday: holiday[format(pointer, 'yyyy')][i + 1],
-        monthPointer: add(pointer, { months: i }),
+    return Array.from({ length: monthDifference + 1 }, () => {
+      const result = {
+        holiday: holiday[format(pointer, 'yyyy')]?.[format(pointer, 'M')],
+        monthPointer: pointer,
       };
+      pointer = add(pointer, { months: 1 });
+      return result;
     });
   });
 

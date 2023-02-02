@@ -19,6 +19,7 @@
 
     if (!searchForm.origin.value && history.value?.[0]) {
       const lastSearch = history.value[0];
+
       const lastDepartureDate = parse(
         lastSearch.departureDate,
         'dd-MM-yyyy',
@@ -30,7 +31,7 @@
         : undefined;
 
       const departureDate = isBefore(lastDepartureDate, startOfDay(new Date()))
-        ? startOfDay(new Date())
+        ? add(startOfDay(new Date()), { days: 1 })
         : lastDepartureDate;
 
       const returnDate = lastReturnDate
