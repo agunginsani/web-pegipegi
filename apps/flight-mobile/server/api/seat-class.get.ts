@@ -20,7 +20,7 @@ export default defineEventHandler(() => {
   return $fetch('/flight/v2/seat-class', {
     baseURL: config.public.apixSearchBaseUrl,
   })
-    .then((data) => SeatClass.parse(data))
+    .then((data) => SeatClass.parse(data).data)
     .catch((error) => {
       logger.error(error);
       throw error;

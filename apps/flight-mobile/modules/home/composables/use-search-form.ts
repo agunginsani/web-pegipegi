@@ -70,9 +70,7 @@ export default defineStore('searchForm', () => {
   async function initiateSeatClass() {
     if (seatClass.length > 0) return;
 
-    const { data: seats } = await useFetch('/api/seat-class', {
-      transform: (data) => data.data,
-    });
+    const { data: seats } = await useFetch('/api/seat-class');
     Object.assign(seatClass, seats.value);
   }
 
