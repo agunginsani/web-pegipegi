@@ -2,7 +2,7 @@
   import SectionSearch from 'home-module/components/SectionSearch.vue';
   import SectionLastSearch from 'home-module/components/SectionLastSearch.vue';
   import SectionPromo from 'home-module/components/SectionPromo.vue';
-  import SectionImportantInfo from '~~/modules/home/components/SectionImportantInfo.vue';
+  import SectionImportantInfo from 'home-module/components/SectionImportantInfo.vue';
   import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
   import SectionSeo from 'home-module/components/SectionSeo.vue';
   import Navbar from 'home-module/components/Navbar.vue';
