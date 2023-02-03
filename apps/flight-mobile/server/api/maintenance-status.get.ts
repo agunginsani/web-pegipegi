@@ -19,7 +19,7 @@ const MaintenanceStatus = z.object({
   }),
 });
 
-export default () => {
+export default eventHandler(() => {
   const config = useRuntimeConfig();
   return $fetch(
     `/v1/projects/${config.fireProjectId}/databases/(default)/documents/status/mweb/products/flight`,
@@ -34,4 +34,4 @@ export default () => {
       logger.error(error);
       throw error;
     });
-};
+});
