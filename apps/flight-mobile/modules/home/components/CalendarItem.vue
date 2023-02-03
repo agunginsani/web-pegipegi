@@ -126,6 +126,10 @@
             Hari ini
           </p>
           <div
+            v-if="date.isToday"
+            class="border-neutral-tuna-50 absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full border"
+          />
+          <div
             v-if="date.isStart && modelValue[1]"
             class="bg-orange-inter-50 absolute left-1/2 top-0 h-9 w-1/2"
           />
@@ -139,7 +143,7 @@
           />
           <div
             v-if="date.isActive"
-            class="active-date bg-orange-inter-600 absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full"
+            class="bg-orange-inter-600 absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full"
           />
           <p
             class="relative mb-1 h-9 text-sm leading-9"
