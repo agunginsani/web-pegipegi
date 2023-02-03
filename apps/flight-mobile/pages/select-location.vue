@@ -7,7 +7,7 @@
     SearchFormValue,
     SearchFormItemValue,
   } from 'home-module/composables/use-search-form';
-  import useFirebase from 'common-module/composables/use-firebase';
+  import useLocationTracker from 'home-module/composables/use-location-tracker';
 
   type ResultItem = {
     title: string;
@@ -15,11 +15,6 @@
     type: string;
     value: SearchFormItemValue;
     icon: string;
-  };
-
-  type ScreenData = {
-    itemNum: number;
-    errorType: string;
   };
 
   definePageMeta({
@@ -49,7 +44,7 @@
     'flight-mweb.last-location-search',
     []
   );
-  const popularGroups = computed(() =>
+  const popularGroups = computed<Array<ResultItem>>(() =>
     airports
       .filter((item) => item.group.toLowerCase() === 'populer')
       .map((item) => ({
@@ -72,11 +67,6 @@
   // search location
   const keyword = ref('');
   const results = ref<Array<ResultItem>>([]);
-  const screenData = ref<ScreenData>({
-    itemNum: 0,
-    errorType: '',
-  });
-  const keywordCode = ref('');
   const isLoading = ref(false);
 
   watchDebounced(
@@ -121,14 +111,8 @@
           (tempResult.length - renderedCount.value < 50
             ? tempResult.length
             : 50);
-
-        if (keywordCode.value !== 'Backspace') {
-          screenData.value.errorType = keyword.value;
-          screenData.value.itemNum = tempResult.length;
-        }
       } else {
         results.value = [];
-        triggerLogTracking('Delete All Keyword', true);
       }
       isLoading.value = false;
     },
@@ -164,7 +148,11 @@
   // event handlers
   const { searchForm, setSearchForm } = useSearchForm();
   const { addSnackbar } = useSnackbar();
-  const { track } = useFirebase();
+
+  const { onKeyDown, track } = useLocationTracker({
+    keyword,
+    resultCount: computed(() => renderedResult.value.length),
+  });
 
   function onSelect(selectedItem: ResultItem) {
     const payload: Partial<SearchFormValue> = {};
@@ -189,59 +177,25 @@
       });
     }
 
-    if (keyword.value.length > 0) {
-      triggerLogTracking('Click Autocomplete Result');
-    }
+    track('Click Autocomplete Result');
 
-    onBack();
+    router.go(-1);
   }
 
-  function onBack(withButton = false) {
-    if (keywordCode.value && withButton) {
-      triggerLogTracking('Cancel Search', true);
-    }
+  function onBack() {
+    track('Cancel Search');
     router.go(-1);
   }
 
   function onDeleteLastSearch() {
     lastSearch.value = [];
   }
-
-  function onKeyDown(event: Event) {
-    const evt = event as KeyboardEvent;
-    keywordCode.value = evt.code;
-  }
-
-  function triggerLogTracking(
-    triggerType: string,
-    isDeleteAll: boolean = false
-  ) {
-    const itemNum: number = isDeleteAll
-      ? screenData.value.itemNum
-      : renderedResult.value.length;
-    const errorType: string = isDeleteAll
-      ? screenData.value.errorType
-      : keyword.value;
-    const trackingData: Object = {
-      screen_name: 'FlightHomeAutoComplete',
-      trigger_type: triggerType,
-      item_num: itemNum > 0 ? itemNum : undefined,
-      error_type: errorType.length > 0 ? errorType : undefined,
-    };
-
-    track('trigger_log', trackingData);
-
-    screenData.value = {
-      itemNum: 0,
-      errorType: '',
-    };
-  }
 </script>
 
 <template>
   <LocationSearch
     v-model="keyword"
-    @back="onBack(true)"
+    @back="onBack"
     @keydown="onKeyDown"
     @update:model-value="isLoading = true"
   >
