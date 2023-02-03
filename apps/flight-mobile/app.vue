@@ -2,28 +2,11 @@
   import Snackbar from 'common-module/components/Snackbar.vue';
   import useProfile from 'common-module/composables/use-profile';
   import useAuth from 'common-module/composables/use-auth';
-  import useSnackbar from 'common-module/composables/use-snackbar';
 
   useAuth();
 
   const { initiateProfile } = useProfile();
   await initiateProfile();
-
-  const online = useOnline();
-  const { addSnackbar, removeSnackbar } = useSnackbar();
-  watch(
-    () => online.value,
-    (value) => {
-      if (!value) {
-        addSnackbar({
-          color: 'negative',
-          text: 'Hmm.. Yakin internetmu masih nyambung?',
-        });
-      } else {
-        removeSnackbar({ index: 0 });
-      }
-    }
-  );
 </script>
 
 <template>
