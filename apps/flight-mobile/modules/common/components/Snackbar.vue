@@ -12,7 +12,7 @@
 
   const online = useOnline();
   watch(
-    () => online.value,
+    () => online,
     (value) => {
       if (!value) {
         addSnackbar({
