@@ -31,7 +31,7 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
     ).toBeVisible();
 
     await expect(
-      page.getByRole('link', { name: 'Pergi Jumat, 13 Jan 2023' })
+      page.getByRole('link', { name: 'Pergi Sabtu, 14 Jan 2023' })
     ).toBeVisible();
 
     await expect(page.getByLabel('Pulang Pergi?')).not.toBeChecked();
@@ -108,7 +108,7 @@ test.describe('As a user, I can search flight schedule filtered by airport, date
   test('Given that I am a user, I can change Pergi or Pulang input value', async ({
     page,
   }) => {
-    await page.getByRole('link', { name: 'Pergi Jumat, 13 Jan 2023' }).click();
+    await page.getByRole('link', { name: 'Pergi Sabtu, 14 Jan 2023' }).click();
     await page.getByRole('button', { name: '08 Februari 2023' }).click();
     await page.getByRole('button', { name: 'Simpan' }).click();
 

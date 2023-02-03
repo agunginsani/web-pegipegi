@@ -76,6 +76,7 @@
       }
       setSearchForm(newSearchForm);
     } else if (!searchForm.origin.value) {
+      const deprtureDate = add(startOfDay(new Date()), { days: 1 });
       setSearchForm({
         origin: {
           label: 'Jakarta (JKT)',
@@ -86,8 +87,8 @@
           value: 'DPS',
         },
         departureDate: {
-          label: format(new Date(), 'EEEE, dd MMM yyyy'),
-          value: startOfDay(new Date()).toString(),
+          label: format(deprtureDate, 'EEEE, dd MMM yyyy'),
+          value: deprtureDate.toString(),
         },
         returnDate: undefined,
         passengers: {
