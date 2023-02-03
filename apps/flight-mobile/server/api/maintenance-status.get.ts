@@ -22,7 +22,7 @@ const MaintenanceStatus = z.object({
 export default eventHandler(() => {
   const config = useRuntimeConfig();
   return $fetch(
-    `/v1/projects/${config.fireProjectId}/databases/(default)/documents/status/mweb/products/flight`,
+    `/v1/projects/${config.firebaseProjectId}/databases/(default)/documents/status/mweb/products/flight`,
     {
       baseURL: 'https://firestore.googleapis.com/',
     }

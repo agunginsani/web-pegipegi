@@ -135,7 +135,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     bannerApiKey: '',
-    fireProjectId: '',
+    firebaseProjectId: '',
     public: {
       homeUrl: '',
       authBaseUrl: '',
