@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import logger from '../utils/logger';
 
 const Airports = z.array(
   z.object({
@@ -26,7 +25,7 @@ export default defineEventHandler((event) => {
   })
     .then((data) => Airports.parse(data))
     .then((airports) => {
-      if (search === undefined) {
+      if (!search) {
         return airports.filter(
           (airport) => airport.group.toLowerCase() === 'populer'
         );

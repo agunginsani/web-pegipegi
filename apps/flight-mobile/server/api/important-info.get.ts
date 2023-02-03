@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import useAuth from 'common-module/composables/use-auth';
 
 const ImportantInfo = z.object({
   message: z.string(),
@@ -19,14 +18,14 @@ const ImportantInfo = z.object({
 
 type ImportantInfo = z.infer<typeof ImportantInfo>;
 
-export default function useFetchImportantInfo() {
-  const { token } = useAuth();
+export default defineEventHandler(() => {
   const config = useRuntimeConfig();
-  return useFetch('/v1/flight-search/v2/banners', {
-    baseURL: config.public.authBaseUrl,
-    headers: { authorization: `Bearer ${token}` },
-    transform(data) {
-      return ImportantInfo.parse(data);
-    },
-  });
-}
+  return $fetch('/flight/v2/banners', {
+    baseURL: config.public.apixSearchBaseUrl,
+  })
+    .then((data) => ImportantInfo.parse(data))
+    .catch((error) => {
+      logger.error(error);
+      throw error;
+    });
+});
