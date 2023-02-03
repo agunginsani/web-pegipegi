@@ -11,19 +11,16 @@
   };
 
   const online = useOnline();
-  watch(
-    () => online,
-    (value) => {
-      if (!value) {
-        addSnackbar({
-          color: 'negative',
-          text: 'Hmm.. Yakin internetmu masih nyambung?',
-        });
-      } else {
-        removeSnackbar({ index: 0 });
-      }
+  watch(online, (value) => {
+    if (!value) {
+      addSnackbar({
+        color: 'negative',
+        text: 'Hmm.. Yakin internetmu masih nyambung?',
+      });
+    } else {
+      removeSnackbar({ index: 0 });
     }
-  );
+  });
 </script>
 
 <template>
