@@ -2,13 +2,7 @@
   import { BottomSheet, Button } from '@pegipegi/web-pegipegi-ui';
 
   const { homeUrl } = useRuntimeConfig().public;
-  const { data: isMaintenance, refresh: fetch } = await useFetch(
-    '/api/maintenance-status',
-    {
-      immediate: false,
-    }
-  );
-  onMounted(() => fetch());
+  const { data: isMaintenance } = await useFetch('/api/maintenance-status');
 </script>
 
 <template>

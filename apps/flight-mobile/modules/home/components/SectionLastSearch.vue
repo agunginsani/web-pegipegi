@@ -2,8 +2,22 @@
   import LastSearchItem, {
     History,
   } from 'home-module/components/LastSearchItem.vue';
+  import { parse, isBefore, startOfDay } from 'date-fns';
 
   const histories = useCookie<Array<History> | null>('flight-search');
+
+  onMounted(() => {
+    const today = startOfDay(new Date());
+    histories.value =
+      histories.value?.filter((item) => {
+        const departureDate = parse(
+          item.departureDate,
+          'dd-MM-yyyy',
+          new Date()
+        );
+        return !isBefore(departureDate, today);
+      }) || [];
+  });
 
   function removeHistory(id: number): void {
     if (histories.value && histories.value !== null) {
@@ -17,7 +31,7 @@
   <section
     aria-labelledby="last-search-user-title"
     class="pb-3"
-    v-if="histories"
+    v-if="!!histories && histories.length > 0"
   >
     <h2 id="last-search-user-title" class="mb-4 px-4 text-base font-bold">
       Pencarian Terakhir
