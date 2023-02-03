@@ -13,7 +13,7 @@ const Adhoc = z.object({
   viewType: z.string(),
 });
 
-export default eventHandler(() => {
+export default defineEventHandler(() => {
   const config = useRuntimeConfig();
   return $fetch('/flight/v1/event-message/view-type/homepage', {
     baseURL: config.public.supplyBaseUrl,
