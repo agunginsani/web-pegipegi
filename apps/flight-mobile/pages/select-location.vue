@@ -44,7 +44,7 @@
     'flight-mweb.last-location-search',
     []
   );
-  const popularGroups = computed<Array<ResultItem>>(() =>
+  const popularGroups = computed(() =>
     airports
       .filter((item) => item.group.toLowerCase() === 'populer')
       .map((item) => ({
