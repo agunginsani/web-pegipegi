@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { History } from 'home-module/components/LastSearchItem.vue';
+  import AdhocBanner from 'home-module/components/AdhocBanner.vue';
   import SearchForm from 'home-module/components/SearchForm.vue';
   import useSearchForm, {
     SearchFormValue,
@@ -122,7 +123,7 @@
       height="400"
       preload
     />
-
+    <AdhocBanner />
     <SearchForm />
   </main>
 </template>

@@ -143,6 +143,7 @@ export default defineNuxtConfig({
       apixBaseUrl: '',
       apixSearchUrl: '',
       accountBaseUrl: '',
+      supplyBaseUrl: '',
       appVersion,
     },
   },
