@@ -4,7 +4,6 @@
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import useFetchPrice from 'home-module/composables/use-fetch-price';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
 
   definePageMeta({
@@ -100,7 +99,9 @@
       flightClass: searchForm.class.value,
     };
 
-    const { data } = await useFetchPrice(query);
+    const { data } = await useFetch('/api/best-price', {
+      query,
+    });
     if (!!data.value) {
       if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
       data.value.forEach((item) => {

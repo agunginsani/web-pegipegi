@@ -1,5 +1,3 @@
-import useFetchSeatClasses from 'home-module/composables/use-fetch-seat-classes';
-
 export type PassangerValue = {
   value: {
     adult: number;
@@ -72,7 +70,7 @@ export default defineStore('searchForm', () => {
   async function initiateSeatClass() {
     if (seatClass.length > 0) return;
 
-    const { data: seats } = await useFetchSeatClasses();
+    const { data: seats } = await useFetch('/api/seat-class');
     Object.assign(seatClass, seats.value);
   }
 
