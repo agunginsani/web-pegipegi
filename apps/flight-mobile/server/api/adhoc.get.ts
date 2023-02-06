@@ -4,7 +4,7 @@ import logger from '../utils/logger';
 const Adhoc = z.object({
   id: z.string(),
   message: z.string(),
-  type: z.string(),
+  type: z.union([z.literal('WARNING'), z.literal('INFO'), z.literal('DANGER')]),
   tripType: z.string(),
   startDate: z.string(),
   endDate: z.string(),
