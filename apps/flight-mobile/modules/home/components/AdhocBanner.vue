@@ -7,7 +7,7 @@
     icon: string;
   };
 
-  const { data } = useFetch('/api/adhoc');
+  const { data } = useLazyFetch('/api/adhoc');
 
   const bannerProperty = computed<BannerProperty>(() => {
     if (data.value?.type === 'WARNING') {
@@ -48,7 +48,7 @@
           />
         </template>
         <template #description>
-          <p>{{ data?.message }}</p>
+          <p>{{ data.message }}</p>
         </template>
         <template #action />
       </Banner>
