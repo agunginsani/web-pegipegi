@@ -31,7 +31,6 @@
     "@nuxtjs/device": "^3.0.0",
     "@pegipegi/web-pegipegi-ui": "latest",
     "@pinia/nuxt": "^0.4.3",
-    "cookie": "^0.5.0",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
     "firebase": "^9.16.0",

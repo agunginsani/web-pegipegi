@@ -43,7 +43,6 @@ importers:
       '@types/uuid': ^9.0.0
       '@vueuse/core': ^9.11.1
       '@vueuse/nuxt': ^9.11.1
-      cookie: ^0.5.0
       date-fns: ^2.29.3
       dotenv: ^16.0.3
       firebase: ^9.16.0
@@ -62,7 +61,6 @@ importers:
       '@nuxtjs/device': 3.0.0
       '@pegipegi/web-pegipegi-ui': 0.0.11_@vueuse+core@9.11.1
       '@pinia/nuxt': 0.4.6_typescript@4.9.5
-      cookie: 0.5.0
       date-fns: 2.29.3
       dotenv: 16.0.3
       firebase: 9.16.0
@@ -4707,14 +4705,6 @@ packages:
         integrity: sha512-RyZrFi6PNpBFbIaQjXDlFIhFVqV42QeKSZX1yQIl6ihImq6vcHNGMtqQ/QzY3RMPuYSkvsRwtnt5M9NeYxKt0g==,
       }
     dev: true
-
-  /cookie/0.5.0:
-    resolution:
-      {
-        integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==,
-      }
-    engines: { node: '>= 0.6' }
-    dev: false
 
   /cookies/0.8.0:
     resolution:
