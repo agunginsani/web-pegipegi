@@ -4,6 +4,7 @@
   type BannerProperty = {
     color: 'info' | 'warning' | 'negative';
     class: string;
+    icon: string;
   };
 
   const { data } = useFetch('/api/adhoc');
