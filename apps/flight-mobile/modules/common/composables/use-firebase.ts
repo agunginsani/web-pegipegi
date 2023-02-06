@@ -24,16 +24,20 @@ export default () => {
   async function track(type: AnalyticsType, params: object) {
     const { userId, deviceId } = useProfile();
 
-    if (!analytics.value) {
-      analytics.value = getAnalytics();
-    }
+    try {
+      if (!analytics.value) {
+        analytics.value = getAnalytics();
+      }
 
-    logEvent(analytics.value, type, {
-      customer_id: userId,
-      device_id: deviceId,
-      product_name: 'Flight',
-      ...params,
-    });
+      logEvent(analytics.value, type, {
+        customer_id: userId,
+        device_id: deviceId,
+        product_name: 'Flight',
+        ...params,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async function getConfig(key: string) {
@@ -41,12 +45,17 @@ export default () => {
       remoteConfig.value = getRemoteConfig();
     }
 
-    if (!remoteActivated.value) {
-      remoteActivated.value = true;
-      await fetchAndActivate(remoteConfig.value);
-    }
+    try {
+      if (!remoteActivated.value) {
+        remoteActivated.value = true;
+        await fetchAndActivate(remoteConfig.value);
+      }
 
-    return JSON.parse(getValue(remoteConfig.value, key).asString());
+      return JSON.parse(getValue(remoteConfig.value, key).asString());
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
   }
 
   return {

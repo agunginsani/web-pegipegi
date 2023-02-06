@@ -2,13 +2,25 @@
   import { Alert } from '@pegipegi/web-pegipegi-ui';
   import useSnackbar from 'common-module/composables/use-snackbar';
 
-  const { snackbars, removeSnackbar } = useSnackbar();
+  const { snackbars, addSnackbar, removeSnackbar } = useSnackbar();
   const transitionClasses = {
     enterActiveClass: 'duration-300 transition-all pointer-events-none',
     leaveActiveClass: 'duration-300 transition-all pointer-events-none',
     enterFromClass: 'opacity-0 translate-y-5',
     leaveToClass: 'opacity-0 translate-y-5',
   };
+
+  const online = useOnline();
+  watch(online, (value) => {
+    if (!value) {
+      addSnackbar({
+        color: 'negative',
+        text: 'Hmm.. Yakin internetmu masih nyambung?',
+      });
+    } else {
+      removeSnackbar({ index: 0 });
+    }
+  });
 </script>
 
 <template>
