@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  const { data } = await useFetch('/api/important-info');
+  const { data } = useLazyFetch('/api/important-info');
 </script>
 
 <template>

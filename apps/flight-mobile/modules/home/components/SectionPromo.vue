@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  const { data: banners, pending, error } = await useFetch('/api/promo');
+  const { data: banners, pending, error } = useLazyFetch('/api/promo');
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
@@ -62,7 +62,7 @@
         class="bg-neutral-tuna-50 h-[138px] w-[250px] shrink-0 snap-center rounded-xl"
       />
       <li
-        v-if="error"
+        v-else-if="error"
         class="flex h-[138px] w-[250px] shrink-0 snap-center flex-col items-center justify-center text-center"
       >
         <p class="mb-1 font-bold">Maaf ada sedikit gangguan</p>
