@@ -9,21 +9,24 @@
   const { data } = useFetch('/api/adhoc');
 
   const bannerProperty = computed<BannerProperty>(() => {
-    if (data.value?.message.toLowerCase() === 'warning') {
+    if (data.value?.type === 'WARNING') {
       return {
         color: 'warning',
         class: 'bg-yellow-candle-300',
+        icon: 'icon-pegipegi-black.svg',
       };
     }
-    if (data.value?.message.toLowerCase() === 'danger') {
+    if (data.value?.type === 'DANGER') {
       return {
         color: 'negative',
         class: 'bg-red-flower-700',
+        icon: 'icon-pegipegi.svg',
       };
     }
     return {
       color: 'info',
       class: 'bg-blue-dodger-600',
+      icon: 'icon-pegipegi.svg',
     };
   });
 </script>
@@ -36,7 +39,12 @@
     >
       <Banner :color="bannerProperty.color">
         <template #icon>
-          <NuxtImg src="/icon-pegipegi.svg" width="24" height="24" />
+          <NuxtImg
+            class="bg-clip-content fill-black"
+            :src="bannerProperty.icon"
+            width="24"
+            height="24"
+          />
         </template>
         <template #description>
           <p>{{ data?.message }}</p>
