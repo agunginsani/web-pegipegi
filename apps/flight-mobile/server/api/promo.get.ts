@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import crypto from 'crypto';
-import cookie from 'cookie';
 
 const Promo = z.object({
   datetime: z.string(),
@@ -19,19 +18,20 @@ const Promo = z.object({
   version: z.string(),
 });
 
-export type Promo = z.infer<typeof Promo>;
+type Promo = z.infer<typeof Promo>;
 
-export default defineEventHandler(async ({ node }) => {
+export default defineEventHandler((event) => {
   const config = useRuntimeConfig();
-  return $fetch('/v1/banner-list', {
+  // Is `Promo` generic needed on `$fetch`?
+  // If `Promo` generic is removed, running `nuxi typecheck` will
+  // fail because it interprets this return value as `any`. 🤷
+  return $fetch<Promo>('/v1/banner-list', {
     baseURL: config.public.bannerApiBaseUrl,
     async onRequest({ options, request }) {
-      const headers = node.req.headers;
-      const cookies = cookie.parse(headers.cookie ?? '');
-      const token = cookies['phpsess'] as string | undefined;
-
+      const token = getCookie(event, 'phpsess');
+      const deviceId = getCookie(event, 'device-id');
       const params = new URLSearchParams();
-      params.append('device_id', cookies['device-id']);
+      if (deviceId) params.append('device_id', deviceId);
       params.append('device_origin', 'mweb');
       params.append('tag', '1');
       if (token) {
