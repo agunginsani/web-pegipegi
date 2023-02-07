@@ -33,9 +33,7 @@
     },
   });
 
-  useHead({
-    meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
-  });
+  useServerSeoMeta({ robots: 'noindex, nofollow' });
 
   const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
   const route = useRoute();
