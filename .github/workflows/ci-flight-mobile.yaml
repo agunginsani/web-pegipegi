@@ -32,6 +32,8 @@ jobs:
         run: pnpm install
       - name: Lint
         run: pnpm prettier apps/flight-mobile --check
+      - name: Run type check
+        run: pnpm -F flight-mobile-app typecheck
       - name: Build staging
         run: pnpm -F flight-mobile-app build-staging
       - name: Install Playwright
