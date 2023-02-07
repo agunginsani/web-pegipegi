@@ -36,6 +36,8 @@
 
   const router = useRouter();
   const route = useRoute();
+
+  // TODO: use /server/api
   const { airports, initiateAirports } = useAirports();
   await initiateAirports();
 

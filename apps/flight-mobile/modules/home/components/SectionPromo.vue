@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  const { data: banners, pending, error } = useLazyFetch('/api/promo');
+  const { data: banners, pending, error } = useFetch('/api/promo');
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
@@ -13,7 +13,6 @@
   }
 
   onMounted(() => {
-    observer.value?.disconnect();
     observer.value = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -57,12 +56,9 @@
       ref="listRef"
     >
       <li class="min-w-[250px]"></li>
+
       <li
-        v-if="pending"
-        class="bg-neutral-tuna-50 h-[138px] w-[250px] shrink-0 snap-center rounded-xl"
-      />
-      <li
-        v-else-if="error"
+        v-if="error"
         class="flex h-[138px] w-[250px] shrink-0 snap-center flex-col items-center justify-center text-center"
       >
         <p class="mb-1 font-bold">Maaf ada sedikit gangguan</p>
@@ -80,8 +76,9 @@
           <p>Muat Ulang</p>
         </button>
       </li>
+
       <li
-        v-else
+        v-else-if="banners"
         v-for="(banner, index) in banners?.data"
         :key="banner.id"
         :data-index="index"
@@ -99,6 +96,12 @@
           />
         </NuxtLink>
       </li>
+
+      <li
+        v-else-if="pending"
+        class="bg-neutral-tuna-50 h-[138px] w-[250px] shrink-0 snap-center rounded-xl"
+      />
+
       <li class="min-w-[250px]"></li>
     </ul>
 

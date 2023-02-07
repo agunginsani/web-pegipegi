@@ -1,23 +1,26 @@
 <script lang="ts" setup>
   import { Banner } from '@pegipegi/web-pegipegi-ui';
 
-  type BannerProperty = {
-    color: 'info' | 'warning' | 'negative';
-    class: string;
-    icon: string;
-  };
+  type BannerProperty =
+    | {
+        color: 'info' | 'warning' | 'negative';
+        class: string;
+        icon: string;
+      }
+    | undefined;
 
-  const { data } = useLazyFetch('/api/adhoc');
+  const { data } = useFetch('/api/adhoc');
 
   const bannerProperty = computed<BannerProperty>(() => {
-    if (data.value?.type === 'WARNING') {
+    if (!data.value) return;
+    if (data.value.type === 'WARNING') {
       return {
         color: 'warning',
         class: 'bg-yellow-candle-300',
         icon: 'icon-pegipegi-black.svg',
       };
     }
-    if (data.value?.type === 'DANGER') {
+    if (data.value.type === 'DANGER') {
       return {
         color: 'negative',
         class: 'bg-red-flower-700',
@@ -33,7 +36,7 @@
 </script>
 
 <template>
-  <div class="relative" v-if="data">
+  <div class="relative" v-if="data && bannerProperty">
     <div
       class="overflow-hidden rounded-t-2xl pt-1"
       :class="[bannerProperty.class]"

@@ -4,7 +4,15 @@
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
+  import {
+    add,
+    format,
+    isBefore,
+    isAfter,
+    startOfDay,
+    differenceInMonths,
+    startOfMonth,
+  } from 'date-fns';
 
   definePageMeta({
     middleware(to, from) {
@@ -68,7 +76,9 @@
     },
   });
 
-  const bestPrice = reactive<{
+  const bestPriceArray = ref<any>([]);
+
+  type BestPrice = {
     [key: string]: {
       [key: string]: {
         cheapest: boolean;
@@ -76,44 +86,56 @@
         shortFare: number;
       };
     };
-  }>({});
+  };
 
-  async function fetchBestPrice(selectedDate: Date) {
-    const month = format(selectedDate, 'MM');
-    const year = format(selectedDate, 'yyyy');
-    const monthKey = `${month}-${year}`;
-
-    if (!!bestPrice[monthKey]) return;
-
-    const query = {
-      from:
-        route.query.type === 'departure'
-          ? searchForm.origin.value
-          : searchForm.destination.value,
-      to:
-        route.query.type === 'departure'
-          ? searchForm.destination.value
-          : searchForm.origin.value,
-      month,
-      year,
-      flightClass: searchForm.class.value,
-    };
-
-    const { data } = await useFetch('/api/best-price', {
-      query,
-    });
-    if (!!data.value) {
-      if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
-      data.value.forEach((item) => {
+  const bestPrice = computed<BestPrice>(() => {
+    const result: BestPrice = {};
+    console.log(bestPriceArray);
+    bestPriceArray.value.forEach((month) => {
+      month.response.data.forEach((item) => {
         if (!!item.shortFare && !!item.fare) {
-          bestPrice[monthKey][item.dateObj.day] = {
+          console.log('masuk');
+          result[item.monthKey][item.dateObj.day] = {
             shortFare: item.shortFare,
             fare: item.fare,
             cheapest: item.cheapest,
           };
         }
       });
-    }
+    });
+
+    return result;
+  });
+
+  async function fetchBestPrice() {
+    const monthDifference = Number(differenceInMonths(endDate, startDate));
+    let pointer = startOfMonth(new Date(startDate));
+
+    const queries = Array.from({ length: monthDifference + 1 }, () => {
+      const result = {
+        from:
+          route.query.type === 'departure'
+            ? searchForm.origin.value
+            : searchForm.destination.value,
+        to:
+          route.query.type === 'departure'
+            ? searchForm.destination.value
+            : searchForm.origin.value,
+        month: format(pointer, 'MM'),
+        year: format(pointer, 'yyyy'),
+        flightClass: searchForm.class.value,
+      };
+      pointer = add(pointer, { months: 1 });
+      return result;
+    });
+    bestPriceArray.value = await Promise.all(
+      queries.map(async (query) => ({
+        key: `${query.month}-${query.year}`,
+        month: query.month,
+        year: query.year,
+        response: await useLazyFetch('/api/best-price', { query }),
+      }))
+    );
   }
 
   function getBestPrice(selectedDate: Date) {
@@ -164,7 +186,7 @@
     router.go(-1);
   }
 
-  await fetchBestPrice(startDate);
+  await fetchBestPrice();
 </script>
 
 <template>
@@ -174,7 +196,6 @@
     :isReturn="$route.query.type === 'return'"
     :disabledDates="disabledDates"
     v-model="modelValue"
-    @select="fetchBestPrice"
     @back="onSave"
   >
     <template #header="{ value }">

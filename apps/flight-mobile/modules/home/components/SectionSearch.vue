@@ -101,8 +101,8 @@
           },
         },
         class: {
-          label: seatClass[0].displayName,
-          value: seatClass[0].code,
+          label: seatClass[0]?.displayName,
+          value: seatClass[0]?.code,
         },
       });
     }
