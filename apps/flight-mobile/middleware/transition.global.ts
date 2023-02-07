@@ -27,6 +27,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return path.split('/').filter((item) => item.length > 0).length;
   }
 
+  // TODO: check if going to /select-date or /select-location
   if (getDepth(to.path) >= getDepth(from.path)) {
     to.meta.pageTransition = enterTransition;
     from.meta.pageTransition = enterTransition;

@@ -15,7 +15,7 @@
   } from 'date-fns';
 
   definePageMeta({
-    middleware(to, from) {
+    middleware(to) {
       const { searchForm } = useSearchForm();
       if (!searchForm.departureDate.value) {
         return navigateTo('/');
@@ -24,20 +24,6 @@
       if (!['departure', 'return'].includes(String(to.query.type))) {
         return navigateTo('/select-date?type=departure');
       }
-
-      const transition: RouteMeta['pageTransition'] = {
-        enterActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
-        leaveActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
-        enterFromClass: 'translate-x-full',
-        enterToClass: 'translate-x-0',
-        leaveToClass: 'translate-x-[-100%] brightness-50',
-        mode: 'in-out',
-      };
-
-      to.meta.pageTransition = transition;
-      from.meta.pageTransition = transition;
     },
   });
 
@@ -76,7 +62,13 @@
     },
   });
 
-  const bestPriceArray = ref<any>([]);
+  const bestPriceArray = ref<
+    Array<{
+      // TODO: add type
+      response: any;
+      key: string;
+    }>
+  >([]);
 
   type BestPrice = {
     [key: string]: {
@@ -90,12 +82,11 @@
 
   const bestPrice = computed<BestPrice>(() => {
     const result: BestPrice = {};
-    console.log(bestPriceArray);
     bestPriceArray.value.forEach((month) => {
-      month.response.data.forEach((item) => {
+      month.response.data?.forEach((item) => {
+        if (!result[month.key]) result[month.key] = {};
         if (!!item.shortFare && !!item.fare) {
-          console.log('masuk');
-          result[item.monthKey][item.dateObj.day] = {
+          result[month.key][Number(item.dateObj.day)] = {
             shortFare: item.shortFare,
             fare: item.fare,
             cheapest: item.cheapest,
@@ -130,19 +121,13 @@
     });
     bestPriceArray.value = await Promise.all(
       queries.map(async (query) => ({
-        key: `${query.month}-${query.year}`,
-        month: query.month,
-        year: query.year,
+        key: `${Number(query.month)}-${query.year}`,
         response: await useLazyFetch('/api/best-price', { query }),
       }))
     );
   }
 
-  function getBestPrice(selectedDate: Date) {
-    const month = format(selectedDate, 'MM-yyyy');
-    const date = format(selectedDate, 'dd');
-    return bestPrice[month]?.[date];
-  }
+  await fetchBestPrice();
 
   function parseTitle(input: string) {
     return input.replace(/\(.+\)/, '');
@@ -185,8 +170,6 @@
 
     router.go(-1);
   }
-
-  await fetchBestPrice();
 </script>
 
 <template>
@@ -223,12 +206,17 @@
       </div>
     </template>
 
-    <template #addon="{ isDisabled, fullDate }">
+    <template #addon="{ isDisabled, monthNum, date, year }">
       <p
         class="text-neutral-tuna-300 h-4 text-[10px]"
-        :class="{ 'text-green-emerald-600': getBestPrice(fullDate)?.cheapest }"
+        :class="{
+          'text-green-emerald-600':
+            bestPrice[`${monthNum}-${year}`]?.[date]?.cheapest,
+        }"
       >
-        {{ isDisabled ? '-' : getBestPrice(fullDate)?.shortFare }}
+        {{
+          isDisabled ? '-' : bestPrice[`${monthNum}-${year}`]?.[date]?.shortFare
+        }}
       </p>
     </template>
   </Calendar>

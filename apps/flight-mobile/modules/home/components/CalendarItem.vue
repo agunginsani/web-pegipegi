@@ -13,6 +13,7 @@
     date: number;
     dayNum: number;
     monthNum: number;
+    year: number;
     fullDate: Date;
     label: string;
     isActive: boolean;
@@ -51,7 +52,7 @@
 
     const today = startOfDay(new Date());
     const year = Number(format(pointer, 'yyyy'));
-    const monthNum = Number(format(pointer, 'M'));
+    const monthNum = Number(format(pointer, 'MM'));
     const numOfDays = Number(format(endOfMonth(pointer), 'd'));
 
     const returnValue: Array<CalendarItemSlotProps> = [];
@@ -77,6 +78,7 @@
         date: i,
         dayNum,
         monthNum,
+        year,
         fullDate,
         label,
         isActive,
