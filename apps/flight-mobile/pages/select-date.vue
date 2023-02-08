@@ -3,7 +3,7 @@
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import useBestPrice from 'home-module/composables/use-calendar-best-price';
+  import useCalendarBestPrice from 'home-module/composables/use-calendar-best-price';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
 
   definePageMeta({
@@ -27,7 +27,7 @@
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
   const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
-  const { bestPrice } = await useBestPrice(startDate, endDate);
+  const { bestPrice } = await useCalendarBestPrice(startDate, endDate);
 
   const modelValue = computed<CalendarModelValue>({
     get() {
