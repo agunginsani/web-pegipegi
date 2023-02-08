@@ -1,18 +1,10 @@
 <script lang="ts" setup>
-  import { RouteMeta } from 'vue-router';
   import Calendar, {
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
-  import {
-    add,
-    format,
-    isBefore,
-    isAfter,
-    startOfDay,
-    differenceInMonths,
-    startOfMonth,
-  } from 'date-fns';
+  import useBestPrice from 'home-module/composables/use-calendar-best-price';
+  import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
 
   definePageMeta({
     middleware(to) {
@@ -31,11 +23,11 @@
     meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
   });
 
-  const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
-  const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
+  const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
+  const { bestPrice } = await useBestPrice(startDate, endDate);
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -61,73 +53,6 @@
       });
     },
   });
-
-  const bestPriceArray = ref<
-    Array<{
-      // TODO: add type
-      response: any;
-      key: string;
-    }>
-  >([]);
-
-  type BestPrice = {
-    [key: string]: {
-      [key: string]: {
-        cheapest: boolean;
-        fare: number;
-        shortFare: number;
-      };
-    };
-  };
-
-  const bestPrice = computed<BestPrice>(() => {
-    const result: BestPrice = {};
-    bestPriceArray.value.forEach((month) => {
-      month.response.data?.forEach((item) => {
-        if (!result[month.key]) result[month.key] = {};
-        if (!!item.shortFare && !!item.fare) {
-          result[month.key][Number(item.dateObj.day)] = {
-            shortFare: item.shortFare,
-            fare: item.fare,
-            cheapest: item.cheapest,
-          };
-        }
-      });
-    });
-
-    return result;
-  });
-
-  async function fetchBestPrice() {
-    const monthDifference = Number(differenceInMonths(endDate, startDate));
-    let pointer = startOfMonth(new Date(startDate));
-
-    const queries = Array.from({ length: monthDifference + 1 }, () => {
-      const result = {
-        from:
-          route.query.type === 'departure'
-            ? searchForm.origin.value
-            : searchForm.destination.value,
-        to:
-          route.query.type === 'departure'
-            ? searchForm.destination.value
-            : searchForm.origin.value,
-        month: format(pointer, 'MM'),
-        year: format(pointer, 'yyyy'),
-        flightClass: searchForm.class.value,
-      };
-      pointer = add(pointer, { months: 1 });
-      return result;
-    });
-    bestPriceArray.value = await Promise.all(
-      queries.map(async (query) => ({
-        key: `${Number(query.month)}-${query.year}`,
-        response: await useLazyFetch('/api/best-price', { query }),
-      }))
-    );
-  }
-
-  await fetchBestPrice();
 
   function parseTitle(input: string) {
     return input.replace(/\(.+\)/, '');
