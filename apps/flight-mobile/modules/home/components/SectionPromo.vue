@@ -45,7 +45,7 @@
           'text-neutral-tuna-200 pointer-events-none': error,
           'text-orange-inter-600': !error,
         }"
-        :href="`${homeUrl}/promo-list`"
+        :href="`${homeUrl}/promo-list?tag=pesawat`"
       >
         Lihat Semua
       </a>

@@ -1,4 +1,6 @@
 import { add, format, differenceInMonths, startOfMonth } from 'date-fns';
+import { Ref } from 'nuxt/dist/app/compat/capi';
+import { BestPrice as BestPriceResponse } from '~~/server/api/best-price.get';
 import useSearchForm from './use-search-form';
 
 type BestPrice = {
@@ -15,21 +17,16 @@ export default async (startDate: Date, endDate: Date) => {
   const route = useRoute();
   const { searchForm } = useSearchForm();
 
-  const bestPriceArray = ref<
-    Array<{
-      // TODO: add type
-      response: any;
-      key: string;
-    }>
-  >([]);
+  const bestPriceArray = ref<Array<Ref<BestPriceResponse | null>>>([]);
 
   const bestPrice = computed<BestPrice>(() => {
     const result: BestPrice = {};
-    bestPriceArray.value.forEach((month) => {
-      month.response.data?.forEach((item) => {
-        if (!result[month.key]) result[month.key] = {};
+    bestPriceArray.value.forEach((bestPrices, index) => {
+      const key = format(add(startDate, { months: index }), 'M-yyyy');
+      bestPrices.value?.data?.forEach((item) => {
+        if (!result[key]) result[key] = {};
         if (!!item.shortFare && !!item.fare) {
-          result[month.key][Number(item.dateObj.day)] = {
+          result[key][Number(item.dateObj.day)] = {
             shortFare: item.shortFare,
             fare: item.fare,
             cheapest: item.cheapest,
@@ -63,10 +60,10 @@ export default async (startDate: Date, endDate: Date) => {
       return result;
     });
     bestPriceArray.value = await Promise.all(
-      queries.map(async (query) => ({
-        key: `${Number(query.month)}-${query.year}`,
-        response: await useLazyFetch('/api/best-price', { query }),
-      }))
+      queries.map((query) => {
+        const { data } = useLazyFetch('/api/best-price', { query });
+        return data;
+      })
     );
   }
 

@@ -33,7 +33,7 @@ export default defineEventHandler((event) => {
     query,
     baseURL: config.public.apixSearchBaseUrl,
   })
-    .then((data) => BestPrice.parse(data).data)
+    .then((data) => BestPrice.parse(data))
     .catch((error) => {
       logger.error(error);
       throw error;
