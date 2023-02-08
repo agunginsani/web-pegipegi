@@ -41,11 +41,11 @@ export default () => {
   }
 
   async function getConfig(key: string) {
-    if (!remoteConfig.value) {
-      remoteConfig.value = getRemoteConfig();
-    }
-
     try {
+      if (!remoteConfig.value) {
+        remoteConfig.value = getRemoteConfig();
+      }
+
       if (!remoteActivated.value) {
         remoteActivated.value = true;
         await fetchAndActivate(remoteConfig.value);
