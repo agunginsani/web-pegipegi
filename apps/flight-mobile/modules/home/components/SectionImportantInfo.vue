@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  // TODO: cache data
   const { data } = useLazyFetch('/api/important-info');
 </script>
 

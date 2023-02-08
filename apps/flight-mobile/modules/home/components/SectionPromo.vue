@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  const { data: banners, pending, error } = useFetch('/api/promo');
+  const { data: banners, pending, error } = useLazyFetch('/api/promo');
 
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
