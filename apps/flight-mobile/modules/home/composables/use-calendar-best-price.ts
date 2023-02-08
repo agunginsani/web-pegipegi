@@ -17,13 +17,13 @@ export default async (startDate: Date, endDate: Date) => {
   const route = useRoute();
   const { searchForm } = useSearchForm();
 
-  const bestPriceArray = ref<Array<Ref<BestPriceResponse | null>>>([]);
+  const bestPriceArray = ref<Array<Ref<BestPriceResponse['data'] | null>>>([]);
 
   const bestPrice = computed<BestPrice>(() => {
     const result: BestPrice = {};
     bestPriceArray.value.forEach((bestPrices, index) => {
       const key = format(add(startDate, { months: index }), 'M-yyyy');
-      bestPrices.value?.data?.forEach((item) => {
+      bestPrices.value?.forEach((item) => {
         if (!result[key]) result[key] = {};
         if (!!item.shortFare && !!item.fare) {
           result[key][Number(item.dateObj.day)] = {
