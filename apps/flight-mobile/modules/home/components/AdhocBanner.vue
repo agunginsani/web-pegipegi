@@ -9,7 +9,8 @@
       }
     | undefined;
 
-  const { data } = useFetch('/api/adhoc');
+  // TODO: cache data
+  const { data } = useLazyFetch('/api/adhoc');
 
   const bannerProperty = computed<BannerProperty>(() => {
     if (!data.value) return;
