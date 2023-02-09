@@ -28,7 +28,6 @@ export default async () => {
     },
   });
 
-  // popular
   const key = 'popular-airports-response';
   const { data: cached } = useNuxtData<AirportsResponse>(key);
   const { data: popularAirports } = await useFetch('/api/airports', {
