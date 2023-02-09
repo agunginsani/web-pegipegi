@@ -9,9 +9,7 @@
   import Footer from 'home-module/components/Footer.vue';
   import useFirebase from 'common-module/composables/use-firebase';
 
-  useHead({
-    meta: [{ hid: 'robots', name: 'robots', content: 'index, follow' }],
-  });
+  useServerSeoMeta({ robots: 'index, follow' });
 
   const { track } = useFirebase();
   onMounted(() => {

@@ -30,9 +30,7 @@
     },
   });
 
-  useHead({
-    meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
-  });
+  useServerSeoMeta({ robots: 'noindex, nofollow' });
 
   const router = useRouter();
   const route = useRoute();
