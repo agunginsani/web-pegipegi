@@ -53,7 +53,9 @@
     twitterPlayer: 'https://www.pegipegi.com/flight',
   });
 
-  useProfile();
+  onServerPrefetch(() => {
+    useProfile();
+  });
 </script>
 
 <template>
