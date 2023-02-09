@@ -24,7 +24,7 @@
     keyword,
     deboundedKeyword,
     popularAirports,
-    isLoading,
+    isSearching,
   } = await useAirports();
   const lastSearch = useLocalStorage<Array<ResultItem>>(
     'flight-mweb.last-location-search',
@@ -169,7 +169,7 @@
     </template>
 
     <template v-else>
-      <ul v-if="isLoading">
+      <ul v-if="isSearching">
         <LocationSearchItem loading />
         <LocationSearchItem loading />
         <LocationSearchItem loading />

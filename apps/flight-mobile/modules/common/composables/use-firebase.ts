@@ -16,7 +16,7 @@ type AnalyticsType =
   | 'filter'
   | 'sort';
 
-export default () => {
+export default function useFirebase() {
   const analytics = useState<Analytics | undefined>();
   const remoteConfig = useState<RemoteConfig | undefined>();
   const remoteActivated = useState<boolean>(() => false);
@@ -62,4 +62,4 @@ export default () => {
     track,
     getConfig,
   };
-};
+}

@@ -13,7 +13,7 @@ type BestPrice = {
   };
 };
 
-export default async (startDate: Date, endDate: Date) => {
+export default function useCalendarBestPrice(startDate: Date, endDate: Date) {
   const route = useRoute();
   const { searchForm } = useSearchForm();
 
@@ -67,9 +67,9 @@ export default async (startDate: Date, endDate: Date) => {
     );
   }
 
-  await fetchBestPrice();
+  fetchBestPrice();
 
   return {
     bestPrice,
   };
-};
+}

@@ -1,7 +1,7 @@
 import parseUserAgent from 'ua-parser-js';
 import { v4 as generateUid } from 'uuid';
 
-export default () => {
+export default function useProfile() {
   const userId = useState(() => '');
   const userEmail = useState(() => '');
   const deviceId = useState(() => '');
@@ -58,4 +58,4 @@ export default () => {
     deviceModel,
     deviceBrowser,
   };
-};
+}

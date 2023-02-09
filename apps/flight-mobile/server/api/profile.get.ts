@@ -28,7 +28,7 @@ export default defineEventHandler((event) => {
       // TODO: get token & device id from cookie
       'App-Version': `${config.appVersion}-flight-mweb`,
       'Device-Origin': 'mweb',
-      'Device-Id': String(query.deviceId),
+      'Device-Id': query.deviceId,
       'Device-Model': query.deviceModel,
       Browser: query.deviceBrowser,
       authorization: `Bearer ${query.ssoToken}`,

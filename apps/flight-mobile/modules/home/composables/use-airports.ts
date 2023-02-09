@@ -16,7 +16,7 @@ function mapData(arr: AirportsResponse) {
   }));
 }
 
-export default async () => {
+export default async function useAirports() {
   const keyword = ref('');
   const deboundedKeyword = refDebounced(keyword, 200);
 
@@ -42,6 +42,6 @@ export default async () => {
     popularAirports,
     keyword,
     deboundedKeyword,
-    isLoading: pending,
+    isSearching: pending,
   };
-};
+}
