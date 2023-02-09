@@ -19,7 +19,7 @@
 
   const router = useRouter();
   const route = useRoute();
-  const { airports, popular, keyword, deboundedKeyword, isLoading } =
+  const { airports, popularAirports, keyword, deboundedKeyword, isLoading } =
     useAirports();
   const lastSearch = useLocalStorage<Array<ResultItem>>(
     'flight-mweb.last-location-search',
@@ -137,7 +137,6 @@
             :type="item.type"
             :icon="item.icon"
             :key="`last-search-${item.value.value}`"
-            :keyword="keyword"
             @select="onSelect(item)"
           />
         </ul>
@@ -153,7 +152,7 @@
       </ul>
       <ul v-else>
         <LocationSearchItem
-          v-for="item in popular"
+          v-for="item in popularAirports"
           :title="item.title"
           :description="item.description"
           :type="item.type"
