@@ -19,7 +19,12 @@
 
   const router = useRouter();
   const route = useRoute();
-  const { airports, popular, keyword, isLoading } = useAirports();
+  const { airports, popular, keyword, deboundedKeyword, isLoading } =
+    useAirports();
+  const lastSearch = useLocalStorage<Array<ResultItem>>(
+    'flight-mweb.last-location-search',
+    []
+  );
 
   definePageMeta({
     middleware(to) {
@@ -36,12 +41,6 @@
 
   useServerSeoMeta({ robots: 'noindex, nofollow' });
 
-  // last location search
-  const lastSearch = useLocalStorage<Array<ResultItem>>(
-    'flight-mweb.last-location-search',
-    []
-  );
-
   // lazy load results
   const body = ref<Window | null>(null);
   const { arrivedState } = useScroll(body, {
@@ -57,7 +56,7 @@
   });
 
   watch(airports, () => {
-    if (keyword.value) renderedCount.value = 50;
+    if (deboundedKeyword.value) renderedCount.value = 50;
   });
 
   watch(
@@ -119,7 +118,7 @@
 
 <template>
   <LocationSearch v-model="keyword" @back="onBack" @keydown="onKeyDown">
-    <template v-if="!keyword">
+    <template v-if="!deboundedKeyword">
       <template v-if="lastSearch.length > 0">
         <div class="flex py-2 px-4">
           <h2 class="font-bold">Pencarian Terakhir</h2>
@@ -147,7 +146,12 @@
       <div class="flex py-2 px-4">
         <h2 class="font-bold">Destinasi Populer</h2>
       </div>
-      <ul>
+      <ul v-if="isLoading">
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+      </ul>
+      <ul v-else>
         <LocationSearchItem
           v-for="item in popular"
           :title="item.title"
@@ -155,7 +159,6 @@
           :type="item.type"
           :icon="item.icon"
           :key="`popular-${item.value.value}`"
-          :keyword="keyword"
           @select="onSelect(item)"
         />
       </ul>
@@ -193,7 +196,7 @@
           :type="item.type"
           :icon="item.icon"
           :key="`result-${item.value.value}`"
-          :keyword="keyword"
+          :keyword="deboundedKeyword"
           @select="onSelect(item)"
         />
       </ul>

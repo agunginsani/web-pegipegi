@@ -1,10 +1,11 @@
 export default () => {
   const keyword = ref('');
-  // TODO: add debounce
+  const deboundedKeyword = refDebounced(keyword, 200);
+
   // TODO: add caching
   const { data, pending } = useFetch('/api/airports', {
     query: {
-      search: keyword,
+      search: deboundedKeyword,
     },
   });
 
@@ -51,6 +52,7 @@ export default () => {
   return {
     airports: airports ?? [],
     keyword,
+    deboundedKeyword,
     popular,
     isLoading: pending,
   };
