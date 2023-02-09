@@ -1,13 +1,12 @@
-import useFetchProfile from 'common-module/composables/use-fetch-profile';
 import parseUserAgent from 'ua-parser-js';
 import { v4 as generateUid } from 'uuid';
 
-export default defineStore('profile', () => {
-  const userId = ref('');
-  const userEmail = ref('');
-  const deviceId = ref('');
-  const deviceBrowser = ref('');
-  const deviceModel = ref('');
+export default function useProfile() {
+  const userId = useState(() => '');
+  const userEmail = useState(() => '');
+  const deviceId = useState(() => '');
+  const deviceBrowser = useState(() => '');
+  const deviceModel = useState(() => '');
 
   async function initiateProfile() {
     // set user agent
@@ -31,11 +30,13 @@ export default defineStore('profile', () => {
     if (!userId.value || !userEmail.value) {
       try {
         if (phpsessCookie.value) {
-          const { data } = await useFetchProfile({
-            ssoToken: phpsessCookie.value,
-            deviceId: deviceId.value,
-            deviceModel: deviceModel.value,
-            deviceBrowser: deviceBrowser.value,
+          const { data } = await useFetch('/api/profile', {
+            query: {
+              ssoToken: phpsessCookie.value,
+              deviceId: deviceId.value,
+              deviceModel: deviceModel.value,
+              deviceBrowser: deviceBrowser.value,
+            },
           });
           if (data) {
             userId.value = data.value?.data.id || '';
@@ -48,12 +49,13 @@ export default defineStore('profile', () => {
     }
   }
 
+  initiateProfile();
+
   return {
     userId,
     userEmail,
     deviceId,
     deviceModel,
     deviceBrowser,
-    initiateProfile,
   };
-});
+}

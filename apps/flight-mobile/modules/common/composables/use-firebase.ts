@@ -16,7 +16,7 @@ type AnalyticsType =
   | 'filter'
   | 'sort';
 
-export default () => {
+export default function useFirebase() {
   const analytics = useState<Analytics | undefined>();
   const remoteConfig = useState<RemoteConfig | undefined>();
   const remoteActivated = useState<boolean>(() => false);
@@ -30,8 +30,8 @@ export default () => {
       }
 
       logEvent(analytics.value, type, {
-        customer_id: userId,
-        device_id: deviceId,
+        customer_id: userId.value,
+        device_id: deviceId.value,
         product_name: 'Flight',
         ...params,
       });
@@ -62,4 +62,4 @@ export default () => {
     track,
     getConfig,
   };
-};
+}

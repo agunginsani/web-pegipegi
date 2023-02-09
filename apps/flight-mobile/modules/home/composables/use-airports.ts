@@ -1,21 +1,47 @@
-import useFetchAirports, {
-  Airports,
-} from 'home-module/composables/use-fetch-airports';
+import { AirportsResponse } from 'api/airports.get';
 
-export default defineStore('airports', () => {
-  const airports = reactive<Airports>([]);
+function mapData(arr: AirportsResponse) {
+  return arr.map((item) => ({
+    title: `${item.area_name}, ${item.country_name}`,
+    description: `${item.airport_code} - ${item.airport_name}`,
+    type: `${item.type[0].toUpperCase()}${item.type.slice(1).toLowerCase()}`,
+    icon:
+      item.type === 'KOTA'
+        ? '/icon-location-city.svg'
+        : '/icon-location-airport.svg',
+    value: {
+      label: `${item.area_name} (${item.airport_code})`,
+      value: item.airport_code,
+    },
+  }));
+}
 
-  async function initiateAirports() {
-    if (airports.length > 0) return;
+export default async function useAirports() {
+  const keyword = ref('');
+  const deboundedKeyword = refDebounced(keyword, 200);
 
-    const { data } = await useFetchAirports();
-    if (data.value) {
-      Object.assign(airports, data.value);
-    }
-  }
+  const { data: filteredAirports, pending } = useLazyFetch('/api/airports', {
+    immediate: false,
+    transform: mapData,
+    query: {
+      search: deboundedKeyword,
+    },
+  });
+
+  const key = 'popular-airports-response';
+  const { data: cached } = useNuxtData<AirportsResponse>(key);
+  const { data: popularAirports } = await useFetch('/api/airports', {
+    key,
+    lazy: !!cached.value,
+    transform: mapData,
+    default: () => cached.value,
+  });
 
   return {
-    airports,
-    initiateAirports,
+    filteredAirports,
+    popularAirports,
+    keyword,
+    deboundedKeyword,
+    isSearching: pending,
   };
-});
+}

@@ -72,7 +72,7 @@
 </script>
 
 <template>
-  <div class="z-1 relative rounded-2xl bg-white p-3">
+  <div class="relative rounded-2xl bg-white p-3">
     <SearchFormItem
       id="origin"
       label="Asal"

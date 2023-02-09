@@ -25,7 +25,7 @@
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
   const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
-  const { bestPrice } = await useCalendarBestPrice(startDate, endDate);
+  const { bestPrice } = useCalendarBestPrice(startDate, endDate);
 
   const modelValue = computed<CalendarModelValue>({
     get() {
