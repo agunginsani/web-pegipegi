@@ -6,6 +6,7 @@
         color: 'info' | 'warning' | 'negative';
         class: string;
         icon: string;
+        message: string;
       }
     | undefined;
 
@@ -19,6 +20,7 @@
         color: 'warning',
         class: 'bg-yellow-candle-300',
         icon: 'icon-pegipegi-black.svg',
+        message: data.value.message,
       };
     }
     if (data.value.type === 'DANGER') {
@@ -26,18 +28,20 @@
         color: 'negative',
         class: 'bg-red-flower-700',
         icon: 'icon-pegipegi.svg',
+        message: data.value.message,
       };
     }
     return {
       color: 'info',
       class: 'bg-blue-dodger-600',
       icon: 'icon-pegipegi.svg',
+      message: data.value.message,
     };
   });
 </script>
 
 <template>
-  <div class="relative" v-if="data && bannerProperty">
+  <div class="relative" v-if="bannerProperty">
     <div
       class="overflow-hidden rounded-t-2xl pt-1"
       :class="[bannerProperty.class]"
@@ -52,7 +56,7 @@
           />
         </template>
         <template #description>
-          <p>{{ data.message }}</p>
+          <p>{{ bannerProperty.message }}</p>
         </template>
         <template #action />
       </Banner>

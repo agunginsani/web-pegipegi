@@ -1,5 +1,5 @@
 import { add, format, differenceInMonths, startOfMonth } from 'date-fns';
-import { Ref } from 'nuxt/dist/app/compat/capi';
+import { Ref } from 'vue';
 import { BestPrice as BestPriceResponse } from '~~/server/api/best-price.get';
 import useSearchForm from './use-search-form';
 
