@@ -33,9 +33,6 @@ export default defineEventHandler((event) => {
       Browser: query.deviceBrowser,
       authorization: `Bearer ${query.ssoToken}`,
     },
-    onRequest(bla) {
-      console.log(bla);
-    },
   })
     .then((data) => {
       return ProfileResponse.parse(data);
