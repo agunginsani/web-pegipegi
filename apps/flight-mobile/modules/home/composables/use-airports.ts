@@ -11,7 +11,7 @@ export default () => {
 
   const airports = computed(() => {
     if (!data.value) return [];
-    return data.value?.map((item) => ({
+    return data.value.map((item) => ({
       title: `${item.area_name}, ${item.country_name}`,
       description: `${item.airport_code} - ${item.airport_name}`,
       type: `${item.type[0].toUpperCase()}${item.type.slice(1).toLowerCase()}`,
