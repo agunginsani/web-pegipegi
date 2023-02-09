@@ -83,17 +83,12 @@
       const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
 
       setBestPrice({
-        // TODO: find proper solution to type dynamically keyed object
-        departurePrice: (bestPrice as any)[departureMonth].value?.[
-          departureDate
-        ]?.fare,
-        returnPrice: (bestPrice as any)[returnMonth].value?.[returnDate]?.fare,
+        departurePrice: bestPrice.value[departureMonth]?.[departureDate]?.fare,
+        returnPrice: bestPrice.value[returnMonth]?.[returnDate]?.fare,
       });
     } else {
       setBestPrice({
-        departurePrice: (bestPrice as any)[departureMonth].value?.[
-          departureDate
-        ]?.fare,
+        departurePrice: bestPrice.value[departureMonth]?.[departureDate]?.fare,
         returnPrice: undefined,
       });
     }
