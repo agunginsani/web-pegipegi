@@ -17,6 +17,20 @@
     icon: string;
   };
 
+  const router = useRouter();
+  const route = useRoute();
+  const {
+    filteredAirports,
+    keyword,
+    deboundedKeyword,
+    popularAirports,
+    isSearching,
+  } = await useAirports();
+  const lastSearch = useLocalStorage<Array<ResultItem>>(
+    'flight-mweb.last-location-search',
+    []
+  );
+
   definePageMeta({
     middleware(to) {
       const { searchForm } = useSearchForm();
@@ -32,126 +46,43 @@
 
   useServerSeoMeta({ robots: 'noindex, nofollow' });
 
-  const router = useRouter();
-  const route = useRoute();
-
-  // TODO: use /server/api
-  const { airports, initiateAirports } = useAirports();
-  await initiateAirports();
-
-  // popular groups & last location search
-  const lastSearch = useLocalStorage<Array<ResultItem>>(
-    'flight-mweb.last-location-search',
-    []
-  );
-  const popularGroups = computed(() =>
-    airports
-      .filter((item) => item.group.toLowerCase() === 'populer')
-      .map((item) => ({
-        title: `${item.area_name}, ${item.country_name}`,
-        description: `${item.airport_code} - ${item.airport_name}`,
-        type: `${item.type[0].toUpperCase()}${item.type
-          .slice(1)
-          .toLowerCase()}`,
-        icon:
-          item.type === 'KOTA'
-            ? '/icon-location-city.svg'
-            : '/icon-location-airport.svg',
-        value: {
-          label: `${item.area_name} (${item.airport_code})`,
-          value: item.airport_code,
-        },
-      }))
-  );
-
-  // search location
-  const keyword = ref('');
-  const results = ref<Array<ResultItem>>([]);
-  const isLoading = ref(false);
-
-  watchDebounced(
-    keyword,
-    () => {
-      if (keyword.value) {
-        const tempResult: Array<ResultItem> = [];
-        const key = keyword.value.toLowerCase();
-
-        // for loop is used for performance reason
-        for (let i = 0; i < airports.length; i++) {
-          const item = airports[i];
-          const string =
-            item.airport_name.toLowerCase() +
-            '|' +
-            item.airport_code.toLowerCase() +
-            '|' +
-            item.country_name.toLowerCase() +
-            '|' +
-            item.area_name.toLowerCase();
-
-          if (string.includes(key))
-            tempResult.push({
-              title: `${item.area_name}, ${item.country_name}`,
-              description: `${item.airport_code} - ${item.airport_name}`,
-              type: `${item.type[0].toUpperCase()}${item.type
-                .slice(1)
-                .toLowerCase()}`,
-              icon:
-                item.type === 'KOTA'
-                  ? '/icon-location-city.svg'
-                  : '/icon-location-airport.svg',
-              value: {
-                label: `${item.area_name} (${item.airport_code})`,
-                value: item.airport_code,
-              },
-            });
-        }
-        results.value = tempResult;
-        renderedCount.value =
-          renderedCount.value +
-          (tempResult.length - renderedCount.value < 50
-            ? tempResult.length
-            : 50);
-      } else {
-        results.value = [];
-      }
-      isLoading.value = false;
-    },
-    { debounce: 200 }
-  );
-
   // lazy load results
-  const renderedCount = ref(0);
-  const renderedResult = computed(() =>
-    results.value.slice(0, renderedCount.value)
-  );
-
   const body = ref<Window | null>(null);
   const { arrivedState } = useScroll(body, {
     offset: { bottom: 100 },
   });
-  watch(
-    () => arrivedState.bottom,
-    (value) => {
-      if (value) {
-        renderedCount.value =
-          renderedCount.value +
-          (results.value.length - renderedCount.value < 50
-            ? results.value.length
-            : 50);
-      }
-    }
+  const renderedCount = ref(50);
+  const renderedResult = computed(() =>
+    filteredAirports.value?.slice(0, renderedCount.value)
   );
+
   onMounted(() => {
     body.value = window;
   });
 
+  watch(filteredAirports, () => {
+    if (deboundedKeyword.value) renderedCount.value = 50;
+  });
+
+  watch(
+    () => arrivedState.bottom,
+    (value) => {
+      if (value && filteredAirports.value) {
+        renderedCount.value =
+          renderedCount.value +
+          (filteredAirports.value.length - renderedCount.value < 50
+            ? filteredAirports.value.length
+            : 50);
+      }
+    }
+  );
+
   // event handlers
   const { searchForm, setSearchForm } = useSearchForm();
   const { addSnackbar } = useSnackbar();
-
   const { onKeyDown, track } = useLocationTracker({
     keyword,
-    resultCount: computed(() => renderedResult.value.length),
+    resultCount: computed(() => renderedResult.value?.length || 0),
   });
 
   function onSelect(selectedItem: ResultItem) {
@@ -163,7 +94,6 @@
       payload.destination?.value !== searchForm.origin.value
     ) {
       setSearchForm(payload);
-
       lastSearch.value = [
         selectedItem,
         ...lastSearch.value.filter(
@@ -178,7 +108,6 @@
     }
 
     track('Click Autocomplete Result');
-
     router.go(-1);
   }
 
@@ -193,13 +122,8 @@
 </script>
 
 <template>
-  <LocationSearch
-    v-model="keyword"
-    @back="onBack"
-    @keydown="onKeyDown"
-    @update:model-value="isLoading = true"
-  >
-    <template v-if="!keyword">
+  <LocationSearch v-model="keyword" @back="onBack" @keydown="onKeyDown">
+    <template v-if="!deboundedKeyword">
       <template v-if="lastSearch.length > 0">
         <div class="flex py-2 px-4">
           <h2 class="font-bold">Pencarian Terakhir</h2>
@@ -218,7 +142,6 @@
             :type="item.type"
             :icon="item.icon"
             :key="`last-search-${item.value.value}`"
-            :keyword="keyword"
             @select="onSelect(item)"
           />
         </ul>
@@ -227,29 +150,33 @@
       <div class="flex py-2 px-4">
         <h2 class="font-bold">Destinasi Populer</h2>
       </div>
-      <ul>
+      <ul v-if="popularAirports?.length === 0">
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+        <LocationSearchItem loading />
+      </ul>
+      <ul v-else>
         <LocationSearchItem
-          v-for="item in popularGroups"
+          v-for="item in popularAirports"
           :title="item.title"
           :description="item.description"
           :type="item.type"
           :icon="item.icon"
           :key="`popular-${item.value.value}`"
-          :keyword="keyword"
           @select="onSelect(item)"
         />
       </ul>
     </template>
 
     <template v-else>
-      <ul v-if="isLoading">
+      <ul v-if="isSearching">
         <LocationSearchItem loading />
         <LocationSearchItem loading />
         <LocationSearchItem loading />
       </ul>
 
       <div
-        v-else-if="results.length === 0"
+        v-else-if="filteredAirports?.length === 0"
         class="flex flex-col items-center py-10 px-5 text-center"
       >
         <NuxtImg
@@ -273,7 +200,7 @@
           :type="item.type"
           :icon="item.icon"
           :key="`result-${item.value.value}`"
-          :keyword="keyword"
+          :keyword="deboundedKeyword"
           @select="onSelect(item)"
         />
       </ul>

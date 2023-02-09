@@ -15,7 +15,7 @@ type SnackbarParam = {
   dismissible?: boolean;
 };
 
-const useAuthStore = defineStore('snackbar', () => {
+export default defineStore('snackbar', () => {
   const snackbars = reactive<Array<SnackbarItem>>([]);
 
   function addSnackbar(payload: SnackbarParam) {
@@ -59,5 +59,3 @@ const useAuthStore = defineStore('snackbar', () => {
     dismissAllSnackbar,
   };
 });
-
-export default useAuthStore;

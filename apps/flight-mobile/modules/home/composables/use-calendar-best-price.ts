@@ -13,7 +13,7 @@ type BestPrice = {
   };
 };
 
-export default async (startDate: Date, endDate: Date) => {
+export default function useCalendarBestPrice(startDate: Date, endDate: Date) {
   const route = useRoute();
   const { searchForm } = useSearchForm();
 
@@ -61,16 +61,15 @@ export default async (startDate: Date, endDate: Date) => {
     });
     bestPriceArray.value = await Promise.all(
       queries.map((query) => {
-        // TODO: cache data
         const { data } = useLazyFetch('/api/best-price', { query });
         return data;
       })
     );
   }
 
-  await fetchBestPrice();
+  fetchBestPrice();
 
   return {
     bestPrice,
   };
-};
+}
