@@ -24,7 +24,7 @@ importers:
       '@vueuse/core': ^9.11.1
       nuxt: 3.1.1
     dependencies:
-      '@pegipegi/web-pegipegi-ui': 0.0.11_@vueuse+core@9.11.1
+      '@pegipegi/web-pegipegi-ui': 0.0.12_@vueuse+core@9.11.1
     devDependencies:
       '@nuxtjs/tailwindcss': 6.3.0
       '@vueuse/core': 9.11.1
@@ -59,7 +59,7 @@ importers:
     dependencies:
       '@google-cloud/logging-winston': 5.3.0_winston@3.8.2
       '@nuxtjs/device': 3.0.0
-      '@pegipegi/web-pegipegi-ui': 0.0.11_@vueuse+core@9.11.1
+      '@pegipegi/web-pegipegi-ui': 0.0.12_@vueuse+core@9.11.1
       '@pinia/nuxt': 0.4.6_typescript@4.9.5
       date-fns: 2.29.3
       dotenv: 16.0.3
@@ -2706,11 +2706,11 @@ packages:
       - webpack
     dev: true
 
-  /@pegipegi/web-pegipegi-ui/0.0.11_@vueuse+core@9.11.1:
+  /@pegipegi/web-pegipegi-ui/0.0.12_@vueuse+core@9.11.1:
     resolution:
       {
-        integrity: sha512-7JyWhWT5+ilg6gM80GM5KrflHKEpOQBhs+8XqqRTCrvxoB148LUqKKJgienGx94uJ7DWp7K4o8iAM8ydC0x2bw==,
-        tarball: download/@pegipegi/web-pegipegi-ui/0.0.11/f2fff3d8617840a200745bbda6dddead2f0d6fc1,
+        integrity: sha512-zJsvUIN5++uQdbUl2idDaeikSq4bRJNFZUoN0xsBLgh6izFQC767tAgo4Urzs17OtOHFVYRmQeQ7naVEQ3y2Ig==,
+        tarball: download/@pegipegi/web-pegipegi-ui/0.0.12/fe98df028b2a2ebd4732d33bec79c987cb350653,
       }
     peerDependencies:
       '@vueuse/core': ^9.7.0
