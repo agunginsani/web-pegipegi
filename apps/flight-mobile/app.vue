@@ -23,7 +23,7 @@
       },
       {
         rel: 'canonical',
-        href: 'https://www.pegipegi.com/flight',
+        href: 'https://www.pegipegi.com/flight/',
       },
     ],
   });
@@ -36,7 +36,7 @@
     author: 'PT. GO Online Destination',
     ogTitle: title,
     ogType: 'website',
-    ogUrl: 'https://www.pegipegi.com/flight',
+    ogUrl: 'https://www.pegipegi.com/flight/',
     ogImage: seoImage,
     ogDescription: seoDescription,
     ogSiteName: 'Pegipegi',
@@ -51,7 +51,7 @@
     twitterImage: seoImage,
     twitterPlayerWidth: seoImageWidth,
     twitterPlayerHeight: seoImageHeight,
-    twitterPlayer: 'https://www.pegipegi.com/flight',
+    twitterPlayer: 'https://www.pegipegi.com/flight/',
   });
 
   useAuth();
