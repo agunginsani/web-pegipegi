@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import crypto from 'crypto';
 
-const Promo = z.object({
+const PromosResponse = z.object({
   datetime: z.string(),
   id: z.string(),
   data: z.array(
@@ -18,15 +18,12 @@ const Promo = z.object({
   version: z.string(),
 });
 
-type Promo = z.infer<typeof Promo>;
+export type PromosResponse = z.infer<typeof PromosResponse>;
 
 export default defineEventHandler((event) => {
   const config = useRuntimeConfig();
-  // Is `Promo` generic needed on `$fetch`?
-  // If `Promo` generic is removed, running `nuxi typecheck` will
-  // fail because it interprets this return value as `any`. 🤷
-  return $fetch<Promo>('/v1/banner-list', {
-    baseURL: config.public.bannerApiBaseUrl,
+  return $fetch('/v1/banner-list', {
+    baseURL: config.bannerBaseUrl,
     async onRequest({ options, request }) {
       const token = getCookie(event, 'phpsess');
       const deviceId = getCookie(event, 'device-id');
@@ -51,7 +48,7 @@ export default defineEventHandler((event) => {
       }
 
       const timestamp = Date.now() / 1000;
-      const hmac = crypto.createHmac('sha512', config.bannerApiKey);
+      const hmac = crypto.createHmac('sha512', config.bannerKey);
       const url = `${request}?${params.toString()}`;
       const raw = `GET\nnull\n${timestamp}\n${url}`;
       let hashed = hmac.update(raw).digest('base64');
@@ -63,7 +60,7 @@ export default defineEventHandler((event) => {
       options.query = Object.fromEntries(params.entries());
     },
   })
-    .then((data) => Promo.parse(data))
+    .then((data) => PromosResponse.parse(data))
     .catch((error) => {
       logger.error(error);
       throw error;
