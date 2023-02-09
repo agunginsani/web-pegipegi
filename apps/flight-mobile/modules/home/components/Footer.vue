@@ -36,9 +36,9 @@
 
 <template>
   <footer class="bg-neutral-tuna-600 mt-auto">
-    <div class="mx-16">
+    <div class="px-16 py-6">
       <NuxtImg
-        class="mx-auto mt-6"
+        class="mx-auto"
         src="/icon-pegipegi-logo.svg"
         alt="icon"
         width="86px"
@@ -63,8 +63,8 @@
         </li>
       </ul>
 
-      <div class="mt-[18px] mb-6 text-center">
-        <p class="text-sm font-bold text-white">Temukan Kami</p>
+      <div class="mt-[18px]">
+        <p class="text-center text-sm font-bold text-white">Temukan Kami</p>
         <ul class="mt-2 flex justify-center gap-x-[18px]">
           <li>
             <a href="https://www.facebook.com/Pegipegi/">

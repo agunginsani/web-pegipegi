@@ -15,15 +15,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     bannerApiKey: '',
     firebaseProjectId: '',
+    accountBaseUrl: '',
+    appVersion,
     public: {
       homeUrl: '',
       authBaseUrl: '',
       bannerApiBaseUrl: '',
       apixBaseUrl: '',
       apixSearchBaseUrl: '',
-      accountBaseUrl: '',
       supplyBaseUrl: '',
-      appVersion,
     },
   },
   image: {
@@ -55,6 +55,7 @@ export default defineNuxtConfig({
     },
   },
   alias: {
+    api: resolve(__dirname, './server/api'),
     'common-module': resolve(__dirname, './modules/common'),
     'home-module': resolve(__dirname, './modules/home'),
   },

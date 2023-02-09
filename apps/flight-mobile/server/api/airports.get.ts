@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const Airports = z.array(
+const AirportsResponse = z.array(
   z.object({
     airport_code: z.string(),
     airport_name: z.string(),
@@ -14,7 +14,7 @@ const Airports = z.array(
   })
 );
 
-export type Airports = z.infer<typeof Airports>;
+export type AirportsResponse = z.infer<typeof AirportsResponse>;
 
 export default defineEventHandler((event) => {
   const config = useRuntimeConfig();
@@ -23,7 +23,7 @@ export default defineEventHandler((event) => {
   return $fetch('/airport/v1/list', {
     baseURL: config.public.apixBaseUrl,
   })
-    .then((data) => Airports.parse(data))
+    .then((data) => AirportsResponse.parse(data))
     .then((airports) => {
       if (!search) {
         return airports.filter(

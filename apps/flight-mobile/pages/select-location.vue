@@ -19,8 +19,13 @@
 
   const router = useRouter();
   const route = useRoute();
-  const { airports, popularAirports, keyword, deboundedKeyword, isLoading } =
-    useAirports();
+  const {
+    filteredAirports,
+    keyword,
+    deboundedKeyword,
+    popularAirports,
+    isLoading,
+  } = await useAirports();
   const lastSearch = useLocalStorage<Array<ResultItem>>(
     'flight-mweb.last-location-search',
     []
@@ -46,27 +51,27 @@
   const { arrivedState } = useScroll(body, {
     offset: { bottom: 100 },
   });
-  const renderedCount = ref(0);
+  const renderedCount = ref(50);
   const renderedResult = computed(() =>
-    airports.value.slice(0, renderedCount.value)
+    filteredAirports.value?.slice(0, renderedCount.value)
   );
 
   onMounted(() => {
     body.value = window;
   });
 
-  watch(airports, () => {
+  watch(filteredAirports, () => {
     if (deboundedKeyword.value) renderedCount.value = 50;
   });
 
   watch(
     () => arrivedState.bottom,
     (value) => {
-      if (value) {
+      if (value && filteredAirports.value) {
         renderedCount.value =
           renderedCount.value +
-          (airports.value.length - renderedCount.value < 50
-            ? airports.value.length
+          (filteredAirports.value.length - renderedCount.value < 50
+            ? filteredAirports.value.length
             : 50);
       }
     }
@@ -77,7 +82,7 @@
   const { addSnackbar } = useSnackbar();
   const { onKeyDown, track } = useLocationTracker({
     keyword,
-    resultCount: computed(() => renderedResult.value.length),
+    resultCount: computed(() => renderedResult.value?.length || 0),
   });
 
   function onSelect(selectedItem: ResultItem) {
@@ -145,7 +150,7 @@
       <div class="flex py-2 px-4">
         <h2 class="font-bold">Destinasi Populer</h2>
       </div>
-      <ul v-if="isLoading">
+      <ul v-if="popularAirports?.length === 0">
         <LocationSearchItem loading />
         <LocationSearchItem loading />
         <LocationSearchItem loading />
@@ -171,7 +176,7 @@
       </ul>
 
       <div
-        v-else-if="airports.length === 0"
+        v-else-if="filteredAirports?.length === 0"
         class="flex flex-col items-center py-10 px-5 text-center"
       >
         <NuxtImg

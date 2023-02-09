@@ -61,7 +61,6 @@ export default async (startDate: Date, endDate: Date) => {
     });
     bestPriceArray.value = await Promise.all(
       queries.map((query) => {
-        // TODO: cache data
         const { data } = useLazyFetch('/api/best-price', { query });
         return data;
       })

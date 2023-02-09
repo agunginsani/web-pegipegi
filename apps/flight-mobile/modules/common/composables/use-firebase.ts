@@ -30,8 +30,8 @@ export default () => {
       }
 
       logEvent(analytics.value, type, {
-        customer_id: userId,
-        device_id: deviceId,
+        customer_id: userId.value,
+        device_id: deviceId.value,
         product_name: 'Flight',
         ...params,
       });
