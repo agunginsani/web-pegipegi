@@ -52,6 +52,10 @@
     airports.value.slice(0, renderedCount.value)
   );
 
+  onMounted(() => {
+    body.value = window;
+  });
+
   watch(airports, () => {
     if (keyword.value) renderedCount.value = 50;
   });
@@ -68,8 +72,6 @@
       }
     }
   );
-
-  onMounted(() => (body.value = window));
 
   // event handlers
   const { searchForm, setSearchForm } = useSearchForm();
