@@ -6,9 +6,7 @@
 
   const isNotFound = computed(() => String(props.error?.statusCode) === '404');
 
-  function handleError() {
-    return clearError({ redirect: '/' });
-  }
+  const home = `${useRuntimeConfig().public.homeUrl}/flight`;
 
   const content = computed(() => {
     if (isNotFound.value) {
@@ -39,8 +37,10 @@
     <p class="mb-5">
       {{ content.description }}
     </p>
-    <Button @click="handleError">
-      {{ content.action }}
-    </Button>
+    <a :href="home">
+      <Button>
+        {{ content.action }}
+      </Button>
+    </a>
   </div>
 </template>

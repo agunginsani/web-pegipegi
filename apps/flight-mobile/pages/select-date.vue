@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-  import { RouteMeta } from 'vue-router';
   import Calendar, {
     CalendarModelValue,
   } from 'home-module/components/Calendar.vue';
   import useSearchForm from 'home-module/composables/use-search-form';
+  import useCalendarBestPrice from 'home-module/composables/use-calendar-best-price';
   import { add, format, isBefore, isAfter, startOfDay } from 'date-fns';
 
   definePageMeta({
-    middleware(to, from) {
+    middleware(to) {
       const { searchForm } = useSearchForm();
       if (!searchForm.departureDate.value) {
         return navigateTo('/');
@@ -16,20 +16,6 @@
       if (!['departure', 'return'].includes(String(to.query.type))) {
         return navigateTo('/select-date?type=departure');
       }
-
-      const transition: RouteMeta['pageTransition'] = {
-        enterActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
-        leaveActiveClass:
-          'fixed left-0 right-0 top-0 transition-all duration-[0.4s]',
-        enterFromClass: 'translate-x-full',
-        enterToClass: 'translate-x-0',
-        leaveToClass: 'translate-x-[-100%] brightness-50',
-        mode: 'in-out',
-      };
-
-      to.meta.pageTransition = transition;
-      from.meta.pageTransition = transition;
     },
   });
 
@@ -37,11 +23,11 @@
     meta: [{ hid: 'robots', name: 'robots', content: 'noindex, nofollow' }],
   });
 
-  const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
-  const route = useRoute();
   const router = useRouter();
   const startDate = new Date();
   const endDate = add(startDate, { months: 12 });
+  const { searchForm, setSearchForm, setBestPrice } = useSearchForm();
+  const { bestPrice } = await useCalendarBestPrice(startDate, endDate);
 
   const modelValue = computed<CalendarModelValue>({
     get() {
@@ -67,60 +53,6 @@
       });
     },
   });
-
-  const bestPrice = reactive<{
-    [key: string]: {
-      [key: string]: {
-        cheapest: boolean;
-        fare: number;
-        shortFare: number;
-      };
-    };
-  }>({});
-
-  async function fetchBestPrice(selectedDate: Date) {
-    const month = format(selectedDate, 'MM');
-    const year = format(selectedDate, 'yyyy');
-    const monthKey = `${month}-${year}`;
-
-    if (!!bestPrice[monthKey]) return;
-
-    const query = {
-      from:
-        route.query.type === 'departure'
-          ? searchForm.origin.value
-          : searchForm.destination.value,
-      to:
-        route.query.type === 'departure'
-          ? searchForm.destination.value
-          : searchForm.origin.value,
-      month,
-      year,
-      flightClass: searchForm.class.value,
-    };
-
-    const { data } = await useFetch('/api/best-price', {
-      query,
-    });
-    if (!!data.value) {
-      if (!bestPrice[monthKey]) bestPrice[monthKey] = {};
-      data.value.forEach((item) => {
-        if (!!item.shortFare && !!item.fare) {
-          bestPrice[monthKey][item.dateObj.day] = {
-            shortFare: item.shortFare,
-            fare: item.fare,
-            cheapest: item.cheapest,
-          };
-        }
-      });
-    }
-  }
-
-  function getBestPrice(selectedDate: Date) {
-    const month = format(selectedDate, 'MM-yyyy');
-    const date = format(selectedDate, 'dd');
-    return bestPrice[month]?.[date];
-  }
 
   function parseTitle(input: string) {
     return input.replace(/\(.+\)/, '');
@@ -151,20 +83,23 @@
       const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
 
       setBestPrice({
-        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
-        returnPrice: bestPrice[returnMonth]?.[returnDate]?.fare,
+        // TODO: find proper solution to type dynamically keyed object
+        departurePrice: (bestPrice as any)[departureMonth].value?.[
+          departureDate
+        ]?.fare,
+        returnPrice: (bestPrice as any)[returnMonth].value?.[returnDate]?.fare,
       });
     } else {
       setBestPrice({
-        departurePrice: bestPrice[departureMonth]?.[departureDate]?.fare,
+        departurePrice: (bestPrice as any)[departureMonth].value?.[
+          departureDate
+        ]?.fare,
         returnPrice: undefined,
       });
     }
 
     router.go(-1);
   }
-
-  await fetchBestPrice(startDate);
 </script>
 
 <template>
@@ -174,7 +109,6 @@
     :isReturn="$route.query.type === 'return'"
     :disabledDates="disabledDates"
     v-model="modelValue"
-    @select="fetchBestPrice"
     @back="onSave"
   >
     <template #header="{ value }">
@@ -202,12 +136,17 @@
       </div>
     </template>
 
-    <template #addon="{ isDisabled, fullDate }">
+    <template #addon="{ isDisabled, monthNum, date, year }">
       <p
         class="text-neutral-tuna-300 h-4 text-[10px]"
-        :class="{ 'text-green-emerald-600': getBestPrice(fullDate)?.cheapest }"
+        :class="{
+          'text-green-emerald-600':
+            bestPrice[`${monthNum}-${year}`]?.[date]?.cheapest,
+        }"
       >
-        {{ isDisabled ? '-' : getBestPrice(fullDate)?.shortFare }}
+        {{
+          isDisabled ? '-' : bestPrice[`${monthNum}-${year}`]?.[date]?.shortFare
+        }}
       </p>
     </template>
   </Calendar>

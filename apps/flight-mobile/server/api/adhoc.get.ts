@@ -1,17 +1,24 @@
 import { z } from 'zod';
 import logger from '../utils/logger';
 
-const Adhoc = z.object({
-  id: z.string(),
-  message: z.string(),
-  type: z.union([z.literal('WARNING'), z.literal('INFO'), z.literal('DANGER')]),
-  tripType: z.string(),
-  startDate: z.string(),
-  endDate: z.string(),
-  departureAirport: z.string(),
-  arrivalAirport: z.string(),
-  viewType: z.string(),
-});
+const Adhoc = z.union([
+  z.object({
+    id: z.string(),
+    message: z.string(),
+    type: z.union([
+      z.literal('WARNING'),
+      z.literal('INFO'),
+      z.literal('DANGER'),
+    ]),
+    tripType: z.string(),
+    startDate: z.string(),
+    endDate: z.string(),
+    departureAirport: z.string(),
+    arrivalAirport: z.string(),
+    viewType: z.string(),
+  }),
+  z.literal(''),
+]);
 
 export default defineEventHandler(() => {
   const config = useRuntimeConfig();
