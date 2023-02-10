@@ -1,6 +1,6 @@
 import useSearchForm from 'home-module/composables/use-search-form';
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
   const { initiateSeatClass } = useSearchForm();
-  initiateSeatClass();
+  await initiateSeatClass();
 });
