@@ -1,14 +1,18 @@
 <script lang="ts" setup>
-  import { PromosResponse } from '~/server/api/promos.get';
+  import { PromosResponse } from 'api/promos.get';
+  import useProfile from 'common-module/composables/use-profile';
 
   /* -------------------------------------------------------------------------- */
   /*                               Data fetching.                               */
   /* -------------------------------------------------------------------------- */
   const key = 'promos-response';
   const { data: cached } = useNuxtData<PromosResponse>(key);
+  const { deviceBrowser, deviceId, deviceModel, userEmail, userId } =
+    useProfile();
   const { data, error } = await useFetch('/api/promos', {
     key,
     lazy: !!cached.value,
+    query: { deviceBrowser, deviceId, deviceModel, userEmail, userId },
     default: () => cached.value,
     transform: (data) => data.data,
   });
