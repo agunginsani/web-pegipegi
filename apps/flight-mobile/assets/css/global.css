@@ -10,11 +10,3 @@
   scrollbar-width: none;
   /* Firefox */
 }
-
-input,
-textarea,
-button,
-select,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
