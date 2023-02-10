@@ -5,7 +5,7 @@ export default function useProfile() {
   const deviceBrowser = useState(() => '');
   const deviceModel = useState(() => '');
 
-  onServerPrefetch(async () => {
+  async function initiate() {
     const { data } = await useFetch('/api/profile');
     if (data.value === null) return;
     userId.value = data.value.userId;
@@ -13,7 +13,7 @@ export default function useProfile() {
     deviceId.value = data.value.deviceId;
     deviceBrowser.value = data.value.deviceBrowser;
     deviceModel.value = data.value.deviceModel;
-  });
+  }
 
   return {
     userId,
@@ -21,5 +21,6 @@ export default function useProfile() {
     deviceId,
     deviceModel,
     deviceBrowser,
+    initiate,
   };
 }
