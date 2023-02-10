@@ -42,6 +42,10 @@ export default function useLocationTracker({
 
     switch (triggerType) {
       case 'Cancel Search':
+        if (keyword.value === '') {
+          delete paramsToBeSent.error_type;
+          delete paramsToBeSent.item_num;
+        }
         (keyword.value || keywordCode) &&
           firebase.track('trigger_log', paramsToBeSent);
         break;

@@ -82,7 +82,7 @@
   const { addSnackbar } = useSnackbar();
   const { onKeyDown, track } = useLocationTracker({
     keyword,
-    resultCount: computed(() => renderedResult.value?.length || 0),
+    resultCount: computed(() => filteredAirports.value?.length || 0),
   });
 
   function onSelect(selectedItem: ResultItem) {
