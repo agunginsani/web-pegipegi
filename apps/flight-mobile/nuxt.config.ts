@@ -13,14 +13,14 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
   ],
   runtimeConfig: {
-    bannerApiKey: '',
+    bannerBaseUrl: '',
+    bannerKey: '',
     firebaseProjectId: '',
     accountBaseUrl: '',
     appVersion,
     public: {
       homeUrl: '',
       authBaseUrl: '',
-      bannerApiBaseUrl: '',
       apixBaseUrl: '',
       apixSearchBaseUrl: '',
       supplyBaseUrl: '',

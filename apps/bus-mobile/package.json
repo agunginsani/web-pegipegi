@@ -10,11 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.3.0",
-    "@vueuse/core": "^9.11.1",
-    "nuxt": "3.1.1"
+    "@nuxtjs/tailwindcss": "^6.3.1",
+    "@vueuse/core": "^9.12.0",
+    "nuxt": "3.2.0"
   },
   "dependencies": {
-    "@pegipegi/web-pegipegi-ui": "latest"
+    "@pegipegi/web-pegipegi-ui": "^0.0.12"
   }
 }

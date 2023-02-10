@@ -1,10 +1,29 @@
 <script lang="ts" setup>
-  const { data: banners, pending, error } = useLazyFetch('/api/promo');
+  import { PromosResponse } from 'api/promos.get';
+  import useProfile from 'common-module/composables/use-profile';
 
+  /* -------------------------------------------------------------------------- */
+  /*                               Data fetching.                               */
+  /* -------------------------------------------------------------------------- */
+  const key = 'promos-response';
+  const { data: cached } = useNuxtData<PromosResponse>(key);
+  const { deviceBrowser, deviceId, deviceModel, userEmail, userId } =
+    useProfile();
+  const { data, error } = await useFetch('/api/promos', {
+    key,
+    lazy: !!cached.value,
+    query: { deviceBrowser, deviceId, deviceModel, userEmail, userId },
+    default: () => cached.value,
+    transform: (data) => data.data,
+  });
+  /* -------------------------------------------------------------------------- */
+
+  /* -------------------------------------------------------------------------- */
+  /*                           Intersection observer.                           */
+  /* -------------------------------------------------------------------------- */
   const listRef = ref<HTMLLIElement | null>(null);
   const listItemRef = ref<Array<HTMLLIElement>>([]);
   const activeBannerIndex = ref('');
-  const homeUrl = useRuntimeConfig().public.homeUrl;
 
   const observer = ref<IntersectionObserver | null>(null);
 
@@ -33,6 +52,9 @@
   onUnmounted(() => {
     observer.value?.disconnect();
   });
+  /* -------------------------------------------------------------------------- */
+
+  const homeUrl = useRuntimeConfig().public.homeUrl;
 </script>
 
 <template>
@@ -56,7 +78,6 @@
       ref="listRef"
     >
       <li class="min-w-[250px]"></li>
-
       <li
         v-if="error"
         class="flex h-[138px] w-[250px] shrink-0 snap-center flex-col items-center justify-center text-center"
@@ -76,10 +97,9 @@
           <p>Muat Ulang</p>
         </button>
       </li>
-
       <li
-        v-else-if="banners"
-        v-for="(banner, index) in banners?.data"
+        v-else-if="data"
+        v-for="(banner, index) in data"
         :key="banner.id"
         :data-index="index"
         class="shrink-0 snap-center"
@@ -96,18 +116,14 @@
           />
         </NuxtLink>
       </li>
-
-      <li
-        v-else-if="pending"
-        class="bg-neutral-tuna-50 h-[138px] w-[250px] shrink-0 snap-center rounded-xl"
-      />
-
       <li class="min-w-[250px]"></li>
     </ul>
-
+    <!-- -------------------------------------------------------------------------- -->
+    <!--                                   Bullets.                                 -->
+    <!-- -------------------------------------------------------------------------- -->
     <ul class="mt-2 flex justify-center gap-x-1 align-middle">
       <li
-        v-for="(banner, index) in banners?.data"
+        v-for="(banner, index) in data"
         :key="banner.id"
         :class="[
           'bg-neutral-tuna-300 h-1.5 rounded-full transition-all duration-100',
@@ -117,5 +133,6 @@
         ]"
       />
     </ul>
+    <!-- -------------------------------------------------------------------------- -->
   </section>
 </template>
