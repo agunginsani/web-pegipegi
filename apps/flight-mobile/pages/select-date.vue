@@ -66,12 +66,9 @@
   function onSave() {
     const departureMonth = format(
       new Date(searchForm.departureDate.value),
-      'MM-yyyy'
+      'M-yyyy'
     );
-    const departureDate = format(
-      new Date(searchForm.departureDate.value),
-      'dd'
-    );
+    const departureDate = format(new Date(searchForm.departureDate.value), 'd');
 
     if (searchForm.returnDate?.value) {
       const returnMonth = format(

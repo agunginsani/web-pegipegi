@@ -46,6 +46,7 @@ export default function useLocationTracker({
         if (isDeleteAll.value) {
           delete paramsToBeSent.error_type;
           delete paramsToBeSent.item_num;
+          isDeleteAll.value = false;
         }
         (keyword.value || keywordCode) &&
           firebase.track('trigger_log', paramsToBeSent);

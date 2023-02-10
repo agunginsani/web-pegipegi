@@ -49,13 +49,12 @@ export default function useProfile() {
     }
   }
 
-  initiateProfile();
-
   return {
     userId,
     userEmail,
     deviceId,
     deviceModel,
     deviceBrowser,
+    initiateProfile,
   };
 }

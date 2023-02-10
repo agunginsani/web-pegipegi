@@ -159,7 +159,7 @@
       @click="clearBestPrice()"
     />
 
-    <NuxtLink :to="searchUrl" @click="saveBestPrice">
+    <NuxtLink @click="saveBestPrice">
       <Button block class="mt-2">Cari Tiket Pesawat</Button>
     </NuxtLink>
 

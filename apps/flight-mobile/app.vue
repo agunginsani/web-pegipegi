@@ -55,7 +55,8 @@
   });
 
   onServerPrefetch(() => {
-    useProfile();
+    const { initiateProfile } = useProfile();
+    initiateProfile();
   });
 </script>
 

@@ -84,7 +84,6 @@
     keyword,
     resultCount: computed(() => renderedResult.value?.length || 0),
   });
-  // const isDeleteAll = ref(false)
 
   function onSelect(selectedItem: ResultItem) {
     const payload: Partial<SearchFormValue> = {};
@@ -113,7 +112,6 @@
   }
 
   function onBack() {
-    // if()
     track('Cancel Search');
     router.go(-1);
   }
