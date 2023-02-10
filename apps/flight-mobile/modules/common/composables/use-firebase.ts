@@ -23,12 +23,6 @@ export default function useFirebase() {
 
   async function track(type: AnalyticsType, params: object) {
     const { userId, deviceId } = useProfile();
-    console.log({
-      customer_id: userId.value,
-      device_id: deviceId.value,
-      product_name: 'Flight',
-      ...params,
-    });
 
     try {
       if (!analytics.value) {
