@@ -53,11 +53,6 @@
     twitterPlayerHeight: seoImageHeight,
     twitterPlayer: seoUrl,
   });
-
-  onServerPrefetch(() => {
-    const { initiateProfile } = useProfile();
-    initiateProfile();
-  });
 </script>
 
 <template>
