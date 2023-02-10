@@ -102,7 +102,6 @@
           value: returnDate.toString(),
         };
       }
-      console.log(newSearchForm);
       setSearchForm(newSearchForm);
     } else if (!searchForm.value.departureDate.value) {
       const departureDate = add(startOfDay(new Date()), { days: 1 });
