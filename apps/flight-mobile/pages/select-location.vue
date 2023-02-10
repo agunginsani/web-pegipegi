@@ -34,7 +34,7 @@
   definePageMeta({
     middleware(to) {
       const { searchForm } = useSearchForm();
-      if (!searchForm.origin.value) {
+      if (!searchForm.value.origin.value) {
         return navigateTo('/');
       }
 
@@ -90,8 +90,8 @@
     payload[route.query.type as 'origin' | 'destination'] = selectedItem.value;
 
     if (
-      payload.origin?.value !== searchForm.destination.value &&
-      payload.destination?.value !== searchForm.origin.value
+      payload.origin?.value !== searchForm.value.destination.value &&
+      payload.destination?.value !== searchForm.value.origin.value
     ) {
       setSearchForm(payload);
       lastSearch.value = [

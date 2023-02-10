@@ -7,18 +7,67 @@
   } from 'home-module/composables/use-search-form';
   import { parse, add, format, isBefore, startOfDay } from 'date-fns';
 
-  const { searchForm, setSearchForm, seatClass, initiateSeatClass } =
-    useSearchForm();
-
-  initiateSeatClass();
+  const { searchForm, setSearchForm, seatClass } = useSearchForm();
 
   const history = useCookie<Array<History>>('flight-search');
 
-  onMounted(() => {
-    /* data needs to be initiated from client side
-       due to server & client tz difference possibility */
+  if (!searchForm.value.origin.value && history.value?.[0]) {
+    const lastSearch = history.value[0];
+    const newSearchForm: Partial<SearchFormValue> = {
+      origin: {
+        label: `${lastSearch.from.city} (${lastSearch.from.airport})`,
+        value: lastSearch.from.airport,
+      },
+      destination: {
+        label: `${lastSearch.to.city} (${lastSearch.to.airport})`,
+        value: lastSearch.to.airport,
+      },
+      class: {
+        label:
+          seatClass.value.find((item) => item.code === lastSearch.seatClass)
+            ?.displayName ?? '-',
+        value: lastSearch.seatClass,
+      },
+      passengers: {
+        label: `${lastSearch.paxAdult} Dewasa • ${lastSearch.paxChild} Anak • ${lastSearch.paxInfant} Bayi`,
+        value: {
+          adult: lastSearch.paxAdult,
+          child: lastSearch.paxChild,
+          infant: lastSearch.paxInfant,
+        },
+      },
+    };
+    setSearchForm(newSearchForm);
+  } else if (!searchForm.value.origin.value) {
+    setSearchForm({
+      origin: {
+        label: 'Jakarta (JKT)',
+        value: 'JKT',
+      },
+      destination: {
+        label: 'Bali / Denpasar (DPS)',
+        value: 'DPS',
+      },
+      returnDate: undefined,
+      passengers: {
+        label: '1 Dewasa • 0 Anak • 0 Bayi',
+        value: {
+          adult: 1,
+          child: 0,
+          infant: 0,
+        },
+      },
+      class: {
+        label: seatClass.value[0]?.displayName,
+        value: seatClass.value[0]?.code,
+      },
+    });
+  }
 
-    if (!searchForm.origin.value && history.value?.[0]) {
+  onMounted(() => {
+    /* date needs to be initiated from client side
+       due to server & client tz difference possibility */
+    if (!searchForm.value.departureDate.value && history.value?.[0]) {
       const lastSearch = history.value[0];
 
       const lastDepartureDate = parse(
@@ -42,31 +91,9 @@
         : undefined;
 
       const newSearchForm: Partial<SearchFormValue> = {
-        origin: {
-          label: `${lastSearch.from.city} (${lastSearch.from.airport})`,
-          value: lastSearch.from.airport,
-        },
-        destination: {
-          label: `${lastSearch.to.city} (${lastSearch.to.airport})`,
-          value: lastSearch.to.airport,
-        },
         departureDate: {
           label: format(departureDate, 'EEEE, dd MMM yyyy'),
           value: departureDate.toString(),
-        },
-        class: {
-          label:
-            seatClass.find((item) => item.code === lastSearch.seatClass)
-              ?.displayName ?? '-',
-          value: lastSearch.seatClass,
-        },
-        passengers: {
-          label: `${lastSearch.paxAdult} Dewasa • ${lastSearch.paxChild} Anak • ${lastSearch.paxInfant} Bayi`,
-          value: {
-            adult: lastSearch.paxAdult,
-            child: lastSearch.paxChild,
-            infant: lastSearch.paxInfant,
-          },
         },
       };
       if (returnDate) {
@@ -75,35 +102,16 @@
           value: returnDate.toString(),
         };
       }
+      console.log(newSearchForm);
       setSearchForm(newSearchForm);
-    } else if (!searchForm.origin.value) {
-      const deprtureDate = add(startOfDay(new Date()), { days: 1 });
+    } else if (!searchForm.value.departureDate.value) {
+      const departureDate = add(startOfDay(new Date()), { days: 1 });
       setSearchForm({
-        origin: {
-          label: 'Jakarta (JKT)',
-          value: 'JKT',
-        },
-        destination: {
-          label: 'Bali / Denpasar (DPS)',
-          value: 'DPS',
-        },
         departureDate: {
-          label: format(deprtureDate, 'EEEE, dd MMM yyyy'),
-          value: deprtureDate.toString(),
+          label: format(departureDate, 'EEEE, dd MMM yyyy'),
+          value: departureDate.toString(),
         },
         returnDate: undefined,
-        passengers: {
-          label: '1 Dewasa • 0 Anak • 0 Bayi',
-          value: {
-            adult: 1,
-            child: 0,
-            infant: 0,
-          },
-        },
-        class: {
-          label: seatClass[0]?.displayName,
-          value: seatClass[0]?.code,
-        },
       });
     }
   });

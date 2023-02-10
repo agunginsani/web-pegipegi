@@ -8,13 +8,13 @@
   const { searchForm, setSearchForm } = useSearchForm();
 
   function getCurrentPassengers() {
-    return JSON.parse(JSON.stringify(searchForm.passengers.value));
+    return JSON.parse(JSON.stringify(searchForm.value.passengers.value));
   }
 
   const passengersValue = reactive(getCurrentPassengers());
 
   watch(
-    () => searchForm.passengers.value,
+    () => searchForm.value.passengers.value,
     () => {
       Object.assign(passengersValue, getCurrentPassengers());
     }

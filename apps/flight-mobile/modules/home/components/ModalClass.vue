@@ -17,20 +17,21 @@
 
   const classModel = computed({
     get() {
-      return searchForm.class.value;
+      return searchForm.value.class.value;
     },
     set(value) {
       setSearchForm({
         class: {
           label:
-            seatClass.find((item) => item.code === value)?.displayName ?? '',
+            seatClass.value.find((item) => item.code === value)?.displayName ??
+            '',
           value,
         },
       });
     },
   });
   watch(
-    () => searchForm.class.value,
+    () => searchForm.value.class.value,
     () => {
       if (route.query.showClass) router.go(-1);
     }
