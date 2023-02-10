@@ -8,6 +8,7 @@
   const seoImage = `https://www.pegipegi.com/flat/img/ogp-pegipegi.jpg`;
   const seoImageWidth = '398';
   const seoImageHeight = '220';
+  const seoUrl = 'https://www.pegipegi.com/flight/';
 
   useHead({
     title,
@@ -22,7 +23,7 @@
       },
       {
         rel: 'canonical',
-        href: 'https://www.pegipegi.com/flight',
+        href: seoUrl,
       },
     ],
   });
@@ -35,7 +36,7 @@
     author: 'PT. GO Online Destination',
     ogTitle: title,
     ogType: 'website',
-    ogUrl: 'https://www.pegipegi.com/flight',
+    ogUrl: seoUrl,
     ogImage: seoImage,
     ogDescription: seoDescription,
     ogSiteName: 'Pegipegi',
@@ -50,7 +51,7 @@
     twitterImage: seoImage,
     twitterPlayerWidth: seoImageWidth,
     twitterPlayerHeight: seoImageHeight,
-    twitterPlayer: 'https://www.pegipegi.com/flight',
+    twitterPlayer: seoUrl,
   });
 
   onServerPrefetch(() => {
