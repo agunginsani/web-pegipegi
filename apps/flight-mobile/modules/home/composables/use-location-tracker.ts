@@ -22,7 +22,6 @@ export default function useLocationTracker({
 }) {
   const firebase = useFirebase();
 
-  const isDeleteAll = ref(false);
   let keywordCode = '';
   let tempKeyword = '';
   let tempResultCount = 0;
@@ -43,10 +42,9 @@ export default function useLocationTracker({
 
     switch (triggerType) {
       case 'Cancel Search':
-        if (isDeleteAll.value) {
+        if (keyword.value === '') {
           delete paramsToBeSent.error_type;
           delete paramsToBeSent.item_num;
-          isDeleteAll.value = false;
         }
         (keyword.value || keywordCode) &&
           firebase.track('trigger_log', paramsToBeSent);
@@ -57,7 +55,6 @@ export default function useLocationTracker({
         break;
 
       case 'Delete All Keyword':
-        isDeleteAll.value = true;
         paramsToBeSent.error_type = tempKeyword;
         paramsToBeSent.item_num = tempResultCount;
         firebase.track('trigger_log', paramsToBeSent);
