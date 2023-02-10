@@ -27,7 +27,7 @@
     <Navbar />
     <SectionSearch />
     <SectionLastSearch />
-    <!-- <SectionPromo /> -->
+    <SectionPromo />
     <SectionImportantInfo />
     <SectionCheapFlight />
     <SectionSeo />
