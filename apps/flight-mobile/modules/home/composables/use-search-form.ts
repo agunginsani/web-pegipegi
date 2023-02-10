@@ -32,7 +32,7 @@ type BestPrice = {
   returnPrice?: number;
 };
 
-export default function searchForm() {
+export default function useSearchForm() {
   const searchForm = useState<SearchFormValue>(() => ({
     origin: {
       label: '',
@@ -69,8 +69,6 @@ export default function searchForm() {
 
   async function initiateSeatClass() {
     const { data: seats } = await useFetch('/api/seat-class');
-    if (seatClass.value.length > 0) return;
-
     seatClass.value = seats.value ?? [];
   }
 
