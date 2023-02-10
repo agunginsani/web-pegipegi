@@ -29,13 +29,6 @@ export default function useFirebase() {
         analytics.value = getAnalytics();
       }
 
-      console.log({
-        customer_id: userId.value,
-        device_id: deviceId.value,
-        product_name: 'Flight',
-        ...params,
-      });
-
       logEvent(analytics.value, type, {
         customer_id: userId.value,
         device_id: deviceId.value,
