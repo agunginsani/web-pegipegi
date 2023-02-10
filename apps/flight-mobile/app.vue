@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import Snackbar from 'common-module/components/Snackbar.vue';
   import ModalMaintenance from 'common-module/components/ModalMaintenance.vue';
+  import useProfile from 'common-module/composables/use-profile';
 
   const title = `Tiket Pesawat Promo - Cek & Pesan Tiket Online Harga OK`;
   const seoDescription = `Cek jadwal dan promo tiket pesawat murah untuk berbagai rute/maskapai di sini. Pesan tiket pesawat online mudah & OK harganya pakai Pegipegi.`;
@@ -51,6 +52,10 @@
     twitterPlayerWidth: seoImageWidth,
     twitterPlayerHeight: seoImageHeight,
     twitterPlayer: seoUrl,
+  });
+
+  onServerPrefetch(() => {
+    useProfile();
   });
 </script>
 
