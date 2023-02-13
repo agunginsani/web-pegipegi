@@ -9,8 +9,8 @@ RUN pnpm fetch
 
 COPY . ./
 
-RUN pnpm -F flight-mobile... install --offline
-RUN pnpm -F flight-mobile... build-production
+RUN pnpm -F flight-mobile-app... install --offline
+RUN pnpm -F flight-mobile-app... build-production
 
 RUN apt-get update && apt-get install sudo
 RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-QPL3K5L058TN0RXGUGQR35R1VPS NEW_RELIC_ACCOUNT_ID=699667 /usr/local/bin/newrelic install -n logs-integration

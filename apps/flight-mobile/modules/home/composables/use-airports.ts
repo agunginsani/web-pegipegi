@@ -1,30 +1,47 @@
-import { z } from "zod";
-import useAuthStore from "common-module/composables/use-auth-store";
+import { AirportsResponse } from 'api/airports.get';
 
-const Airports = z.array(
-  z.object({
-    airport_code: z.string(),
-    airport_name: z.string(),
-    all_airport: z.string(),
-    area_name: z.string(),
-    country_name: z.string(),
-    group: z.string(),
-    international: z.boolean(),
-    timezone: z.string(),
-    type: z.string(),
-  })
-);
+function mapData(arr: AirportsResponse) {
+  return arr.map((item) => ({
+    title: `${item.area_name}, ${item.country_name}`,
+    description: `${item.airport_code} - ${item.airport_name}`,
+    type: `${item.type[0].toUpperCase()}${item.type.slice(1).toLowerCase()}`,
+    icon:
+      item.type === 'KOTA'
+        ? '/icon-location-city.svg'
+        : '/icon-location-airport.svg',
+    value: {
+      label: `${item.area_name} (${item.airport_code})`,
+      value: item.airport_code,
+    },
+  }));
+}
 
-type Airports = z.infer<typeof Airports>;
+export default async function useAirports() {
+  const keyword = ref('');
+  const deboundedKeyword = refDebounced(keyword, 200);
 
-export default function useAirports() {
-  const { token } = useAuthStore();
-  const config = useRuntimeConfig();
-  return useFetch("/v1/airport/v1/list", {
-    baseURL: config.public.authBaseUrl,
-    headers: { authorization: `Bearer ${token}` },
-    transform(data) {
-      return Airports.parse(data);
+  const { data: filteredAirports, pending } = useLazyFetch('/api/airports', {
+    immediate: false,
+    transform: mapData,
+    query: {
+      search: deboundedKeyword,
     },
   });
+
+  const key = 'popular-airports-response';
+  const { data: cached } = useNuxtData<AirportsResponse>(key);
+  const { data: popularAirports } = await useFetch('/api/airports', {
+    key,
+    lazy: !!cached.value,
+    transform: mapData,
+    default: () => cached.value,
+  });
+
+  return {
+    filteredAirports,
+    popularAirports,
+    keyword,
+    deboundedKeyword,
+    isSearching: pending,
+  };
 }

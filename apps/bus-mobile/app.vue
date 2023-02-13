@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Button, Input } from '@pegipegi/pegipegi-web-ui';
+  import { Button, Input } from '@pegipegi/pegipegi-web-ui';
 </script>
 
 <template>

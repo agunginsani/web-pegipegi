@@ -1,20 +1,36 @@
 <script lang="ts" setup>
-  import useAirports from "home-module/composables/use-airports";
-  import useSeatClasses from "home-module/composables/use-seat-classes";
-  import usePromoBanners from "home-module/composables/use-promo-banners";
+  import SectionSearch from 'home-module/components/SectionSearch.vue';
+  import SectionLastSearch from 'home-module/components/SectionLastSearch.vue';
+  import SectionPromo from 'home-module/components/SectionPromo.vue';
+  import SectionImportantInfo from 'home-module/components/SectionImportantInfo.vue';
+  import SectionCheapFlight from 'home-module/components/SectionCheapFlight.vue';
+  import SectionSeo from 'home-module/components/SectionSeo.vue';
+  import Navbar from 'home-module/components/Navbar.vue';
+  import Footer from 'home-module/components/Footer.vue';
+  import useFirebase from 'common-module/composables/use-firebase';
 
-  const [{ data: airports }, { data: seatClasses }, { data: promos }] =
-    await Promise.all([useAirports(), useSeatClasses(), usePromoBanners()]);
+  useServerSeoMeta({ robots: 'index, follow' });
+
+  const { track } = useFirebase();
+  onMounted(() => {
+    track('open_screen', {
+      screen_name: 'FlightHome',
+    });
+  });
+
+  const searchUrl = useLocalStorage('flight-mweb.search-url', null);
+  searchUrl.value = null;
 </script>
 
 <template>
-  <h1>Promo Banners</h1>
-  <hr />
-  <code>{{ promos }}</code>
-  <h1>Seat Classes</h1>
-  <hr />
-  <code>{{ seatClasses }}</code>
-  <h1>Airports</h1>
-  <hr />
-  <code>{{ airports }}</code>
+  <div id="homepage" class="flex h-screen flex-col overflow-y-auto bg-white">
+    <Navbar />
+    <SectionSearch />
+    <SectionLastSearch />
+    <SectionPromo />
+    <SectionImportantInfo />
+    <SectionCheapFlight />
+    <SectionSeo />
+    <Footer />
+  </div>
 </template>
