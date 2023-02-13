@@ -72,7 +72,7 @@
   const { seatClass } = useSearchForm();
   const seatClassText = computed(
     () =>
-      seatClass.find((item) => item.code === props.history.seatClass)
+      seatClass.value.find((item) => item.code === props.history.seatClass)
         ?.displayName
   );
 </script>

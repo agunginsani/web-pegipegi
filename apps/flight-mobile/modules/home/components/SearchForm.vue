@@ -11,11 +11,11 @@
 
   const returnModel = computed({
     get() {
-      return searchForm.returnDate ? ['return'] : [];
+      return searchForm.value.returnDate ? ['return'] : [];
     },
     set(value) {
       if (value.length > 0) {
-        const today = new Date(String(searchForm.departureDate.value));
+        const today = new Date(String(searchForm.value.departureDate.value));
         const tommorow = add(today, { days: 1 });
         setSearchForm({
           returnDate: {
@@ -31,20 +31,20 @@
 
   const searchUrl = computed(() => {
     const queryParams = new URLSearchParams({
-      from: searchForm.origin.value,
-      to: searchForm.destination.value,
-      adult: String(searchForm.passengers.value.adult),
-      child: String(searchForm.passengers.value.child),
-      infant: String(searchForm.passengers.value.infant),
-      seatClass: searchForm.class.value,
+      from: searchForm.value.origin.value,
+      to: searchForm.value.destination.value,
+      adult: String(searchForm.value.passengers.value.adult),
+      child: String(searchForm.value.passengers.value.child),
+      infant: String(searchForm.value.passengers.value.infant),
+      seatClass: searchForm.value.class.value,
       isNoTransit: '0',
     });
 
-    const departureDate = searchForm.departureDate.value
-      ? format(new Date(searchForm.departureDate.value), 'dd-MM-yyyy')
+    const departureDate = searchForm.value.departureDate.value
+      ? format(new Date(searchForm.value.departureDate.value), 'dd-MM-yyyy')
       : undefined;
-    const returnDate = searchForm.returnDate?.value
-      ? format(new Date(searchForm.returnDate.value), 'dd-MM-yyyy')
+    const returnDate = searchForm.value.returnDate?.value
+      ? format(new Date(searchForm.value.returnDate.value), 'dd-MM-yyyy')
       : undefined;
 
     if (departureDate) queryParams.set('departureDate', departureDate);
@@ -58,15 +58,15 @@
   bestPriceStorage.value = {};
 
   function saveBestPrice() {
-    bestPriceStorage.value = bestPrice;
+    bestPriceStorage.value = bestPrice.value;
   }
 
   const isRotated = ref(false);
   function onSwap() {
     isRotated.value = !isRotated.value;
     clearBestPrice();
-    const origin = JSON.parse(JSON.stringify(searchForm.destination));
-    const destination = JSON.parse(JSON.stringify(searchForm.origin));
+    const origin = JSON.parse(JSON.stringify(searchForm.value.destination));
+    const destination = JSON.parse(JSON.stringify(searchForm.value.origin));
     setSearchForm({ origin, destination });
   }
 </script>

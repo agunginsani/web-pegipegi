@@ -32,8 +32,8 @@ type BestPrice = {
   returnPrice?: number;
 };
 
-export default defineStore('searchForm', () => {
-  const searchForm = reactive<SearchFormValue>({
+export default function useSearchForm() {
+  const searchForm = useState<SearchFormValue>(() => ({
     origin: {
       label: '',
       value: '',
@@ -59,32 +59,31 @@ export default defineStore('searchForm', () => {
       label: '',
       value: '',
     },
-  });
+  }));
 
   function setSearchForm(payload: Partial<SearchFormValue>) {
-    Object.assign(searchForm, payload);
+    searchForm.value = { ...searchForm.value, ...payload };
   }
 
-  const seatClass = reactive<Array<SeatClassItem>>([]);
+  const seatClass = useState<Array<SeatClassItem>>(() => []);
 
   async function initiateSeatClass() {
-    if (seatClass.length > 0) return;
-
     const { data: seats } = await useFetch('/api/seat-class');
-    Object.assign(seatClass, seats.value);
+    seatClass.value = seats.value ?? [];
   }
 
-  const bestPrice = reactive<BestPrice>({
+  const bestPrice = useState<BestPrice>(() => ({
     departurePrice: undefined,
     returnPrice: undefined,
-  });
+  }));
 
   function setBestPrice(params: BestPrice) {
-    Object.assign(bestPrice, params);
+    bestPrice.value = params;
   }
 
   function clearBestPrice() {
-    (bestPrice.departurePrice = undefined), (bestPrice.returnPrice = undefined);
+    (bestPrice.value.departurePrice = undefined),
+      (bestPrice.value.returnPrice = undefined);
   }
 
   return {
@@ -96,4 +95,4 @@ export default defineStore('searchForm', () => {
     clearBestPrice,
     bestPrice,
   };
-});
+}

@@ -46,15 +46,15 @@ export default function useCalendarBestPrice(startDate: Date, endDate: Date) {
       const result = {
         from:
           route.query.type === 'departure'
-            ? searchForm.origin.value
-            : searchForm.destination.value,
+            ? searchForm.value.origin.value
+            : searchForm.value.destination.value,
         to:
           route.query.type === 'departure'
-            ? searchForm.destination.value
-            : searchForm.origin.value,
+            ? searchForm.value.destination.value
+            : searchForm.value.origin.value,
         month: format(pointer, 'MM'),
         year: format(pointer, 'yyyy'),
-        flightClass: searchForm.class.value,
+        flightClass: searchForm.value.class.value,
       };
       pointer = add(pointer, { months: 1 });
       return result;

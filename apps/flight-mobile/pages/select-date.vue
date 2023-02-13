@@ -9,7 +9,7 @@
   definePageMeta({
     middleware(to) {
       const { searchForm } = useSearchForm();
-      if (!searchForm.departureDate.value) {
+      if (!searchForm.value.departureDate.value) {
         return navigateTo('/');
       }
 
@@ -30,9 +30,9 @@
   const modelValue = computed<CalendarModelValue>({
     get() {
       return [
-        new Date(String(searchForm.departureDate.value)),
-        searchForm.returnDate
-          ? new Date(String(searchForm.returnDate.value))
+        new Date(String(searchForm.value.departureDate.value)),
+        searchForm.value.returnDate
+          ? new Date(String(searchForm.value.returnDate.value))
           : undefined,
       ];
     },
@@ -65,17 +65,23 @@
 
   function onSave() {
     const departureMonth = format(
-      new Date(searchForm.departureDate.value),
+      new Date(searchForm.value.departureDate.value),
       'M-yyyy'
     );
-    const departureDate = format(new Date(searchForm.departureDate.value), 'd');
+    const departureDate = format(
+      new Date(searchForm.value.departureDate.value),
+      'd'
+    );
 
-    if (searchForm.returnDate?.value) {
+    if (searchForm.value.returnDate?.value) {
       const returnMonth = format(
-        new Date(searchForm.returnDate?.value),
+        new Date(searchForm.value.returnDate?.value),
         'MM-yyyy'
       );
-      const returnDate = format(new Date(searchForm.returnDate?.value), 'dd');
+      const returnDate = format(
+        new Date(searchForm.value.returnDate?.value),
+        'dd'
+      );
 
       setBestPrice({
         departurePrice: bestPrice.value[departureMonth]?.[departureDate]?.fare,
