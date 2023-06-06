@@ -83,7 +83,7 @@
       @click="clearBestPrice()"
     >
       <button
-        class="border-purple-affair-700 absolute top-full right-4 z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2 transition-transform duration-500"
+        class="border-purple-affair-700 absolute right-4 top-full z-10 aspect-square -translate-y-1/3 rounded-full border-2 bg-white p-2 transition-transform duration-500"
         :class="{
           'rotate-0': !isRotated,
           'rotate-180': isRotated,

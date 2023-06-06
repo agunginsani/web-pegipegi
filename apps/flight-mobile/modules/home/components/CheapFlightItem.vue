@@ -28,7 +28,7 @@
         loading="lazy"
       />
       <div
-        class="absolute top-0 left-0 flex h-full w-full flex-col justify-between rounded bg-gradient-to-t from-current py-[10px] px-[12px]"
+        class="absolute left-0 top-0 flex h-full w-full flex-col justify-between rounded bg-gradient-to-t from-current px-[12px] py-[10px]"
       >
         <p class="text-xs text-white">
           Pesawat Ke <br />

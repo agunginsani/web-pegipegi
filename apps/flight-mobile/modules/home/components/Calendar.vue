@@ -134,7 +134,7 @@
         </button>
         <slot name="header" :value="localValue" />
       </div>
-      <ul class="flex w-full justify-between py-3 px-4">
+      <ul class="flex w-full justify-between px-4 py-3">
         <li
           v-for="(day, index) in [
             'Sen',
@@ -178,7 +178,7 @@
     </main>
 
     <footer class="shadow-lifted sticky inset-x-0 bottom-0 z-30">
-      <div class="bg-neutral-tuna-50 rounded-t-2xl py-2 px-4 text-sm">
+      <div class="bg-neutral-tuna-50 rounded-t-2xl px-4 py-2 text-sm">
         <p>
           <NuxtImg
             class="mr-2 inline-block"

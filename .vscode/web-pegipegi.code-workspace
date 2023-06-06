@@ -23,6 +23,10 @@
       "name": "🗂️ root"
     },
     {
+      "path": "../apps/main-desktop",
+      "name": "📱 apps/main-desktop"
+    },
+    {
       "path": "../apps/flight-mobile",
       "name": "📱 apps/flight-mobile"
     },

@@ -29,7 +29,7 @@
 
 <template>
   <div
-    class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b py-2 px-4"
+    class="bg-neutral-tuna-25 border-neutral-tuna-100 relative mb-3 flex items-center rounded-t-xl border-b px-4 py-2"
     :aria-labelledby="id"
   >
     <NuxtImg

@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     // DISCLAIMER: `nuxt-vuefire` is still in preview phase.
     // Please update once the stable version is released.
     'nuxt-vuefire',
+    '@nuxt/devtools',
   ],
   runtimeConfig: {
     bannerBaseUrl: '',

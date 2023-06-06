@@ -1,6 +1,7 @@
-import { AirportsResponse } from 'api/airports.get';
+import type { AirportsResponse } from 'api/airports.get';
 
-function mapData(arr: AirportsResponse) {
+function mapData(arr: AirportsResponse | null) {
+  if (arr === null) return null;
   return arr.map((item) => ({
     title: `${item.area_name}, ${item.country_name}`,
     description: `${item.airport_code} - ${item.airport_name}`,
@@ -34,7 +35,7 @@ export default async function useAirports() {
     key,
     lazy: !!cached.value,
     transform: mapData,
-    default: () => cached.value,
+    default: () => mapData(cached.value),
   });
 
   return {

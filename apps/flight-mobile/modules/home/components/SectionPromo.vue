@@ -13,7 +13,7 @@
     key,
     lazy: !!cached.value,
     query: { deviceBrowser, deviceId, deviceModel, userEmail, userId },
-    default: () => cached.value,
+    default: () => cached.value?.data ?? null,
     transform: (data) => data.data,
   });
   /* -------------------------------------------------------------------------- */

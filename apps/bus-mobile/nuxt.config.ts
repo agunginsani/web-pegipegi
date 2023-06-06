@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/devtools'],
   tailwindcss: {
     cssPath: '@pegipegi/web-pegipegi-ui/style',
   },

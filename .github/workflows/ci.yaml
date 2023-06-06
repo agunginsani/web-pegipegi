@@ -1,0 +1,116 @@
+name: ci
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      - name: Install application
+        run: pnpm install
+      - name: Lint
+        run: pnpm prettier . --check
+      - name: Run type check
+        run: pnpm -F "*-app" typecheck
+      - name: Build staging
+        run: pnpm -F "*-app" build-staging
+      - name: Install Playwright
+        run: pnpm -F "*-test" exec playwright install --with-deps
+      - name: Run Playwright tests
+        run: CI=true pnpm -F "*-test" exec playwright test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: tests/flight-mobile/playwright-report/
+          retention-days: 30
+  # flight_mobile_build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 7
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: 'pnpm'
+  #     - name: Install application
+  #       run: pnpm install
+  #     - name: Lint
+  #       run: pnpm prettier apps/flight-mobile --check
+  #     - name: Run type check
+  #       run: pnpm -F flight-mobile-app typecheck
+  #     - name: Build staging
+  #       run: pnpm -F flight-mobile-app build-staging
+  #     - name: Install Playwright
+  #       run: pnpm -F flight-mobile-test exec playwright install --with-deps
+  #     - name: Run Playwright tests
+  #       run: CI=true pnpm -F flight-mobile-test exec playwright test
+  #     - uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: tests/flight-mobile/playwright-report/
+  #         retention-days: 30
+  flight_mobile_sonarcloud:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: apps/flight-mobile
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # main_desktop_build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 7
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: 'pnpm'
+  #     - name: Install application
+  #       run: pnpm install
+  #     - name: Lint
+  #       run: pnpm prettier apps/main-desktop --check
+  #     - name: Run type check
+  #       run: pnpm -F main-desktop-app typecheck
+  #     - name: Build staging
+  #       run: pnpm -F main-desktop-app build-staging
+  main_desktop_sonarcloud:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: apps/main-desktop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

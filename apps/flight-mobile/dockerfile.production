@@ -1,6 +1,6 @@
 FROM node:16
 
-RUN npm install -g pnpm@^7
+RUN npm install -g pnpm@^8
 
 WORKDIR /src
 
