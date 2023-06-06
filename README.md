@@ -12,6 +12,11 @@ This is repository for:
 - www.pegipegi.com/flight (mobile): `flight-mobile/*.*.*`
 - www.pegipegi.com & www.pegipegi.com/promo (desktop): `main-desktop/*.*.*`
 
+## Standardized release branch names
+
+- www.pegipegi.com/flight (mobile): `release/flight-mobile/*.*.*`
+- www.pegipegi.com & www.pegipegi.com/promo (desktop): `release/main-desktop/*.*.*`
+
 ## Release flow
 
 1. Create branch release with standardized names.
