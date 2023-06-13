@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@pegipegi/web-pegipegi-ui/module',
-    '@nuxt/image-edge',
+    '@nuxt/image',
     '@nuxtjs/device',
     '@nuxt/devtools',
   ],

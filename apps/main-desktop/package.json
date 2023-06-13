@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.4.5",
-    "@nuxt/image-edge": "1.0.0-28008586.381b906",
+    "@nuxt/image": "1.0.0-rc.1",
     "@nuxtjs/tailwindcss": "^6.6.5",
     "@types/cookie": "^0.5.1",
     "@types/node": "^18.16.3",
