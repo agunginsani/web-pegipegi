@@ -65,16 +65,14 @@
   <div class="w-full">
     <Header light />
     <main
-      class="mx-auto mt-6 grid w-[calc(100vw-128px)] min-w-[975px] max-w-[1366px] gap-4 pb-6"
+      class="mx-auto mt-6 grid w-[calc(100vw-128px)] min-w-[975px] max-w-[1366px] gap-8 pb-6"
     >
-      <h1 class="mb-8 text-4xl font-bold">Promo Pegipegi</h1>
-      <!-- <a
-        :href="`${config.public.homeUrl}/promo`"
-        class="w-full overflow-hidden rounded-xl"
-        target="_blank"
-      >
-        <NuxtImg class="w-full" src="/figure-long-banner.svg" />
-      </a> -->
+      <h1 class="text-4xl font-bold">Promo Pegipegi</h1>
+      <NuxtImg
+        class="w-full rounded-xl"
+        alt="Pasti ada harga termurah"
+        src="/figure-promo-banner.webp"
+      />
       <ChipTab
         :options="tagOptions"
         v-model="activeTag"
