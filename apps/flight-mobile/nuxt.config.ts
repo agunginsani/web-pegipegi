@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/tailwindcss',
     ['@pinia/nuxt', { autoImports: ['defineStore'] }],
-    '@nuxt/image-edge',
+    '@nuxt/image',
     '@nuxtjs/device',
     // DISCLAIMER: `nuxt-vuefire` is still in preview phase.
     // Please update once the stable version is released.
