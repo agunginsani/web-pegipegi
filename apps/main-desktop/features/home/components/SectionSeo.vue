@@ -118,9 +118,21 @@
             Satu lagi yang menjadi kelebihan Pegipegi. Bila Anda menemukan
             kesulitan atau membutuhkan bantuan saat melakukan booking hotel
             secara online, Anda dapat menghubungi Customer Service Pegipegi di
-            nomor telepon 0804 1400 777. Dengan pelayanan yang profesional dan
-            berpengalaman, Customer Service Pegipegi siap membantu Anda setiap
-            hari selama 24 jam.
+            <a
+              class="text-blue-600 underline visited:text-purple-600 hover:text-blue-800"
+              href="mailto:cs@pegipegi.com"
+            >
+              cs@pegipegi.com</a
+            >
+            ataupun kontak yang tertera di halaman
+            <a
+              class="text-blue-600 underline visited:text-purple-600 hover:text-blue-800"
+              href="https://www.pegipegi.com/faq"
+            >
+              FAQ</a
+            >. Dengan pelayanan yang profesional dan berpengalaman, Customer
+            Service Pegipegi siap membantu Anda setiap hari dari pukul 07.00 -
+            22.00.
           </p>
           <p>
             Selain itu, Customer Service Pegipegi juga dapat membantu Anda untuk

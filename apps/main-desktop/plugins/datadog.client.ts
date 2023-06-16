@@ -2,8 +2,7 @@ import { datadogRum } from '@datadog/browser-rum';
 
 export default defineNuxtPlugin(() => {
   const {
-    appVersion,
-    public: { envMode },
+    public: { appVersion, envMode },
   } = useRuntimeConfig();
 
   datadogRum.init({

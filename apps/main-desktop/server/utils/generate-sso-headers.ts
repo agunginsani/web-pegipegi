@@ -11,14 +11,13 @@ type SSOHeaders = {
 
 export default function (event: H3Event): SSOHeaders {
   const config = useRuntimeConfig();
-  const phpsess = getCookie(event, 'phpsess');
   const ua = uaParser(getHeader(event, 'User-Agent'));
   const deviceId = getCookie(event, 'device-id') ?? '';
   const deviceBrowser = ua.browser.name ?? '';
   const deviceModel = ua.os.name ?? '';
 
   return {
-    'App-Version': `${config.appVersion}-main-web`,
+    'App-Version': `${config.public.appVersion}-main-web`,
     Browser: deviceBrowser,
     'Device-Id': deviceId,
     'Device-Model': deviceModel,

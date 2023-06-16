@@ -20,7 +20,6 @@ export default defineNuxtConfig({
     firebaseClientEmail: '',
     firebasePrivateKey: '',
     accountBaseUrl: '',
-    appVersion,
     mainhomeBaseUrl: '',
     mainhomeSecretKey: '',
     seoBaseUrl: '',
@@ -35,6 +34,7 @@ export default defineNuxtConfig({
     busBaseUrl: '',
     newsletterBaseUrl: '',
     public: {
+      appVersion,
       homeAltUrl: '',
       homeUrl: '',
       domain: '',
