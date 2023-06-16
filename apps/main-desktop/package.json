@@ -1,7 +1,7 @@
 {
   "name": "main-desktop-app",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.0.17",
   "private": true,
   "scripts": {
     "analyze": "nuxi analyze",
@@ -29,6 +29,7 @@
     "vue-tsc": "^1.2.0"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.42.2",
     "@google-cloud/logging-winston": "^5.3.0",
     "@gtm-support/vue-gtm": "^2.0.0",
     "@headlessui/vue": "^1.7.12",

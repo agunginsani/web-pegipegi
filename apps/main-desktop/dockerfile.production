@@ -12,9 +12,6 @@ COPY . ./
 RUN pnpm -F main-desktop-app... install --offline
 RUN pnpm -F main-desktop-app... build-production
 
-RUN apt-get update && apt-get install sudo
-RUN curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-QPL3K5L058TN0RXGUGQR35R1VPS NEW_RELIC_ACCOUNT_ID=699667 /usr/local/bin/newrelic install -n logs-integration
-
 WORKDIR /src/apps/main-desktop
 
 CMD ["sh", "-c", "STREAM_LOG_TO_GCP=true node -r newrelic -r dotenv/config .output/server/index.mjs dotenv_config_path=.env.production dotenv_config_debug=true"]
