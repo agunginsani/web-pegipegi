@@ -6,8 +6,8 @@ export default defineNuxtPlugin(() => {
   } = useRuntimeConfig();
 
   datadogRum.init({
-    applicationId: 'ff87abb7-5c64-4101-b54e-b4b86d7998fc',
-    clientToken: 'pub69fb294088bbdb56d048cfce2be2d55b',
+    applicationId: 'ae60728d-465a-47da-94eb-6127be526e7d',
+    clientToken: 'pub744fea693a6f5ad3031f29f16d5b6fc7',
     site: 'ap1.datadoghq.com',
     service: 'web-flight-mobile',
     env: envMode,
