@@ -1,7 +1,7 @@
 {
   "name": "main-desktop-app",
   "type": "module",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "private": true,
   "scripts": {
     "analyze": "nuxi analyze",
