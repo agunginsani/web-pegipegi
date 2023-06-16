@@ -1,22 +1,10 @@
 import { resolve } from 'path';
 import { version as appVersion } from './package.json';
 
-const script = [];
-if (process.env.ENV_MODE === 'production') {
-  script.push({
-    hid: 'new-relic',
-    id: 'new-relic',
-    src: 'https://new-assets.s3.ap-southeast-1.amazonaws.com/scripts/new-relic-revamp/flight-mobile-web.js',
-  });
-}
-
 export default defineNuxtConfig({
   app: {
     baseURL: '/flight/',
     buildAssetsDir: '/_assets/',
-    head: {
-      script,
-    },
   },
   modules: [
     '@vueuse/nuxt',
@@ -34,8 +22,9 @@ export default defineNuxtConfig({
     bannerKey: '',
     firebaseProjectId: '',
     accountBaseUrl: '',
-    appVersion,
     public: {
+      envMode: '',
+      appVersion,
       homeUrl: '',
       authBaseUrl: '',
       apixBaseUrl: '',

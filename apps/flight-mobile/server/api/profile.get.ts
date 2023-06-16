@@ -38,7 +38,7 @@ export default defineEventHandler((event) => {
   return $fetch('/v1/users/profile', {
     baseURL: config.accountBaseUrl,
     headers: {
-      'App-Version': `${config.appVersion}-flight-mweb`,
+      'App-Version': `${config.public.appVersion}-flight-mweb`,
       'Device-Origin': 'mweb',
       'Device-Id': deviceId,
       'Device-Model': deviceModel,
