@@ -2,7 +2,7 @@
   "name": "flight-mobile-app",
   "private": true,
   "type": "module",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "scripts": {
     "analyze": "nuxi analyze",
     "build-production": "nuxi build --dotenv .env.production",
