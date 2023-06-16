@@ -63,9 +63,6 @@ importers:
       firebase:
         specifier: ^9.17.1
         version: 9.17.1
-      newrelic:
-        specifier: ^9.9.0
-        version: 9.14.1
       nuxt-vuefire:
         specifier: ^0.1.5
         version: 0.1.5(@firebase/app-types@0.9.0)(firebase@9.17.1)(vuefire@3.0.1)
