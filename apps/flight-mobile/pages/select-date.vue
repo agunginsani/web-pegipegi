@@ -136,12 +136,14 @@
       <p
         class="text-neutral-tuna-300 h-4 text-[10px]"
         :class="{
-          'text-green-emerald-600':
-            bestPrice[`${monthNum}-${year}`]?.[date]?.cheapest,
+          '!text-green-emerald-600':
+            bestPrice?.[`${monthNum}-${year}`]?.[date]?.cheapest,
         }"
       >
         {{
-          isDisabled ? '-' : bestPrice[`${monthNum}-${year}`]?.[date]?.shortFare
+          isDisabled
+            ? '-'
+            : bestPrice?.[`${monthNum}-${year}`]?.[date]?.shortFare
         }}
       </p>
     </template>

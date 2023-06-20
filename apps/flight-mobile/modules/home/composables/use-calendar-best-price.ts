@@ -23,7 +23,7 @@ export default function useCalendarBestPrice(startDate: Date, endDate: Date) {
     const result: BestPrice = {};
     bestPriceArray.value.forEach((bestPrices, index) => {
       const key = format(add(startDate, { months: index }), 'M-yyyy');
-      bestPrices.value?.forEach((item) => {
+      bestPrices?.value?.forEach((item) => {
         if (!result[key]) result[key] = {};
         if (!!item.shortFare && !!item.fare) {
           result[key][Number(item.dateObj.day)] = {
@@ -67,7 +67,13 @@ export default function useCalendarBestPrice(startDate: Date, endDate: Date) {
     );
   }
 
-  fetchBestPrice();
+  watch(
+    () => route.query.type,
+    () => {
+      fetchBestPrice();
+    },
+    { immediate: true }
+  );
 
   return {
     bestPrice,
