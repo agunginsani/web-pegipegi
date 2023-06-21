@@ -2,6 +2,17 @@
   import Snackbar from 'common-module/components/Snackbar.vue';
   import ModalMaintenance from 'common-module/components/ModalMaintenance.vue';
 
+  const nuxtApp = useNuxtApp();
+  const isLoading = ref(false);
+
+  nuxtApp.hook('page:start', () => {
+    isLoading.value = true;
+  });
+
+  nuxtApp.hook('page:finish', () => {
+    isLoading.value = false;
+  });
+
   const title = `Tiket Pesawat Promo - Cek & Pesan Tiket Online Harga OK`;
   const seoDescription = `Cek jadwal dan promo tiket pesawat murah untuk berbagai rute/maskapai di sini. Pesan tiket pesawat online mudah & OK harganya pakai Pegipegi.`;
   const seoImage = `https://www.pegipegi.com/flat/img/ogp-pegipegi.jpg`;
@@ -56,6 +67,7 @@
 
 <template>
   <NuxtLoadingIndicator color="#fe5000" />
+  <div v-if="isLoading" class="fixed inset-0 z-50"></div>
   <NuxtPage />
   <div id="portal-1" class="relative z-30" />
   <div id="portal-2" class="relative z-40" />
