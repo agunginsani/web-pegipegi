@@ -17,6 +17,10 @@ export default [
         url: 'https://petra.pegipegi.com/auth/login',
         target: '_blank',
       },
+      {
+        text: 'Cicilan Kartu Kredit',
+        url: 'https://www.pegipegi.com/installment',
+      },
     ],
   },
   {
