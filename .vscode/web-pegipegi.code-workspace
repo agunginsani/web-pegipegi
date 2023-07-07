@@ -38,5 +38,9 @@
       "path": "../tests/flight-mobile",
       "name": "🧪 tests/flight-mobile"
     },
+    {
+      "path": "../tests/main-desktop",
+      "name": "🧪 tests/main-desktop"
+    },
   ]
 }

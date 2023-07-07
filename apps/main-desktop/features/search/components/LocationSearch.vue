@@ -161,13 +161,14 @@
           </p>
         </Section>
 
-        <Section v-else-if="searchResult.length > 0">
+        <Section v-else-if="searchResult.length > 0" role="listbox">
           <ItemRow
             v-for="(item, idx) in searchResult"
             :key="`result-${idx}`"
             :item="item"
             :keyword="keyword"
             @select="onSelect(item)"
+            role="option"
           >
             <ItemRow
               v-for="(itemChild, idxChild) in item.child || []"
@@ -175,6 +176,7 @@
               :item="itemChild"
               :keyword="keyword"
               @select="onSelect(itemChild)"
+              role="option"
             />
           </ItemRow>
         </Section>
