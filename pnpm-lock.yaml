@@ -54,6 +54,9 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.4.3
         version: 0.4.3(typescript@4.9.5)
+      '@sentry/vue':
+        specifier: ^7.57.0
+        version: 7.57.0
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3
@@ -91,6 +94,9 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: ^6.3.1
         version: 6.6.5
+      '@sentry/vite-plugin':
+        specifier: ^2.4.0
+        version: 2.4.0
       '@types/cookie':
         specifier: ^0.5.1
         version: 0.5.1

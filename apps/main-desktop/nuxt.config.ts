@@ -72,9 +72,6 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
   vite: {
-    build: {
-      sourcemap: true,
-    },
     plugins: [
       sentryVitePlugin({
         url: 'https://sentry.pegipegi.com',

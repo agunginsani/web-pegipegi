@@ -1,11 +1,15 @@
 import { resolve } from 'path';
 import { version as appVersion } from './package.json';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
+
+const envMode = process.env.NUXT_PUBLIC_ENV_MODE;
 
 export default defineNuxtConfig({
   app: {
     baseURL: '/flight/',
     buildAssetsDir: '/_assets/',
   },
+  sourcemap: { client: true },
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/tailwindcss',
@@ -68,5 +72,23 @@ export default defineNuxtConfig({
   nitro: {
     baseURL: '/flight/',
     compressPublicAssets: true,
+  },
+  vite: {
+    plugins: [
+      sentryVitePlugin({
+        url: 'https://sentry.pegipegi.com',
+        org: 'pegipegi',
+        release: {
+          name: appVersion,
+          deploy: envMode === undefined ? undefined : { env: envMode },
+        },
+        project: 'web-pegipegi-flight-mobile',
+        authToken:
+          '703e790fc2fb40c594455f9ca0ef40330cf48bc10c394fe194bb1d3d598dc8d9',
+        sourcemaps: {
+          assets: ['.nuxt/dist/**'],
+        },
+      }),
+    ],
   },
 });

@@ -10,7 +10,7 @@ export default defineNuxtPlugin((context) => {
   if (process.env.NODE_ENV === 'production') {
     Sentry.init({
       Vue: vueApp,
-      dsn: 'https://41c79ae8fc994827a8ffc3ce8b2f5ff3@sentry.pegipegi.com/8',
+      dsn: 'https://6ece223d3c374eff95cb909b1fd6af49@sentry.pegipegi.com/9',
       integrations: [
         new Sentry.BrowserTracing({
           routingInstrumentation: Sentry.vueRouterInstrumentation(router),
