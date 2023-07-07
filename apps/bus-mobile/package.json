@@ -17,6 +17,6 @@
     "nuxt": "3.4.3"
   },
   "dependencies": {
-    "@pegipegi/web-pegipegi-ui": "^0.0.12"
+    "@pegipegi/web-pegipegi-ui": "1.0.0-beta.42"
   }
 }

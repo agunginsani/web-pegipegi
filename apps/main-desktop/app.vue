@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-  const title = 'Pegipegi | Booking Hotel, Tiket Pesawat dan Kereta Api Murah';
+  const title = 'Liburan termurah cuma di Pegipegi';
   const seoDescription =
-    'Jelajahi Indonesiamu bareng Pegipegi! Cari hotel, tiket pesawat ataupun kereta api mudah banget dan banyak promonya! Explore with us!';
-  const seoImage =
-    'https://www.pegipegi.com/assets-hotel-homepage-pc/img/ogp-pegipegi.jpg';
+    'Juara Harga Termurah untuk pesan hotel, pesawat, kereta, bus & travel! Ada potongan harga langsung dan promo setiap hari, buktiin murahnya sekarang!';
+  const seoImage = 'https://asset.pegipegi.com/image/seo/ogimage.jpg';
   const seoImageWidth = '398';
   const seoImageHeight = '220';
   const seoUrl = 'https://www.pegipegi.com/';

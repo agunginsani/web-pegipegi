@@ -18,7 +18,10 @@
   function highlight(input: string) {
     if (!props.keyword) return input;
 
-    const regex = new RegExp(props.keyword, 'ig');
+    const regex = new RegExp(
+      props.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      'ig'
+    );
     return input.replace(regex, `<strong style="color: #FE5000;">$&</strong>`);
   }
 </script>

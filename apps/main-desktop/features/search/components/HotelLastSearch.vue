@@ -23,7 +23,7 @@
   });
   const historyCookieList = computed(() =>
     historyCookie.value
-      ? JSON.parse(historyCookie.value.replaceAll('|', ','))
+      ? JSON.parse(historyCookie.value.replace(/\|/g, ','))
       : []
   );
 
