@@ -80,6 +80,7 @@ export default defineNuxtConfig({
           name: appVersion,
           deploy: envMode === undefined ? undefined : { env: envMode },
         },
+        disable: process.env.NODE_ENV !== 'production',
         project: 'web-pegipegi-main-desktop',
         authToken:
           '703e790fc2fb40c594455f9ca0ef40330cf48bc10c394fe194bb1d3d598dc8d9',
