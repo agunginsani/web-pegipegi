@@ -11,6 +11,7 @@ COPY . ./
 
 RUN pnpm -F main-desktop-app... install --offline
 RUN pnpm -F main-desktop-app... build-staging
+RUN rm -rf .nuxt/dist/**/*.map
 
 WORKDIR /src/apps/main-desktop
 
