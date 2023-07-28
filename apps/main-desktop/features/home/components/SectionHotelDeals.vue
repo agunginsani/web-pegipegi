@@ -119,7 +119,9 @@
   }
 
   onMounted(async () => {
-    await executeItems();
+    if (hotelDeals.value?.length) {
+      await executeItems();
+    }
   });
 </script>
 

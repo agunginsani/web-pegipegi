@@ -38,7 +38,11 @@ export default defineEventHandler((event) => {
       'X-Auth-Token': config.accomAuthToken,
     },
   })
-    .then((data) => HotelDealsResponse.parse(data).data)
+    .then((data) => {
+      const parsedRes = HotelDealsResponse.parse(data).data;
+      const flashSales = parsedRes.filter((val) => Number(val.isFlashSale));
+      return flashSales.length ? flashSales : parsedRes;
+    })
     .catch((e) => {
       throw e;
     });
