@@ -15,6 +15,7 @@ export default defineNuxtPlugin((context) => {
         new Sentry.BrowserTracing({
           routingInstrumentation: Sentry.vueRouterInstrumentation(router),
         }),
+        new Sentry.Replay(),
       ],
       environment: envMode,
       release: appVersion,
@@ -22,6 +23,7 @@ export default defineNuxtPlugin((context) => {
       // of transactions for performance monitoring.
       // We recommend adjusting this value in production
       tracesSampleRate: 0.5,
+      replaysOnErrorSampleRate: 1.0,
     });
   }
 });
