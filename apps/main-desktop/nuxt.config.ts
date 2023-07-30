@@ -1,8 +1,8 @@
 import { resolve } from 'path';
 import { version as appVersion } from './package.json';
-import { sentryVitePlugin } from '@sentry/vite-plugin';
+// import { sentryVitePlugin } from '@sentry/vite-plugin';
 
-const envMode = process.env.NUXT_PUBLIC_ENV_MODE;
+// const envMode = process.env.NUXT_PUBLIC_ENV_MODE;
 
 export default defineNuxtConfig({
   app: {
@@ -71,26 +71,26 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
   },
-  vite: {
-    build: {
-      sourcemap: 'hidden',
-    },
-    plugins: [
-      sentryVitePlugin({
-        url: 'https://sentry.pegipegi.com',
-        org: 'pegipegi',
-        release: {
-          name: appVersion,
-          deploy: envMode === undefined ? undefined : { env: envMode },
-        },
-        disable: process.env.NODE_ENV !== 'production',
-        project: 'web-pegipegi-main-desktop',
-        authToken:
-          '703e790fc2fb40c594455f9ca0ef40330cf48bc10c394fe194bb1d3d598dc8d9',
-        sourcemaps: {
-          assets: ['.nuxt/dist/**'],
-        },
-      }),
-    ],
-  },
+  // vite: {
+  //   build: {
+  //     sourcemap: 'hidden',
+  //   },
+  //   plugins: [
+  //     sentryVitePlugin({
+  //       url: 'https://sentry.pegipegi.com',
+  //       org: 'pegipegi',
+  //       release: {
+  //         name: appVersion,
+  //         deploy: envMode === undefined ? undefined : { env: envMode },
+  //       },
+  //       disable: process.env.NODE_ENV !== 'production',
+  //       project: 'web-pegipegi-main-desktop',
+  //       authToken:
+  //         '703e790fc2fb40c594455f9ca0ef40330cf48bc10c394fe194bb1d3d598dc8d9',
+  //       sourcemaps: {
+  //         assets: ['.nuxt/dist/**'],
+  //       },
+  //     }),
+  //   ],
+  // },
 });
