@@ -33,7 +33,7 @@
       >
         <NuxtImg
           class="w-full"
-          src="/figure-long-banner.webp"
+          src="/figure-long-banner-v2.webp"
           alt="Juara Harga Termurah"
         />
       </a>
