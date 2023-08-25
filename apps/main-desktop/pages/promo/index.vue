@@ -71,7 +71,7 @@
       <NuxtImg
         class="w-full rounded-xl"
         alt="Pasti ada harga termurah"
-        src="/figure-long-banner-v2.webp"
+        src="/figure-promo-banner.webp"
       />
       <ChipTab
         :options="tagOptions"

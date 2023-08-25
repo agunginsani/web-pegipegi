@@ -56,7 +56,7 @@
     :aria-label="`${props.label} ${props.value?.label}`"
     @click="onClick"
   >
-    <div class="relative">
+    <div class="relative shrink-0">
       <NuxtImg
         v-if="props.icon"
         :src="props.icon"
