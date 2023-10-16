@@ -40,6 +40,11 @@
       <SectionAccomSelection />
       <SectionTravelBlog />
       <SectionImportantInfo />
+      <NuxtImg
+        class="w-full rounded-xl"
+        src="/figure-download-banner.webp"
+        alt="Download Aplikasi Pegipegi"
+      />
       <NewsletterSubscribe />
       <SectionSeo />
     </main>
