@@ -157,12 +157,6 @@ export default async function useHotelSearchForm() {
     params: {
       keyword: debouncedSearch,
       traceId: form.value.traceId,
-      actionUrl: null,
-      checkInDate: form.value.traceId !== '' ? form.value.checkInDate : '',
-      stayCount: form.value.traceId !== '' ? night : '',
-      roomCount: form.value.traceId !== '' ? form.value.room : '',
-      returnResult: '',
-      netPrice: 1,
     },
     watch: false,
     immediate: false,
